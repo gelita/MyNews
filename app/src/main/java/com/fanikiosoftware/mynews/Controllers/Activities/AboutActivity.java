@@ -1,4 +1,4 @@
-package com.fanikiosoftware.mynews;
+package com.fanikiosoftware.mynews.Controllers.Activities;
 
 
 import android.app.Activity;
