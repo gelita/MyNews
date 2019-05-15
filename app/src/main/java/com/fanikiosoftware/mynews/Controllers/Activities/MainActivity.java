@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.miAbout:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                intent.putExtra(String.valueOf(R.string.title), R.string.about);
+                intent.putExtra("title", 10);
                 break;
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                intent.putExtra(String.valueOf(R.string.title), R.string.help);
+                intent.putExtra("title", 20);
                 break;
             case R.id.miNotifications:
                 intent = new Intent(getBaseContext(), NotificationsActivity.class);

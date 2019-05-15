@@ -12,12 +12,15 @@ import com.fanikiosoftware.mynews.R;
 
 public  class InfoActivity extends AppCompatActivity {
 
+    String title;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_info);
         TextView textView = findViewById(R.id.tvFragmentInfo);
-        this.setTitle("About");
+        getActivityTitle();
+        setTitle(title);
         textView.setText(R.string.lorem_ipsum);
     }
     //create menu options
@@ -49,5 +52,16 @@ public  class InfoActivity extends AppCompatActivity {
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;
+    }
+
+    public String getActivityTitle(){
+        Intent intent = getIntent();
+        int i = intent.getIntExtra("title", 0);
+        if(i == 10){
+            title = "About";
+        }else{
+            title = "Help";
+        }
+        return title;
     }
 }
