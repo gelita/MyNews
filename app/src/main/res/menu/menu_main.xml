@@ -7,22 +7,18 @@
         android:id="@+id/miSearch"
         android:icon="@drawable/ic_search"
         android:title="@string/search"
-        android:onClick="onSearch"
-
         app:showAsAction="ifRoom">
     </item>
     <item
         android:id="@+id/miNotifications"
         android:icon="@drawable/ic_notification"
         android:title="@string/notifications"
-        android:onClick="onNotifications"
         app:showAsAction="withText">
     </item>
     <item
         android:id="@+id/miHelp"
         android:icon="@drawable/ic_help"
         android:title="@string/help"
-        android:onClick="onHelp"
         app:showAsAction="withText">
 
     </item>
@@ -30,7 +26,6 @@
         android:id="@+id/miAbout"
         android:icon="@drawable/ic_about"
         android:title="@string/about"
-        android:onClick="onAbout"
         app:showAsAction="withText">
     </item>
 </menu>

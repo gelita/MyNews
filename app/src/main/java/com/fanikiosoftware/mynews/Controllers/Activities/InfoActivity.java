@@ -1,21 +1,25 @@
 package com.fanikiosoftware.mynews.Controllers.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 
-public class NotificationsActivity extends AppCompatActivity {
+public  class InfoActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_query);
+        setContentView(R.layout.fragment_info);
+        TextView textView = findViewById(R.id.tvFragmentInfo);
+        this.setTitle("About");
+        textView.setText(R.string.lorem_ipsum);
     }
-
     //create menu options
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

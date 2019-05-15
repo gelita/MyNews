@@ -20,7 +20,7 @@ android {
 allprojects {
     repositories {
         jcenter()
-        maven {url "https://clojars.org/repo/"}
+        maven { url "https://clojars.org/repo/" }
     }
 }
 dependencies {

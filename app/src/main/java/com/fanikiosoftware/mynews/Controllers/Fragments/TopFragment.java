@@ -9,10 +9,8 @@ import icepick.State;
 
 public class TopFragment extends BaseFragment{
 
-//    @BindView(R.id.fragment_detail_text_view)
-TextView textView;
-    @State
-    int buttonTag;
+//    @BindView(R.id.fragment_detail_text_view) TextView textView;
+    @State int buttonTag;
 
     // --------------
     // BASE METHODS
