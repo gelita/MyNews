@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 
-public  class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends AppCompatActivity {
 
+    int tag;
     String title;
 
     @Override
@@ -23,11 +24,13 @@ public  class InfoActivity extends AppCompatActivity {
         setTitle(title);
         textView.setText(R.string.lorem_ipsum);
     }
+
     //create menu options
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -36,30 +39,36 @@ public  class InfoActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.miAbout:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
+                tag = 10;
                 break;
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
+                tag = 20;
                 break;
             case R.id.miNotifications:
-                intent = new Intent(getBaseContext(), NotificationsActivity.class);
+                intent = new Intent(getBaseContext(), QueryActivity.class);
+                tag = 30;
                 break;
             case R.id.miSearch:
-                intent = new Intent(getBaseContext(), SearchActivity.class);
+                intent = new Intent(getBaseContext(), QueryActivity.class);
+                tag = 40;
                 break;
             default:
                 break;
         }
+        //add intent extra int to identify which button click called the activity
+        intent.putExtra("tag", tag);
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;
     }
 
-    public String getActivityTitle(){
+    public String getActivityTitle() {
         Intent intent = getIntent();
-        int i = intent.getIntExtra("title", 0);
-        if(i == 10){
+        tag = intent.getIntExtra("tag", 0);
+        if (tag == 10) {
             title = "About";
-        }else{
+        } else {
             title = "Help";
         }
         return title;
