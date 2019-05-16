@@ -12,10 +12,10 @@
             android:id="@+id/tvFragmentInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:layout_margin="24dp"
-            android:textColor="#000"
+            android:layout_marginTop="40dp"
             android:lineSpacingExtra="8dp"
+            android:textColor="#000"
             android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,15 +1,30 @@
 package com.fanikiosoftware.mynews.Controllers.Activities;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.fanikiosoftware.mynews.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class QueryActivity extends AppCompatActivity {
 
+    @BindView(R.id.etSearch) TextInputLayout etSearch;
+    @BindView(R.id.etDateStart) EditText  etDateStart;
+    @BindView(R.id.etDateEnd) EditText etDateEnd;
+    @BindView(R.id.check1) AppCompatCheckBox check1;
+    @BindView(R.id.check2) AppCompatCheckBox check2;
+    @BindView(R.id.check3) AppCompatCheckBox check3;
+    @BindView(R.id.check4) AppCompatCheckBox check4;
+    @BindView(R.id.check5) AppCompatCheckBox check5;
+    @BindView(R.id.check6) AppCompatCheckBox check6;
     int tag;
     String title;
 
@@ -17,6 +32,7 @@ public class QueryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query);
+        ButterKnife.bind(this);
         getActivityTitle();
         setTitle(title);
     }

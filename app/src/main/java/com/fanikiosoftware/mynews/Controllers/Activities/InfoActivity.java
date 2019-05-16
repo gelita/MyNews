@@ -10,19 +10,24 @@ import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class InfoActivity extends AppCompatActivity {
 
     int tag;
     String title;
+    @BindView(R.id.tvFragmentInfo)
+    TextView tvFragmentInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_info);
-        TextView textView = findViewById(R.id.tvFragmentInfo);
+        ButterKnife.bind(this);
         getActivityTitle();
         setTitle(title);
-        textView.setText(R.string.lorem_ipsum);
+        tvFragmentInfo.setText(R.string.lorem_ipsum);
     }
 
     //create menu options
