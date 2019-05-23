@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- 1 | Add TabLayout to handle tabs -->
     <android.support.design.widget.TabLayout
-        android:id="@+id/activity_main_tabs"
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="6dp"
+        app:tabTextAppearance="?attr/tabSelectedTextColor"
+        android:minHeight="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorBrightAccent"
-        app:tabTextColor="#D4E0F8"
-        app:tabSelectedTextColor="#fff"
-        app:tabIndicatorHeight="5dp"/>
+        app:tabIndicatorHeight="5dp"
+        app:tabMode="fixed"
+        app:tabTextColor="#D4E0F8" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/activity_main_viewpager"
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout"/>
 
-</LinearLayout>
+</RelativeLayout>

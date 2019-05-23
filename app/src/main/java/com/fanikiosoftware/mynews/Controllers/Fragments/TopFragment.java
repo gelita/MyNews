@@ -1,13 +1,11 @@
 package com.fanikiosoftware.mynews.Controllers.Fragments;
 
-import android.widget.TextView;
-
 import com.fanikiosoftware.mynews.R;
 
 //import butterknife.BindView;
 import icepick.State;
 
-public class TopFragment extends BaseFragment{
+public class TopFragment extends BlankFragment {
 
 //    @BindView(R.id.fragment_detail_text_view) TextView textView;
     @State int buttonTag;
@@ -17,7 +15,7 @@ public class TopFragment extends BaseFragment{
     // --------------
 
     @Override
-    protected BaseFragment newInstance() {
+    protected BlankFragment newInstance() {
         return new TopFragment();
     }
 

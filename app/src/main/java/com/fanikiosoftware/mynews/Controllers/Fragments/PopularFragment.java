@@ -6,7 +6,7 @@ import com.fanikiosoftware.mynews.R;
 
 import icepick.State;
 
-public class PopularFragment extends BaseFragment {
+public class PopularFragment extends BlankFragment {
 
     //  @BindView(R.id.fragment_detail_text_view)
     TextView textView;
@@ -18,7 +18,7 @@ public class PopularFragment extends BaseFragment {
     // --------------
 
     @Override
-    protected BaseFragment newInstance() {
+    protected BlankFragment newInstance() {
         return new PopularFragment();
     }
 

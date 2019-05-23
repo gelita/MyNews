@@ -1,9 +1,8 @@
 package com.fanikiosoftware.mynews.Controllers.Activities;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ import butterknife.ButterKnife;
 
 public class QueryActivity extends AppCompatActivity {
 
-    @BindView(R.id.etSearch) TextInputLayout etSearch;
+    @BindView(R.id.etSearch) EditText etSearch;
     @BindView(R.id.etDateStart) EditText  etDateStart;
     @BindView(R.id.etDateEnd) EditText etDateEnd;
     @BindView(R.id.check1) AppCompatCheckBox check1;

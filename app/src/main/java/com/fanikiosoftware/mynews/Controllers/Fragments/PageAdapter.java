@@ -11,11 +11,13 @@ public class PageAdapter extends FragmentPagerAdapter {
         super(mgr);
     }
 
+    //returns the number of tabs
     @Override
     public int getCount() {
         return (3);
     }
 
+    //returns a new object of the selected fragment type
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -30,6 +32,7 @@ public class PageAdapter extends FragmentPagerAdapter {
         }
     }
 
+    //returns the title of the selected tab
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {

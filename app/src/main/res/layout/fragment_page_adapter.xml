@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Controllers.Fragments.PageAdapter">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment activity_query -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
