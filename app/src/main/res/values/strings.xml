@@ -25,4 +25,7 @@
         other minister Azkaban. </string>
     <string name="title">title</string>
     <string name="Recycler">Recycler</string>
+    <string name="article_header">header here</string>
+    <string name="headline">Article Headline Here</string>
+    <string name="notificationSwitch">Enable notifications (1x daily)</string>
 </resources>

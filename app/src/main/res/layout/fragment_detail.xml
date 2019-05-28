@@ -2,16 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fanikiosoftware.mynews.Controllers.Fragments.BlankFragment"
+    tools:context="com.fanikiosoftware.mynews.controllers.fragments.TopFragment"
     android:gravity="center"
     android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/fragment_detail_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I have no details to show you..."
-        android:textColor="#FFF"
-        android:textSize="20sp"/>
+   <!-- TODO: complete fragment detailed view layout -->
 
 </LinearLayout>

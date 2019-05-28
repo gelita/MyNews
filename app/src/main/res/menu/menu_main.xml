@@ -4,6 +4,12 @@
     tools:context=".activities.MainActivity">
 
     <item
+        android:id="@+id/miBackPress"
+        android:icon="@drawable/ic_back"
+        android:title=""
+        app:showAsAction="ifRoom">
+    </item>
+    <item
         android:id="@+id/miSearch"
         android:icon="@drawable/ic_search"
         android:title="@string/search"

@@ -1,4 +1,4 @@
-package com.fanikiosoftware.mynews.Controllers.Fragments;
+package com.fanikiosoftware.mynews.controllers.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,13 +12,11 @@ public class PageAdapter extends FragmentPagerAdapter {
     }
 
     //returns the number of tabs
-    @Override
     public int getCount() {
         return (3);
     }
 
     //returns a new object of the selected fragment type
-    @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
@@ -33,7 +31,6 @@ public class PageAdapter extends FragmentPagerAdapter {
     }
 
     //returns the title of the selected tab
-    @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:

@@ -1,4 +1,4 @@
-package com.fanikiosoftware.mynews.Controllers.Activities;
+package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.fanikiosoftware.mynews.Controllers.Fragments.PageAdapter;
+import com.fanikiosoftware.mynews.controllers.fragments.PageAdapter;
 import com.fanikiosoftware.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,38 +39,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem backItem = menu.findItem(R.id.miBackPress);
+        // hide the back arrow on this activity
+        backItem.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
     //determine which item was selected and respond accordingly with the proper intent and int extra
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         Intent intent = new Intent();
-        //create tag identifier for each menu item
-        int tag = 0;
+        String title = "";
         switch (item.getItemId()) {
             case R.id.miAbout:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                tag = 10;
+                title = "About";
                 break;
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                tag = 20;
+                title = "Help";
                 break;
             case R.id.miNotifications:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
-                tag = 30;
+                title = "Notifications";
                 break;
             case R.id.miSearch:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
-                tag = 40;
+                title = "Search";
                 break;
             default:
                 break;
         }
         //add intent extra int to identify which button click called the activity
-        intent.putExtra("tag", tag);
+        intent.putExtra("title", title);
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;

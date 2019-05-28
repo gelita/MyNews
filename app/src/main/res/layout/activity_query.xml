@@ -138,4 +138,14 @@
         android:text="@string/search"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/colorPrimary"/>
+
+    <Switch
+        android:id="@+id/notificationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSubmit"
+        android:text="@string/notificationSwitch"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"/>
 </RelativeLayout>

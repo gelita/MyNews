@@ -1,4 +1,4 @@
-package com.fanikiosoftware.mynews.Controllers;
+package com.fanikiosoftware.mynews.controllers.network;
 
 import com.google.gson.annotations.SerializedName;
 

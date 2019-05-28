@@ -1,4 +1,4 @@
-package com.fanikiosoftware.mynews.Controllers.Fragments;
+package com.fanikiosoftware.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,32 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanikiosoftware.mynews.Controllers.Activities.MyAdapter;
 import com.fanikiosoftware.mynews.R;
+import com.fanikiosoftware.mynews.controllers.activities.MyAdapter;
 
 import icepick.Icepick;
+import icepick.State;
 
-public abstract class BlankFragment extends Fragment {
+public class PopularFragment extends Fragment {
 
-    //Force developer implement those methods
-    protected abstract BlankFragment newInstance();
+    @State
+    int buttonTag;
 
-    protected abstract int getFragmentLayout();
-
-    protected abstract void configureDesign();
-
-    protected abstract void updateDesign();
-
-    public BlankFragment(){
-
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get activity_query identifier from abstract method declared in child class
         //this method will report the correct activity_query's identifier so the correct activity_query will be used
@@ -49,7 +38,6 @@ public abstract class BlankFragment extends Fragment {
         return rootView;
     }
 
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Handling Bundle Restoration
@@ -58,10 +46,23 @@ public abstract class BlankFragment extends Fragment {
         this.updateDesign();
     }
 
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Handling Bundle Save
         Icepick.saveInstanceState(this, outState);
+    }
+    protected Fragment newInstance() {
+        return new PopularFragment();
+    }
+
+    protected int getFragmentLayout() {
+        return R.layout.fragment_detail;
+    }
+
+    protected void configureDesign() {
+    }
+
+    protected void updateDesign() {
+        //  this.updateTextView(this.buttonTag);
     }
 }

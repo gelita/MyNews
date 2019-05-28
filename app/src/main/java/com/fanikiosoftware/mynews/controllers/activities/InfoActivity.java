@@ -1,39 +1,35 @@
-package com.fanikiosoftware.mynews.Controllers.Activities;
+package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class QueryActivity extends AppCompatActivity {
+public class InfoActivity extends AppCompatActivity {
 
-    @BindView(R.id.etSearch) EditText etSearch;
-    @BindView(R.id.etDateStart) EditText  etDateStart;
-    @BindView(R.id.etDateEnd) EditText etDateEnd;
-    @BindView(R.id.check1) AppCompatCheckBox check1;
-    @BindView(R.id.check2) AppCompatCheckBox check2;
-    @BindView(R.id.check3) AppCompatCheckBox check3;
-    @BindView(R.id.check4) AppCompatCheckBox check4;
-    @BindView(R.id.check5) AppCompatCheckBox check5;
-    @BindView(R.id.check6) AppCompatCheckBox check6;
-    int tag;
     String title;
+    @BindView(R.id.tvFragmentInfo)
+    TextView tvFragmentInfo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_query);
+        setContentView(R.layout.activity_info);
         ButterKnife.bind(this);
+        Objects.requireNonNull(getSupportActionBar()).setIcon(R.drawable.ic_back);
         getActivityTitle();
         setTitle(title);
+        tvFragmentInfo.setText(R.string.lorem_ipsum);
     }
 
     //create menu options
@@ -44,32 +40,33 @@ public class QueryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         Intent intent = new Intent();
-        //create tag identifier for each menu item
-        tag = 0;
+        String t = "";
         switch (item.getItemId()) {
+            case R.id.miBackPress:
+                intent = new Intent(getBaseContext(), MainActivity.class);
+                break;
             case R.id.miAbout:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                tag = 10;
+                t = "About";
                 break;
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                tag = 20;
+                t = "Help";
                 break;
             case R.id.miNotifications:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
-                tag = 30;
+                t = "Notifications";
                 break;
             case R.id.miSearch:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
-                tag = 40;
+                t = "Search";
                 break;
             default:
                 break;
         }
         //add intent extra int to identify which button click called the activity
-        intent.putExtra("tag", tag);
+        intent.putExtra("title", t);
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;
@@ -77,12 +74,7 @@ public class QueryActivity extends AppCompatActivity {
 
     public String getActivityTitle() {
         Intent intent = getIntent();
-        tag = intent.getIntExtra("tag", 0);
-        if (tag == 30) {
-            title = "Notifications";
-        } else {
-            title = "Search";
-        }
+        title = intent.getStringExtra("title");
         return title;
     }
 }
