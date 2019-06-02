@@ -4,8 +4,6 @@ public class Post {
 
     private String section;
     private String title;
-    private String imageUrl;
-
 
     public String getSection() {
         return section;
@@ -15,9 +13,6 @@ public class Post {
         return title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
     public void setSection(String section) {
         this.section = section;
@@ -27,7 +22,4 @@ public class Post {
         this.title = title;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }
