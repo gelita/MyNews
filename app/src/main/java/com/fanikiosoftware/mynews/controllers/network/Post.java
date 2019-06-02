@@ -1,31 +1,33 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
-
 public class Post {
 
-    private int id;
+    private String section;
     private String title;
-    private Date date;
+    private String imageUrl;
 
-    @SerializedName("body")
-    private String text;
 
-    public int getId() {
-        return id;
+    public String getSection() {
+        return section;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Date getDate() {
-        return date;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getText() {
-        return text;
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
