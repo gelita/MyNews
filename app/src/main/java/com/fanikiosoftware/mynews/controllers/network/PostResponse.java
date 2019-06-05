@@ -10,7 +10,7 @@ public class PostResponse {
     private int numResults;
     private String section;
     @SerializedName("last_updated")
-    private String lastUpdated;
+    private String date;
     @SerializedName("results")
     private List<Post> resultsList;
 
@@ -18,15 +18,16 @@ public class PostResponse {
         return numResults;
     }
 
-    public String getSection() {
-        return section;
+    public String getDateView() {
+        return date;
     }
 
-    public String getLastUpdated() {
-        return lastUpdated;
+    public String getSection() {
+        return section;
     }
 
     public List<Post> getResultsList() {
         return resultsList;
     }
+
 }

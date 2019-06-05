@@ -1,7 +1,5 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -14,4 +12,10 @@ public interface NewsApi {
     //will return a JSON array of posts
     @GET("home.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts();
+
+    @GET("business.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    Call<PostResponse> getPosts1();
+
+    @GET("technology.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    Call<PostResponse> getPosts2();
 }

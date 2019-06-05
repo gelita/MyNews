@@ -1,9 +1,13 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Post {
 
-    private String section;
-    private String title;
+    String section;
+    String title;
+    @SerializedName("created_date")
+    String date;
 
     public String getSection() {
         return section;
@@ -13,6 +17,13 @@ public class Post {
         return title;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public void setSection(String section) {
         this.section = section;

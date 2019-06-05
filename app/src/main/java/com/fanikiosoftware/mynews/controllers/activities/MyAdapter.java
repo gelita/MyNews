@@ -1,23 +1,24 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
+import com.fanikiosoftware.mynews.controllers.network.Post;
+import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder> {
 
-    private String[] mDataset;
+   List<Post> postList;
 
-    public MyAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public MyAdapter(List<Post> postList) {
+        this.postList = postList;
     }
 
     //called everytime an instance of MyAdapter is created
@@ -26,32 +27,43 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
         //inflate the card view layout and setup each view within each individual card(row)of the rv
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item,
                 parent, false);
-        //obtain an instance of the viewHolder
-        ArticleViewHolder viewHolder = new ArticleViewHolder(view);
-        return viewHolder;
+        //return a new instance of the viewHolder
+        return new ArticleViewHolder(view);
     }
 
     //binds the data with the view when the data is shown in the UI
     @Override
     public void onBindViewHolder(ArticleViewHolder viewHolder, int position) {
-//        viewHolder.mTextView.setText(mDataset[position]);
+        viewHolder.tvSection.setText(postList.get(position).getSection());
+        viewHolder.tvDate.setText(postList.get(position).getDate());
+        viewHolder.tvTitle.setText(postList.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return postList.size();
     }
+
+//    public void updatePostList(List<Post> postList) {
+//        this.postList.clear();
+//        this.postList.addAll(postList);
+//        //notify the adapter that the postList has been updated
+//        notifyDataSetChanged();
+//    }
 
     public static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.header_view) TextView headerView;
-        @BindView(R.id.title_view) TextView titleView;
-        @BindView(R.id.date_view) TextView dateView;
-        @BindView(R.id.image_view) ImageView imageView;
+        CardView cardView;
+        TextView tvSection;
+        TextView tvTitle;
+        TextView tvDate;
 
         public ArticleViewHolder(View v) {
             super(v);
-            ButterKnife.bind(this, v);
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            tvTitle = (TextView) itemView.findViewById(R.id.title_view);
+            tvSection = (TextView) itemView.findViewById(R.id.section_view);
+            tvDate = (TextView) itemView.findViewById(R.id.date_view);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.fanikiosoftware.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.fanikiosoftware.mynews.controllers.network.NewsApi;
 import com.fanikiosoftware.mynews.controllers.network.Post;
 import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import icepick.Icepick;
@@ -34,22 +33,18 @@ public class TopFragment extends Fragment {
     NewsApi newsApi;
     @State
     int buttonTag;
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    RecyclerView recyclerView;
+    List<Post> postList = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get activity_query identifier from abstract method declared in child class
         //this method will report the correct activity_query's identifier so the correct activity_query will be used
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
-        RecyclerView recyclerView = rootView.findViewById(R.id.rv_recycler_view);
         textViewResult = rootView.findViewById(R.id.tv_textView);
+        recyclerView = rootView.findViewById(R.id.rv_recycler_view);
         recyclerView.setHasFixedSize(true);
+        adapter = new MyAdapter(postList);
         recyclerView.setAdapter(adapter);
-        //the LinearLayoutManager manages the recyclerView list
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
         loadJSON();
         return rootView;
     }
@@ -70,14 +65,8 @@ public class TopFragment extends Fragment {
                     textViewResult.setText("Code: " + response.code());
                     return;
                 }
-                PostResponse postResponse = response.body();
-                List<Post> postList = postResponse.getResultsList();
-                for (Post post : postList) {
-                    String content = "";
-                    content += "TITLE: " + post.getTitle() + "\n";
-                    content += "SECTION: " + post.getSection() + "\n\n";
-                    textViewResult.append(content);
-                }
+                postList.addAll(response.body().getResultsList());
+                adapter.notifyDataSetChanged(); //getCount() and onBindViewHolder() called next
             }
 
             @Override
