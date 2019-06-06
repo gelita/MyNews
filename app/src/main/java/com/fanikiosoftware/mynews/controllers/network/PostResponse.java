@@ -6,13 +6,11 @@ import java.util.List;
 
 public class PostResponse {
 
-    @SerializedName("num_results")
-    private int numResults;
+    @SerializedName("num_results") private int numResults;
     private String section;
-    @SerializedName("last_updated")
-    private String date;
-    @SerializedName("results")
-    private List<Post> resultsList;
+    @SerializedName("last_updated") private String date;
+    @SerializedName("results") private List<Post> resultsList;
+    private String url;
 
     public int getNumResults() {
         return numResults;
@@ -25,9 +23,13 @@ public class PostResponse {
     public String getSection() {
         return section;
     }
+    public String getUrl() {
+        return url;
+    }
 
     public List<Post> getResultsList() {
         return resultsList;
     }
+
 
 }

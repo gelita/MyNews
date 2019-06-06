@@ -6,6 +6,7 @@ public class Post {
 
     String section;
     String title;
+    String url;
     @SerializedName("created_date")
     String date;
 
@@ -21,16 +22,7 @@ public class Post {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getUrl() {
+        return url;
     }
-
-    public void setSection(String section) {
-        this.section = section;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
 }
