@@ -8,13 +8,12 @@ import com.fanikiosoftware.mynews.R;
 
 class WebActivity extends AppCompatActivity {
 
-    private String url = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         WebView webView = findViewById(R.id.webView);
-        url = getIntent().getStringExtra("url");
+        String url = getIntent().getStringExtra("url");
         webView.loadUrl(url);
     }
 }

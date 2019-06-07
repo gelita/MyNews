@@ -46,6 +46,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
     @Override
     public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
         viewHolder.tvSection.setText(postList.get(position).getSection());
+        if(!postList.get(position).getSubsection().equals("")){
+            viewHolder.tvSubsection.setText("> " + postList.get(position).getSubsection());
+        }else{
+            //remove subsection from view if subsection variable is empty string
+            viewHolder.tvSubsection.setVisibility(View.GONE);
+        }
         String date = postList.get(position).getDate();
         date = date.substring(5,10) + "-" + date.substring(0,4);
         viewHolder.tvDate.setText(date);
@@ -75,6 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
 
         CardView cardView;
         TextView tvSection;
+        TextView tvSubsection;
         TextView tvTitle;
         TextView tvDate;
         ImageView imageView;
@@ -84,6 +91,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
             cardView = itemView.findViewById(R.id.card_view);
             tvTitle = itemView.findViewById(R.id.title_view);
             tvSection = itemView.findViewById(R.id.section_view);
+            tvSubsection = itemView.findViewById(R.id.subsection_view);
             tvDate = itemView.findViewById(R.id.date_view);
             imageView = itemView.findViewById(R.id.image_view);
         }

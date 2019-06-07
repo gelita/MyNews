@@ -28,4 +28,6 @@
     <string name="article_header">header here</string>
     <string name="headline">Article Headline Here</string>
     <string name="notificationSwitch">Enable notifications (1x daily)</string>
+    <string name="article_section">section here</string>
+    <string name="article_subsection">subsection</string>
 </resources>

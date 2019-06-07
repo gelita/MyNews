@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Post {
 
     String section;
+    String subsection;
     String title;
     String url;
     @SerializedName("created_date")
@@ -12,6 +13,9 @@ public class Post {
 
     public String getSection() {
         return section;
+    }
+    public String getSubsection() {
+        return subsection;
     }
 
     public String getTitle() {
