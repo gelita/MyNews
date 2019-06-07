@@ -1,9 +1,13 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,8 @@ import static android.app.PendingIntent.getActivity;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder> {
 
    List<Post> postList;
+    private static final String TAG = "MyAdapter";
+
     public MyAdapter(List<Post> postList) {
         this.postList = postList;
     }
@@ -38,16 +44,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
 
     //binds the data with the view when the data is shown in the UI
     @Override
-    public void onBindViewHolder(ArticleViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
         viewHolder.tvSection.setText(postList.get(position).getSection());
         String date = postList.get(position).getDate();
         date = date.substring(5,10) + "-" + date.substring(0,4);
         viewHolder.tvDate.setText(date);
         viewHolder.tvTitle.setText(postList.get(position).getTitle());
-        Picasso.get()
+        Picasso.with(viewHolder.imageView.getContext())
                 .load("https://static01.nyt.com/images/2019/06/04/us/politics/04dc-senate1/04dc-senate1-thumbStandard.jpg")
                 .resize(40, 40)
                 .into(viewHolder.imageView);
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "clicked on image from position: " + position);
+                Context context = v.getContext();
+                Intent intent = new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", postList.get(position).getUrl());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
