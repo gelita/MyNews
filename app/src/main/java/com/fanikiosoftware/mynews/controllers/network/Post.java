@@ -18,7 +18,7 @@ public class Post {
     }
 
     public String getDate() {
-        return date;
+        return dateeeeeee;
     }
 
     public void setDate(String date) {
