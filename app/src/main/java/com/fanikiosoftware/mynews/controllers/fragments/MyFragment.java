@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TopFragment extends Fragment {
+public class MyFragment extends Fragment {
 
     String BASE_URL = "https://api.nytimes.com/svc/topstories/v2/";
     public TextView textViewResult;
@@ -35,6 +35,7 @@ public class TopFragment extends Fragment {
     int buttonTag;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
+//    List<Post.ImageUrl> imageUrlList = new ArrayList<>(5);
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get activity_query identifier from abstract method declared in child class
@@ -57,6 +58,7 @@ public class TopFragment extends Fragment {
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
         newsApi = retrofit.create(NewsApi.class);
+
         Call<PostResponse> call = newsApi.getPosts();
         call.enqueue(new Callback<PostResponse>() {
             @Override
@@ -66,7 +68,8 @@ public class TopFragment extends Fragment {
                     return;
                 }
                 postList.addAll(response.body().getResultsList());
-                adapter.notifyDataSetChanged(); //getCount() and onBindViewHolder() called next
+                //getCount() & onBindViewHolder() called next in MyAdapter
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -90,8 +93,8 @@ public class TopFragment extends Fragment {
         Icepick.saveInstanceState(this, outState);
     }
 
-    protected TopFragment newInstance() {
-        return new TopFragment();
+    protected MyFragment newInstance() {
+        return new MyFragment();
     }
 
     protected int getFragmentLayout() {

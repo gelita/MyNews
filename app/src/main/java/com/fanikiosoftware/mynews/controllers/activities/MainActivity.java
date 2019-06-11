@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.fanikiosoftware.mynews.controllers.fragments.PageAdapter;
 import com.fanikiosoftware.mynews.R;
+import com.fanikiosoftware.mynews.controllers.fragments.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,11 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     //this method provides the connection between the ViewPager and the TabLayout
     private void configureViewPager() {
-        // Get ViewPager from activity_query
         ViewPager viewPager = findViewById(R.id.viewpager);
-        // Set PagerAdapter to the ViewPager
-        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager()));
-        // get the TabLayout from the main activity_query
+        // Set PagerAdapter
+        //adapter changes the page according to which tab is currently selected
+        viewPager.setAdapter(new PagerAdapter((getSupportFragmentManager())));
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         // attach TabLayout and ViewPager
         tabLayout.setupWithViewPager(viewPager);

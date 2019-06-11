@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class PageAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
 
     //Default Constructor
-    public PageAdapter(FragmentManager mgr) {
+    public PagerAdapter(FragmentManager mgr) {
         super(mgr);
     }
 
@@ -20,7 +20,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TopFragment();
+                return new MyFragment();
             case 1:
                 return new PopularFragment();
             case 2:

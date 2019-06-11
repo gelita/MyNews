@@ -1,10 +1,7 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,16 +13,14 @@ import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.network.Post;
-import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static android.app.PendingIntent.getActivity;
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder> {
 
-   List<Post> postList;
+    List<Post> postList;
+    List<Post.ImageUrl> imageUrlList;
     private static final String TAG = "MyAdapter";
 
     public MyAdapter(List<Post> postList) {
@@ -46,18 +41,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
     @Override
     public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
         viewHolder.tvSection.setText(postList.get(position).getSection());
-        if(!postList.get(position).getSubsection().equals("")){
-            viewHolder.tvSubsection.setText("> " + postList.get(position).getSubsection());
-        }else{
+        if (!postList.get(position).getSubsection().equals("")) {
+            viewHolder.tvSubsection.setText(" > " + postList.get(position).getSubsection());
+        } else {
             //remove subsection from view if subsection variable is empty string
             viewHolder.tvSubsection.setVisibility(View.GONE);
         }
         String date = postList.get(position).getDate();
-        date = date.substring(5,10) + "-" + date.substring(0,4);
+        date = date.substring(5, 10) + "-" + date.substring(0, 4);
         viewHolder.tvDate.setText(date);
         viewHolder.tvTitle.setText(postList.get(position).getTitle());
+
         Picasso.with(viewHolder.imageView.getContext())
-                .load("https://static01.nyt.com/images/2019/06/04/us/politics/04dc-senate1/04dc-senate1-thumbStandard.jpg")
+                .load(postList.get(position).getImageUrlList().get(position).getImageUrl())
                 .resize(40, 40)
                 .into(viewHolder.imageView);
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {

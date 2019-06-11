@@ -15,6 +15,7 @@ import com.fanikiosoftware.mynews.controllers.network.NewsApi;
 import com.fanikiosoftware.mynews.controllers.network.Post;
 import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import icepick.Icepick;
@@ -33,6 +34,8 @@ public class TechFragment extends Fragment {
     NewsApi newsApi;
     @State
     int buttonTag;
+    RecyclerView recyclerView;
+    List<Post> postList = new ArrayList<>();
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,31 +58,27 @@ public class TechFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        //retrofit will create the body of the method being called w/out a defn in NewsApi.class
         newsApi = retrofit.create(NewsApi.class);
         Call<PostResponse> call = newsApi.getPosts();
         call.enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                if(!response.isSuccessful()){
-                    //get the error message
-                    textViewResult.setText("CODE: " + response.code());
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
                     return;
                 }
-                PostResponse postResponse = response.body();
-                //get the array from the PostResponse object
-                List<Post> postList = postResponse.getResultsList();
-                for(Post post : postList){
-
-
-
-                }
+                postList.addAll(response.body().getResultsList());
+                adapter.notifyDataSetChanged(); //getCount() and onBindViewHolder() called next
             }
+
             @Override
             public void onFailure(Call<PostResponse> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
     }
+
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
