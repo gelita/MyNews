@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
+import com.fanikiosoftware.mynews.controllers.network.Multimedia;
 import com.fanikiosoftware.mynews.controllers.network.Post;
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder> {
 
     List<Post> postList;
-    List<Post.ImageUrl> imageUrlList;
+    List<Multimedia> multimediaList;
     private static final String TAG = "MyAdapter";
 
     public MyAdapter(List<Post> postList) {
@@ -40,32 +41,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
     //binds the data with the view when the data is shown in the UI
     @Override
     public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
-        viewHolder.tvSection.setText(postList.get(position).getSection());
-        if (!postList.get(position).getSubsection().equals("")) {
-            viewHolder.tvSubsection.setText(" > " + postList.get(position).getSubsection());
+        Post post = postList.get(position);
+        viewHolder.tvSection.setText(post.getSection());
+        //if subsection is not empty string then post subsection after section >
+        if (!post.getSubsection().equals("")) {
+            viewHolder.tvSubsection.setText(" > " + post.getSubsection());
         } else {
             //remove subsection from view if subsection variable is empty string
             viewHolder.tvSubsection.setVisibility(View.GONE);
         }
-        String date = postList.get(position).getDate();
+        String date = post.getDate();
         date = date.substring(5, 10) + "-" + date.substring(0, 4);
         viewHolder.tvDate.setText(date);
-        viewHolder.tvTitle.setText(postList.get(position).getTitle());
-
-        Picasso.with(viewHolder.imageView.getContext())
-                .load(postList.get(position).getImageUrlList().get(position).getImageUrl())
-                .resize(40, 40)
-                .into(viewHolder.imageView);
-        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "clicked on image from position: " + position);
-                Context context = v.getContext();
-                Intent intent = new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("url", postList.get(position).getUrl());
-                context.startActivity(intent);
-            }
-        });
+        viewHolder.tvTitle.setText(post.getTitle());
+        //******I've tried this with the .length and without and get the same error msg each time
+        if (post.getMultimediaList().get(0).getUrl() != null
+                && post.getMultimediaList().get(0).getUrl().length() > 0) {
+            Picasso.with(viewHolder.imageView.getContext())
+                    .load(post.getMultimediaList().get(0).getUrl())
+                    .resize(40, 40)
+                    .into(viewHolder.imageView);
+            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "clicked on image from position: " + position);
+                    Context context = v.getContext();
+                    Intent intent = new Intent(v.getContext(), WebActivity.class);
+                    intent.putExtra("url", postList.get(position).getUrl());
+                    context.startActivity(intent);
+                }
+            });
+        } else {
+            viewHolder.imageView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

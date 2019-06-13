@@ -13,7 +13,7 @@ public class Post {
     @SerializedName("created_date")
     String date;
     @SerializedName("multimedia")
-    List<ImageUrl> imageUrlList;
+    List<Multimedia> multimediaList;
 
 
     public String getSection() {
@@ -24,8 +24,8 @@ public class Post {
         return subsection;
     }
 
-    public List<ImageUrl> getImageUrlList() {
-        return imageUrlList;
+    public List<Multimedia> getMultimediaList() {
+        return multimediaList;
     }
 
     public String getTitle() {
@@ -38,18 +38,5 @@ public class Post {
 
     public String getUrl() {
         return url;
-    }
-
-
-    //**********  MULTIMEDIA INNER CLASS *************//
-
-    public class ImageUrl {
-
-        @SerializedName("url")
-        String imageUrl;
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
     }
 }

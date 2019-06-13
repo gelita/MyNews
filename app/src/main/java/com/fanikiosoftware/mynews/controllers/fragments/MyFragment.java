@@ -35,7 +35,6 @@ public class MyFragment extends Fragment {
     int buttonTag;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
-//    List<Post.ImageUrl> imageUrlList = new ArrayList<>(5);
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get activity_query identifier from abstract method declared in child class
