@@ -54,26 +54,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
         date = date.substring(5, 10) + "-" + date.substring(0, 4);
         viewHolder.tvDate.setText(date);
         viewHolder.tvTitle.setText(post.getTitle());
-        //******I've tried this with the .length and without and get the same error msg each time
-        if (post.getMultimediaList().get(0).getUrl() != null
-                && post.getMultimediaList().get(0).getUrl().length() > 0) {
+        viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "clicked on tvTitle from position: " + position);
+                Context context = v.getContext();
+                Intent intent = new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", postList.get(position).getUrl());
+                context.startActivity(intent);
+            }
+        });
+        if (!post.getMultimediaList().isEmpty()) {
             Picasso.with(viewHolder.imageView.getContext())
                     .load(post.getMultimediaList().get(0).getUrl())
                     .resize(40, 40)
                     .into(viewHolder.imageView);
-            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "clicked on image from position: " + position);
-                    Context context = v.getContext();
-                    Intent intent = new Intent(v.getContext(), WebActivity.class);
-                    intent.putExtra("url", postList.get(position).getUrl());
-                    context.startActivity(intent);
-                }
-            });
+
         } else {
-            viewHolder.imageView.setVisibility(View.INVISIBLE);
+            Picasso.with(viewHolder.imageView.getContext())
+                    .load(R.drawable.ic_nyt)
+                    .resize(40, 40)
+                    .into(viewHolder.imageView);
         }
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "clicked on image from position: " + position);
+                Context context = v.getContext();
+                Intent intent = new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", postList.get(position).getUrl());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

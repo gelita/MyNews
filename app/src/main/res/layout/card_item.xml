@@ -22,7 +22,8 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:clickable="true"
-                android:layout_marginLeft="8dp"/>
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_pic"/>
 
             <TextView
                 android:id="@+id/section_view"
@@ -50,7 +51,8 @@
                 android:layout_alignParentEnd="true"
                 android:text="@string/hint_date"
                 android:textSize="10sp"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/title_view"
