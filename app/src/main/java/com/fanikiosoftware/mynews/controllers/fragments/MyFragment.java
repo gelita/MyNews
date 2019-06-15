@@ -81,6 +81,12 @@ public class MyFragment extends Fragment {
             call = newsApi.getPosts1();
         }else if (whichFrag == 2){
             call = newsApi.getPosts2();
+        }else if (whichFrag == 3){
+            call = newsApi.getPosts3();
+        }else if (whichFrag == 4){
+            call = newsApi.getPosts4();
+        }else if (whichFrag == 5){
+            call = newsApi.getPosts5();
         }
         call.enqueue(new Callback<PostResponse>() {
             @Override

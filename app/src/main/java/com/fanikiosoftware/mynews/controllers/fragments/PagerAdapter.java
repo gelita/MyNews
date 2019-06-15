@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
+    private String[] titles = {"Top Stories", "Business", "Tech", "Fashion",
+           "Real Estate"};
+
     //Default Constructor
     public PagerAdapter(FragmentManager mgr) {
         super(mgr);
@@ -13,7 +16,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     //returns the number of tabs
     public int getCount() {
-        return (3);
+        return (5);
     }
 
     //returns a new object of the selected fragment type
@@ -22,18 +25,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
         return myFragment;
     }
 
-
     //returns the title of the selected tab
     public String getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "Top Stories";
-            case 1:
-                return "Business";
-            case 2:
-                return "Tech News";
-            default:
-                return null;
-        }
+        return titles[position];
     }
 }

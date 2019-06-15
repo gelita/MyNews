@@ -18,4 +18,13 @@ public interface NewsApi {
 
     @GET("technology.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts2();
+
+    @GET("fashion.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    Call<PostResponse> getPosts3();
+
+    @GET("health.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    Call<PostResponse> getPosts4();
+
+    @GET("realestate.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    Call<PostResponse> getPosts5();
 }

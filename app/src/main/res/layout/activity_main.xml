@@ -11,13 +11,13 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="6dp"
-        app:tabTextAppearance="?attr/tabSelectedTextColor"
-        android:minHeight="?attr/actionBarSize"
         android:background="@color/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
         app:tabIndicatorColor="@color/colorBrightAccent"
         app:tabIndicatorHeight="5dp"
         app:tabMode="fixed"
+        app:tabTextAppearance="?attr/tabSelectedTextColor"
         app:tabTextColor="#D4E0F8"
         tools:targetApi="lollipop" />
 
@@ -25,6 +25,6 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout"/>
+        android:layout_below="@+id/tab_layout" />
 
 </RelativeLayout>

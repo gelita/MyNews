@@ -34,5 +34,6 @@
     <string name="json_business">business</string>
     <string name="json_tech">technology</string>
     <string name="json_home">home</string>
+    <string name="image_view">article image</string>
 
 </resources>
