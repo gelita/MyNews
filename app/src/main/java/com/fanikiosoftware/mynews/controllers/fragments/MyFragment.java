@@ -32,9 +32,18 @@ public class MyFragment extends Fragment {
     MyAdapter adapter;
     NewsApi newsApi;
     @State
-    int buttonTag;
+    int position;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
+
+    public static MyFragment newInstance(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        MyFragment fragment = new MyFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get activity_query identifier from abstract method declared in child class
@@ -42,14 +51,21 @@ public class MyFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
         textViewResult = rootView.findViewById(R.id.tv_textView);
         recyclerView = rootView.findViewById(R.id.rv_recycler_view);
+        readBundle(getArguments());
         recyclerView.setHasFixedSize(true);
         adapter = new MyAdapter(postList);
         recyclerView.setAdapter(adapter);
-        loadJSON();
+        loadJSON(position);
         return rootView;
     }
 
-    private void loadJSON() {
+    private void readBundle(Bundle bundle) {
+            if (bundle != null) {
+                position = bundle.getInt("position");
+            }
+    }
+
+    private void loadJSON(int whichFrag ) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -57,8 +73,15 @@ public class MyFragment extends Fragment {
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
         newsApi = retrofit.create(NewsApi.class);
-
-        Call<PostResponse> call = newsApi.getPosts();
+        Call<PostResponse> call = null;
+        System.out.println("whichFrag: " + whichFrag);
+        if (whichFrag == 0) {
+            call = newsApi.getPosts();
+        }else if (whichFrag == 1){
+            call = newsApi.getPosts1();
+        }else if (whichFrag == 2){
+            call = newsApi.getPosts2();
+        }
         call.enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
@@ -92,6 +115,7 @@ public class MyFragment extends Fragment {
         Icepick.saveInstanceState(this, outState);
     }
 
+
     protected MyFragment newInstance() {
         return new MyFragment();
     }
@@ -104,6 +128,5 @@ public class MyFragment extends Fragment {
     }
 
     protected void updateDesign() {
-        //  this.updateTextView(this.buttonTag);
     }
 }

@@ -18,25 +18,18 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     //returns a new object of the selected fragment type
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new MyFragment();
-            case 1:
-                return new PopularFragment();
-            case 2:
-                return new TechFragment();
-            default:
-                return null;
-        }
+        MyFragment myFragment = MyFragment.newInstance(position);
+        return myFragment;
     }
 
+
     //returns the title of the selected tab
-    public CharSequence getPageTitle(int position) {
+    public String getPageTitle(int position) {
         switch (position) {
             case 0:
                 return "Top Stories";
             case 1:
-                return "Popular";
+                return "Business";
             case 2:
                 return "Tech News";
             default:

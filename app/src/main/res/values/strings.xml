@@ -30,4 +30,9 @@
     <string name="notificationSwitch">Enable notifications (1x daily)</string>
     <string name="article_section">section here</string>
     <string name="article_subsection">subsection</string>
+    <string name="api_key">.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6</string>
+    <string name="json_business">business</string>
+    <string name="json_tech">technology</string>
+    <string name="json_home">home</string>
+
 </resources>

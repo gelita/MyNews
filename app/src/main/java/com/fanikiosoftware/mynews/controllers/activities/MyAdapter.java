@@ -69,7 +69,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
                     .load(post.getMultimediaList().get(0).getUrl())
                     .resize(40, 40)
                     .into(viewHolder.imageView);
-
         } else {
             Picasso.with(viewHolder.imageView.getContext())
                     .load(R.drawable.ic_nyt)
