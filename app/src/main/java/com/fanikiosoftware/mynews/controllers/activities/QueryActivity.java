@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.fanikiosoftware.mynews.R;
 
@@ -21,17 +22,30 @@ import butterknife.ButterKnife;
  */
 public class QueryActivity extends AppCompatActivity {
 
-    @BindView(R.id.etSearch) EditText etSearch;
-    @BindView(R.id.etDateStart) EditText etDateStart;
-    @BindView(R.id.etDateEnd) EditText etDateEnd;
-    @BindView(R.id.btnSubmit) Button btnSubmit;
-    @BindView(R.id.check1) AppCompatCheckBox check1;
-    @BindView(R.id.check2) AppCompatCheckBox check2;
-    @BindView(R.id.check3) AppCompatCheckBox check3;
-    @BindView(R.id.check4) AppCompatCheckBox check4;
-    @BindView(R.id.check5) AppCompatCheckBox check5;
-    @BindView(R.id.check6) AppCompatCheckBox check6;
-    @BindView(R.id.notificationSwitch) Switch notificationSwitch;
+    public String query = "";
+
+    @BindView(R.id.etSearch)
+    EditText etSearch;
+    @BindView(R.id.etDateStart)
+    EditText etDateStart;
+    @BindView(R.id.etDateEnd)
+    EditText etDateEnd;
+    @BindView(R.id.btnSubmit)
+    Button btnSubmit;
+    @BindView(R.id.check1)
+    AppCompatCheckBox check1;
+    @BindView(R.id.check2)
+    AppCompatCheckBox check2;
+    @BindView(R.id.check3)
+    AppCompatCheckBox check3;
+    @BindView(R.id.check4)
+    AppCompatCheckBox check4;
+    @BindView(R.id.check5)
+    AppCompatCheckBox check5;
+    @BindView(R.id.check6)
+    AppCompatCheckBox check6;
+    @BindView(R.id.notificationSwitch)
+    Switch notificationSwitch;
     String title;
 
     @Override
@@ -42,7 +56,20 @@ public class QueryActivity extends AppCompatActivity {
         getActivityTitle();
         setSwitch(title);
         setTitle(title);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                query = etSearch.getText().toString();
+                if (query.equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.input_required, Toast.LENGTH_SHORT).show();
+                }else if(!query.equals("")){
+                    //get check box values
+                    System.out.println(query);
+                }
+            }
+        });
     }
+
 
     //create menu options
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,7 +106,7 @@ public class QueryActivity extends AppCompatActivity {
                 break;
         }
         //add intent extra int to identify which button click called the activity
-        intent.putExtra("title",  t);
+        intent.putExtra("title", t);
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;
@@ -92,10 +119,10 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     //remove notifications switch if on Search activity else remove Submit btn if on Notifications
-    private void setSwitch(String s){
-        if(s.equals("Search")){
+    private void setSwitch(String s) {
+        if (s.equals("Search")) {
             notificationSwitch.setVisibility(View.GONE);
-        }else if(s.equals("Notifications")){
+        } else if (s.equals("Notifications")) {
             btnSubmit.setVisibility(View.GONE);
         }
     }

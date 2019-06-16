@@ -35,5 +35,5 @@
     <string name="json_tech">technology</string>
     <string name="json_home">home</string>
     <string name="image_view">article image</string>
-
+    <string name="input_required">Please enter a search term.</string>
 </resources>
