@@ -59,15 +59,25 @@ public class QueryActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                query = etSearch.getText().toString();
-                if (query.equals("")) {
-                    Toast.makeText(getApplicationContext(), R.string.input_required, Toast.LENGTH_SHORT).show();
-                }else if(!query.equals("")){
-                    //get check box values
-                    System.out.println(query);
-                }
+                getQuery();
             }
         });
+    }
+
+    private void getQuery() {
+
+        query = etSearch.getText().toString();
+        if (query.equals("")) {
+            Toast.makeText(getApplicationContext(), R.string.search_term_required, Toast.LENGTH_SHORT).show();
+        } else if (!query.isEmpty()) {
+            System.out.println("Search term: " + query);
+            //confirm that at least ONE checkbox is checked or give feedback to user
+            if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() &&
+                    !check4.isChecked() && !check5.isChecked() && !check6.isChecked()){
+                Toast.makeText(getApplicationContext(), R.string.checkbox_required, Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
 
