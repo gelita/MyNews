@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/inputSearch"
@@ -18,38 +18,46 @@
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_query_term"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="@string/search_query_term" />
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
         android:id="@+id/dateRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/inputSearch"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp">
+        android:layout_below="@+id/inputSearch">
 
         <EditText
-            android:id="@+id/etDateStart"
+            android:id="@+id/etDateStartLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:autofillHints="@android:string/no"
-            android:hint="@string/hint_date"
-            android:inputType="date"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_start_date"
+            android:labelFor="@+id/tvStartDateSpinner" />
+
+        <TextView
+            android:id="@+id/tvStartDateSpinner"
+            style="@android:style/Widget.Holo.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/etDateEnd"
+            android:id="@+id/etDateEndLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:autofillHints="@android:string/no"
-            android:hint="@string/hint_date"
-            android:inputType="date"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_end_date"
+            android:labelFor="@+id/tvEndDateSpinner" />
+
+        <TextView
+            android:id="@+id/tvEndDateSpinner"
+            style="@android:style/Widget.Holo.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -65,16 +73,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/art"
-            android:buttonTint="@color/colorPrimary"/>
+            android:buttonTint="@color/colorPrimary"
+            android:text="@string/art" />
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/check2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/business"
-            android:buttonTint="@color/colorPrimary"/>
+            android:buttonTint="@color/colorPrimary"
+            android:text="@string/business" />
     </LinearLayout>
 
     <LinearLayout
@@ -90,16 +98,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/entrepreneurs"
-            android:buttonTint="@color/colorPrimary"/>
+            android:buttonTint="@color/colorPrimary"
+            android:text="@string/entrepreneurs" />
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/check4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/politics"
-            android:buttonTint="@color/colorPrimary"/>
+            android:buttonTint="@color/colorPrimary"
+            android:text="@string/politics" />
     </LinearLayout>
 
     <LinearLayout
@@ -116,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/sports"
-            app:buttonTint="@color/colorPrimary"/>
+            app:buttonTint="@color/colorPrimary" />
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/check6"
@@ -124,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/travel"
-            app:buttonTint="@color/colorPrimary"/>
+            app:buttonTint="@color/colorPrimary" />
     </LinearLayout>
 
     <Button
@@ -133,19 +141,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/row3"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/search"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/colorPrimary"    />
+        android:textColor="@android:color/white" />
 
     <Switch
         android:id="@+id/notificationSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnSubmit"
-        android:text="@string/notificationSwitch"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"/>
+        android:text="@string/notificationSwitch" />
 </RelativeLayout>
