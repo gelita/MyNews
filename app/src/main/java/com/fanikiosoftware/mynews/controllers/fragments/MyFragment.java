@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyFragment extends Fragment {
 
-    String BASE_URL = "https://api.nytimes.com/svc/topstories/v2/";
+    String BASE_URL = "https://api.nytimes.com/svc/";
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;

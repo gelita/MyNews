@@ -10,21 +10,22 @@ public interface NewsApi {
 
     //annotate w/ @Get("posts") to let retrofit know what is requested/required
     //will return a JSON array of posts
-    @GET("home.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    @GET("topstories/v2/home.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts();
 
-    @GET("business.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    @GET("topstories/v2/business.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts1();
 
-    @GET("technology.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    @GET("topstories/v2/technology.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts2();
 
-    @GET("fashion.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    @GET("topstories/v2/fashion.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts3();
 
-    @GET("health.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    @GET("topstories/v2/realestate.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts4();
 
-    @GET("realestate.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    //article search query using user input search term
+    @GET("?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts5();
 }

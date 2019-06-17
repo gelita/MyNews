@@ -121,37 +121,55 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     private void getQuery() {
-
-        query = etSearch.getText().toString();
-        if (query.equals("")) {
-            Toast.makeText(getApplicationContext(), R.string.search_term_required, Toast.LENGTH_SHORT).show();
-        } else if (!query.isEmpty()) {
-            System.out.println("Search term: " + query);
-            // confirm that at least ONE checkbox is checked or give feedback to user
+        //if search is empty then display error to user
+        if (etSearch.getText().toString().isEmpty()) {
+            Toast.makeText
+                (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
+        }else {
+            query = "search/v2/articlesearch.json&" + etSearch.getText().toString();
+            System.out.println("Search term:" + query);
+            //if no checkboxes are selected provide error message to user
             if (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() &&
                     !check4.isChecked() && !check5.isChecked() && !check6.isChecked()) {
                 Toast.makeText(getApplicationContext(),
-                        R.string.checkbox_required, Toast.LENGTH_SHORT).show();
+                        R.string.checkbox_required, Toast.LENGTH_LONG).show();
             } else {
-                String query = "fq=news_desk: (";
+                int q = 0;
+                //build query string using search term and at least one selected section in the api
+                String sections = "&fq=news_desk:(";
                 if (check1.isChecked()) {
-                    query += "\"" + check1.getText().toString() + "\" ";
-                    Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                    sections += " \"" + check1.getText().toString() + "\"";
+                    q++;
                 }
                 if (check2.isChecked()) {
-                    query += check2.getText().toString();
+                    sections += " \"" + check2.getText().toString() + "\"";
+                    q++;
                 }
                 if (check3.isChecked()) {
-                    query += check3.getText().toString();
+                    sections += " \"" + check3.getText().toString() + "\"";
+                    q++;
                 }
                 if (check4.isChecked()) {
-                    query += check4.getText().toString();
+                    sections += " \"" + check4.getText().toString() + "\"";
+                    q++;
                 }
                 if (check5.isChecked()) {
-                    query += check5.getText().toString();
+                    sections += " \"" + check5.getText().toString() + "\"";
+                    q++;
                 }
                 if (check6.isChecked()) {
-                    query += check6.getText().toString();
+                    sections += " \"" + check6.getText().toString() + "\"";
+                    q++;
+                }
+                // is at least 1 checkbox marked? if not then add nothing to query
+                //if at least 1 checkbox marked then add that section(s) to the query
+                if(q == 0){
+                    sections = "";
+                }else if(q > 0){
+                    sections += ")";
+                    query = query + sections;
+                    System.out.print("query: " + query);
+                    System.out.print("sections: " + sections);
                 }
             }
         }
