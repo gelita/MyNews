@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.fanikiosoftware.mynews.R;
 
-import java.nio.FloatBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -128,14 +127,35 @@ public class QueryActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.search_term_required, Toast.LENGTH_SHORT).show();
         } else if (!query.isEmpty()) {
             System.out.println("Search term: " + query);
-            //confirm that at least ONE checkbox is checked or give feedback to user
+            // confirm that at least ONE checkbox is checked or give feedback to user
             if (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() &&
                     !check4.isChecked() && !check5.isChecked() && !check6.isChecked()) {
-                Toast.makeText(getApplicationContext(), R.string.checkbox_required, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        R.string.checkbox_required, Toast.LENGTH_SHORT).show();
+            } else {
+                String query = "fq=news_desk: (";
+                if (check1.isChecked()) {
+                    query += "\"" + check1.getText().toString() + "\" ";
+                    Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                }
+                if (check2.isChecked()) {
+                    query += check2.getText().toString();
+                }
+                if (check3.isChecked()) {
+                    query += check3.getText().toString();
+                }
+                if (check4.isChecked()) {
+                    query += check4.getText().toString();
+                }
+                if (check5.isChecked()) {
+                    query += check5.getText().toString();
+                }
+                if (check6.isChecked()) {
+                    query += check6.getText().toString();
+                }
             }
         }
     }
-
 
     //create menu options
     public boolean onCreateOptionsMenu(Menu menu) {
