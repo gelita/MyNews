@@ -1,8 +1,11 @@
 package com.fanikiosoftware.mynews.controllers.fragments;
 
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,7 @@ public class MyFragment extends Fragment {
     int position;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
+    public static final String TAG = "MyFragment";
 
     public static MyFragment newInstance(int position) {
         Bundle bundle = new Bundle();
@@ -46,6 +50,7 @@ public class MyFragment extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG," :: MyFragment onCreateView called");
         //Get activity_query identifier from abstract method declared in child class
         //this method will report the correct activity_query's identifier so the correct activity_query will be used
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);

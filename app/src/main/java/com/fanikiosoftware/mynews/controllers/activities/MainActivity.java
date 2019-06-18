@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,9 +14,11 @@ import com.fanikiosoftware.mynews.controllers.fragments.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, " :: MainActivity onCreate called");
         setContentView(R.layout.activity_main);
         //Configure ViewPager
         this.configureViewPager();
@@ -24,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
     //this method provides the connection between the ViewPager and the TabLayout
     private void configureViewPager() {
         ViewPager viewPager = findViewById(R.id.viewpager);
-        // Set PagerAdapter
-        //adapter changes the page according to which tab is currently selected
+        //Set PagerAdapter -adapter may change pages according to which tab is currently selected
         viewPager.setAdapter(new PagerAdapter((getSupportFragmentManager())));
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         // attach TabLayout and ViewPager

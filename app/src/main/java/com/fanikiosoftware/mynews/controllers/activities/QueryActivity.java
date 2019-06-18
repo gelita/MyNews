@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,11 +60,13 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener date;
     public String query1 = "";
     private Calendar myCalendar;
+    public static final String TAG = "QueryActivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "  :: QueryActivity onCreate called");
         setContentView(R.layout.activity_query);
         ButterKnife.bind(this);
         getActivityTitle();
@@ -124,10 +127,9 @@ public class QueryActivity extends AppCompatActivity {
         //if search is empty then display error to user
         if (etSearch.getText().toString().isEmpty()) {
             Toast.makeText
-                (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
-        }else {
+                    (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
+        } else {
             query1 = "search/v2/articlesearch.json&" + etSearch.getText().toString();
-            System.out.println("Search term:" + query1);
             //if no checkboxes are selected provide error message to user
             if (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() &&
                     !check4.isChecked() && !check5.isChecked() && !check6.isChecked()) {
@@ -162,12 +164,10 @@ public class QueryActivity extends AppCompatActivity {
                     q++;
                 }
                 //if at least 1 checkbox marked then add that section(s) to the query1
-                if(q > 0){
+                if (q > 0) {
                     query2 += ")";
                     query1 += query2;
-                    System.out.print("query1: " + query1);
-                }else {
-                    // do nothing?
+                    System.out.println("Search term: " + query1);
                 }
             }
         }

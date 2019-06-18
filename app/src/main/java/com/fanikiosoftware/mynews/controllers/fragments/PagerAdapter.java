@@ -21,8 +21,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     //returns a new object of the selected fragment type
     public Fragment getItem(int position) {
-        MyFragment myFragment = MyFragment.newInstance(position);
-        return myFragment;
+        return MyFragment.newInstance(position);
     }
 
     //returns the title of the selected tab
