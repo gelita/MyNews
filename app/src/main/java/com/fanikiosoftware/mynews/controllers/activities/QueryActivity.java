@@ -103,6 +103,9 @@ public class QueryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getQuery();
+                Intent intent = new Intent(getBaseContext(), QueryResultsActivity);
+                intent.putExtra(query1,"BASE_URL");
+                startActivity(intent);
             }
         });
 

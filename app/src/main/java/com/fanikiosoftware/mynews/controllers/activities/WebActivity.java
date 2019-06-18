@@ -9,7 +9,7 @@ import android.webkit.WebView;
 
 import com.fanikiosoftware.mynews.R;
 
-class WebActivity extends AppCompatActivity {
+public class WebActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
