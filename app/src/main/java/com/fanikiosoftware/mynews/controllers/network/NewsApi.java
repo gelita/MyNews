@@ -25,7 +25,7 @@ public interface NewsApi {
     @GET("topstories/v2/realestate.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts4();
 
-    //article search query using user input search term
+    //article search query1 using user input search term
     @GET("?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts5();
 }
