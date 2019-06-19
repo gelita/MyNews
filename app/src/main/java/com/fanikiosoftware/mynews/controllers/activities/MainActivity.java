@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         // attach TabLayout and ViewPager
         tabLayout.setupWithViewPager(viewPager);
         // for the purpose of design, tabs have the same width
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     //create menu options

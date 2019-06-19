@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class PagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles = {"Top Stories", "Business", "Tech", "Fashion",
-           "Real Estate"};
+           "Real Estate", "Health"};
 
     //Default Constructor
     public PagerAdapter(FragmentManager mgr) {
@@ -16,7 +16,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     //returns the number of tabs
     public int getCount() {
-        return (5);
+        return (6);
     }
 
     //returns a new object of the selected fragment type
