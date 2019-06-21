@@ -103,9 +103,10 @@ public class QueryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getQuery();
-//                Intent intent = new Intent(getBaseContext(), QueryResultsActivity);
-//                intent.putExtra(query1,"BASE_URL");
-//                startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
+                Log.d(TAG,"query1 = " + query1);
+                intent.putExtra("BASE_URL", query1);
+                startActivity(intent);
             }
         });
 
@@ -132,7 +133,7 @@ public class QueryActivity extends AppCompatActivity {
             Toast.makeText
                     (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
         } else {
-            query1 = "search/v2/articlesearch.json&" + etSearch.getText().toString();
+            query1 = "search/v2/articlesearch.json?q=" + etSearch.getText().toString();
             //if no checkboxes are selected provide error message to user
             if (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() &&
                     !check4.isChecked() && !check5.isChecked() && !check6.isChecked()) {
@@ -143,7 +144,7 @@ public class QueryActivity extends AppCompatActivity {
                 //build query1 string using search term and at least one selected section in the api
                 String query2 = "&fq=news_desk:(";
                 if (check1.isChecked()) {
-                    query2 += " \"" + check1.getText().toString() + "\"";
+                    query2 += "\"" + check1.getText().toString() + "\"";
                     q++;
                 }
                 if (check2.isChecked()) {
@@ -170,7 +171,7 @@ public class QueryActivity extends AppCompatActivity {
                 if (q > 0) {
                     query2 += ")";
                     query1 += query2;
-                    System.out.println("Search term: " + query1);
+                    System.out.println(TAG + " line 173 Search term: " + query1);
                 }
             }
         }

@@ -30,7 +30,7 @@ public interface NewsApi {
 
 
 
-    //article search query1 using user input search term
-    @GET("?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    //article search query1 using user input search term [uses & NOT ? prefix]
+    @GET("&api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts6();
 }

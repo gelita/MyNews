@@ -1,8 +1,6 @@
 package com.fanikiosoftware.mynews.controllers.fragments;
 
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyFragment extends Fragment {
 
-    String BASE_URL = "https://api.nytimes.com/svc/";
+    String BASE_URL;// = "https://api.nytimes.com/svc/";
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;
@@ -43,14 +41,25 @@ public class MyFragment extends Fragment {
     public static MyFragment newInstance(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
+        bundle.putString("BASE_URL", "https://api.nytimes.com/svc/");
+        MyFragment fragment = new MyFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    public static MyFragment newInstance(int position, String BASE_URL) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        bundle.putString("BASE_URL", BASE_URL);
         MyFragment fragment = new MyFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG," :: MyFragment onCreateView called");
+        Log.d(TAG, " :: MyFragment onCreateView called");
         //Get activity_query identifier from abstract method declared in child class
         //this method will report the correct activity_query's identifier so the correct activity_query will be used
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
@@ -65,12 +74,14 @@ public class MyFragment extends Fragment {
     }
 
     private void readBundle(Bundle bundle) {
-            if (bundle != null) {
-                position = bundle.getInt("position");
-            }
+        if (bundle != null) {
+            position = bundle.getInt("position");
+            BASE_URL = bundle.getString("BASE_URL");
+            Log.d(TAG, "base_url = " + BASE_URL);
+        }
     }
 
-    private void loadJSON(int whichFrag ) {
+    private void loadJSON(int whichFrag) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -82,16 +93,18 @@ public class MyFragment extends Fragment {
         System.out.println("whichFrag: " + whichFrag);
         if (whichFrag == 0) {
             call = newsApi.getPosts();
-        }else if (whichFrag == 1){
+        } else if (whichFrag == 1) {
             call = newsApi.getPosts1();
-        }else if (whichFrag == 2){
+        } else if (whichFrag == 2) {
             call = newsApi.getPosts2();
-        }else if (whichFrag == 3){
+        } else if (whichFrag == 3) {
             call = newsApi.getPosts3();
-        }else if (whichFrag == 4){
+        } else if (whichFrag == 4) {
             call = newsApi.getPosts4();
-        }else if (whichFrag == 5){
+        } else if (whichFrag == 5) {
             call = newsApi.getPosts5();
+        }else if (whichFrag == 6) {
+            call = newsApi.getPosts6();
         }
         call.enqueue(new Callback<PostResponse>() {
             @Override
