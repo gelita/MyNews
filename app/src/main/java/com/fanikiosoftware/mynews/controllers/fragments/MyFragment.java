@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyFragment extends Fragment {
 
-    String BASE_URL;// = "https://api.nytimes.com/svc/";
+    String baseURL;
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;
@@ -41,16 +41,16 @@ public class MyFragment extends Fragment {
     public static MyFragment newInstance(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putString("BASE_URL", "https://api.nytimes.com/svc/");
+        bundle.putString("baseURL", "https://api.nytimes.com/svc/");
         MyFragment fragment = new MyFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public static MyFragment newInstance(int position, String BASE_URL) {
+    public static MyFragment newInstance(int position, String baseURL) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putString("BASE_URL", BASE_URL);
+        bundle.putString("baseURL", baseURL);
         MyFragment fragment = new MyFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -69,21 +69,21 @@ public class MyFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         adapter = new MyAdapter(postList);
         recyclerView.setAdapter(adapter);
-        loadJSON(position);
+        loadJSON(position, baseURL);
         return rootView;
     }
 
-    private void readBundle(Bundle bundle) {
-        if (bundle != null) {
-            position = bundle.getInt("position");
-            BASE_URL = bundle.getString("BASE_URL");
-            Log.d(TAG, "base_url = " + BASE_URL);
+    private void readBundle(Bundle args) {
+        if (args != null) {
+            position = args.getInt("position");
+            baseURL = args.getString("baseURL");
+            Log.d(TAG, "baseURL = " + baseURL);
         }
     }
 
-    private void loadJSON(int whichFrag) {
+    private void loadJSON(int whichFrag, String url) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
