@@ -17,7 +17,6 @@ import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import icepick.Icepick;
 import icepick.State;
@@ -30,13 +29,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyFragment extends Fragment {
 
     private static final String BASE_URL = "https://api.nytimes.com/svc/";
+    public static final String API_KEY = "&api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;
     @State
     int position;
     String userQuery;
-    String sections;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
     public static final String TAG = "MyFragment";
@@ -79,7 +78,7 @@ public class MyFragment extends Fragment {
             position = args.getInt("position");
             if (position > 5) {
                 userQuery = args.getString("userQuery");
-                System.out.println("query: " + userQuery);
+                System.out.println("query: " + userQuery + API_KEY);
             }
         }
     }
@@ -107,11 +106,13 @@ public class MyFragment extends Fragment {
         } else if (whichFrag == 5) {
             call = newsApi.getPosts5();
         } else if (whichFrag == 6) {
-            //remove ending "," in sections string
-            StringBuilder builder = new StringBuilder(sections);
-            builder.deleteCharAt(sections.length() -1);
+            //remove ending "," in query string
+            StringBuilder builder = new StringBuilder(userQuery);
+            builder.deleteCharAt(userQuery.length() - 1);
+            userQuery += API_KEY;
             call = newsApi.getPosts6(userQuery);
         }
+        assert call != null;
         call.enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
@@ -119,6 +120,7 @@ public class MyFragment extends Fragment {
                     textViewResult.setText("Code: " + response.code());
                     return;
                 }
+                assert response.body() != null;
                 postList.addAll(response.body().getResultsList());
                 //getCount() & onBindViewHolder() called next in MyAdapter
                 adapter.notifyDataSetChanged();
