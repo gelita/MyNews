@@ -35,8 +35,8 @@ public class MyFragment extends Fragment {
     NewsApi newsApi;
     @State
     int position;
-    String userQuery = "";
-    String sections = "";
+    String userQuery;
+    String sections;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
     public static final String TAG = "MyFragment";
@@ -78,8 +78,8 @@ public class MyFragment extends Fragment {
         if (args != null) {
             position = args.getInt("position");
             if (position > 5) {
-                System.out.println("query: " + query);
                 userQuery = args.getString("userQuery");
+                System.out.println("query: " + userQuery);
             }
         }
     }
