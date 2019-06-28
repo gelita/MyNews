@@ -2,6 +2,8 @@ package com.fanikiosoftware.mynews.controllers.network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NewsApi {
 
@@ -28,9 +30,9 @@ public interface NewsApi {
     @GET("topstories/v2/health.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
     Call<PostResponse> getPosts5();
 
-
-
     //article search query1 using user input search term [uses & NOT ? prefix]
-    @GET("&api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
-    Call<PostResponse> getPosts6();
+    @GET("search/v2/articlesearch.json?q={searchQuery}?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6")
+    Call<PostResponse> getPosts6(
+            @Path("searchQuery") String userQuery
+    );
 }

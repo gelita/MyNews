@@ -17,6 +17,7 @@ import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import icepick.Icepick;
 import icepick.State;
@@ -28,12 +29,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyFragment extends Fragment {
 
-    String baseURL;
+    private static final String BASE_URL = "https://api.nytimes.com/svc/";
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;
     @State
     int position;
+    String userQuery = "";
+    String sections = "";
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
     public static final String TAG = "MyFragment";
@@ -41,21 +44,19 @@ public class MyFragment extends Fragment {
     public static MyFragment newInstance(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putString("baseURL", "https://api.nytimes.com/svc/");
         MyFragment fragment = new MyFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public static MyFragment newInstance(int position, String baseURL) {
+    public static MyFragment newInstance(int position, String userQuery) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putString("baseURL", baseURL);
+        bundle.putString("userQuery", userQuery);
         MyFragment fragment = new MyFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,21 +70,23 @@ public class MyFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         adapter = new MyAdapter(postList);
         recyclerView.setAdapter(adapter);
-        loadJSON(position, baseURL);
+        loadJSON(position);
         return rootView;
     }
 
     private void readBundle(Bundle args) {
         if (args != null) {
             position = args.getInt("position");
-            baseURL = args.getString("baseURL");
-            Log.d(TAG, "baseURL = " + baseURL);
+            if (position > 5) {
+                System.out.println("query: " + query);
+                userQuery = args.getString("userQuery");
+            }
         }
     }
 
-    private void loadJSON(int whichFrag, String url) {
+    private void loadJSON(int whichFrag) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -103,8 +106,11 @@ public class MyFragment extends Fragment {
             call = newsApi.getPosts4();
         } else if (whichFrag == 5) {
             call = newsApi.getPosts5();
-        }else if (whichFrag == 6) {
-            call = newsApi.getPosts6();
+        } else if (whichFrag == 6) {
+            //remove ending "," in sections string
+            StringBuilder builder = new StringBuilder(sections);
+            builder.deleteCharAt(sections.length() -1);
+            call = newsApi.getPosts6(userQuery);
         }
         call.enqueue(new Callback<PostResponse>() {
             @Override
@@ -138,7 +144,6 @@ public class MyFragment extends Fragment {
         //Handling Bundle Save
         Icepick.saveInstanceState(this, outState);
     }
-
 
     protected MyFragment newInstance() {
         return new MyFragment();

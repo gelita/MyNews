@@ -58,9 +58,8 @@ public class QueryActivity extends AppCompatActivity {
     Switch notificationSwitch;
     String title;
     private DatePickerDialog.OnDateSetListener date;
-    public String query1 = "";    private Calendar myCalendar;
+    private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +100,8 @@ public class QueryActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getQuery();
                 Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                intent.putExtra("baseURL", query1);
+                intent.putExtra("userQuery", getQuery());
                 startActivity(intent);
             }
         });
@@ -113,7 +111,7 @@ public class QueryActivity extends AppCompatActivity {
             public void onClick(View v) {
             }
         });
-
+        //todo replace w/textview no spinner
         tvStartDateSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,51 +125,47 @@ public class QueryActivity extends AppCompatActivity {
 
     private String getQuery() {
         //if search is empty then display error to user
-        if (etSearch.getText().toString().isEmpty()) {
+        String query = etSearch.getText().toString();
+        if (query.isEmpty()) {
             Toast.makeText
                     (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
+            return null;
         } else {
-            query1 = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + etSearch.getText().toString();
-            //if no checkboxes are selected provide error message to user
-            if (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() &&
-                    !check4.isChecked() && !check5.isChecked() && !check6.isChecked()) {
-                Toast.makeText(getApplicationContext(),
-                        R.string.checkbox_required, Toast.LENGTH_LONG).show();
+            String query2 = "";
+            Boolean aBoolean = false; //track checked boxes, if any checked aBoolean will be true
+            if (check1.isChecked()) {
+                query2 += check1.getText().toString() + ",";
+                aBoolean = true;
+            }
+            if (check2.isChecked()) {
+                query2 += check2.getText().toString() + ",";
+                aBoolean = true;
+            }
+            if (check3.isChecked()) {
+                query2 += check3.getText().toString() + ",";
+                aBoolean = true;
+            }
+            if (check4.isChecked()) {
+                query2 += check4.getText().toString() + ",";
+                aBoolean = true;
+            }
+            if (check5.isChecked()) {
+                query2 += check5.getText().toString() + ",";
+                aBoolean = true;
+            }
+            if (check6.isChecked()) {
+                query2 += check6.getText().toString();
+                aBoolean = true;
+            }
+            if (query2.equals("")) {
+                //if no category section selected - notify user to choose at least one
+                Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
+                return null;
             } else {
-                String query2 = "&fq=news_desk:(";
-                int q = 0; //track if any checkboxes are checked
-                if (check1.isChecked()) {
-                    query2 += "\"" + check1.getText().toString() + "\"";
-                    q++;
-                }
-                if (check2.isChecked()) {
-                    query2 += " \"" + check2.getText().toString() + "\"";
-                    q++;
-                }
-                if (check3.isChecked()) {
-                    query2 += " \"" + check3.getText().toString() + "\"";
-                    q++;
-                }
-                if (check4.isChecked()) {
-                    query2 += " \"" + check4.getText().toString() + "\"";
-                    q++;
-                }
-                if (check5.isChecked()) {
-                    query2 += " \"" + check5.getText().toString() + "\"";
-                    q++;
-                }
-                if (check6.isChecked()) {
-                    query2 += " \"" + check6.getText().toString() + "\"";
-                    q++;
-                }
-                //if at least 1 checkbox marked then add that section(s) to the query1
-                if (q > 0) {
-                   query2 += ")/";
-                   query1 += query2;
-                }
+                query = query + "&fq=" + query2.substring(0, query2.length() - 1);
+                return query;
             }
         }
-        return query1;
     }
 
     //create menu options
