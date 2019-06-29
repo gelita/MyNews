@@ -162,7 +162,7 @@ public class QueryActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
                 return null;
             } else {
-                query = query + "&fq=" + query2.substring(0, query2.length() - 1);
+               query =  query + "$" + query2.substring(0, query2.length() - 1);
                 return query;
             }
         }

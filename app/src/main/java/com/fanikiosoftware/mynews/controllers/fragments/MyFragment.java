@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyFragment extends Fragment {
 
     private static final String BASE_URL = "https://api.nytimes.com/svc/";
-    public static final String API_KEY = "&api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
+    public static final String API_KEY = "nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;
@@ -49,6 +49,7 @@ public class MyFragment extends Fragment {
     }
 
     public static MyFragment newInstance(int position, String userQuery) {
+        Log.d(TAG, "MyFragment newInstance 2 starting");
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         bundle.putString("userQuery", userQuery);
@@ -78,7 +79,7 @@ public class MyFragment extends Fragment {
             position = args.getInt("position");
             if (position > 5) {
                 userQuery = args.getString("userQuery");
-                System.out.println("query: " + userQuery + API_KEY);
+                System.out.println("query: " + userQuery + " Key: " + API_KEY);
             }
         }
     }
@@ -109,21 +110,31 @@ public class MyFragment extends Fragment {
             //remove ending "," in query string
             StringBuilder builder = new StringBuilder(userQuery);
             builder.deleteCharAt(userQuery.length() - 1);
-            userQuery += API_KEY;
-            call = newsApi.getPosts6(userQuery);
+            String[] query = userQuery.split("$");
+            call = newsApi.getPosts6(query[0], query[1], API_KEY);
         }
         assert call != null;
         call.enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (!response.isSuccessful()) {
-                    textViewResult.setText("Code: " + response.code());
+                    textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
+                    Thread.currentThread().getStackTrace();
                     return;
                 }
-                assert response.body() != null;
-                postList.addAll(response.body().getResultsList());
-                //getCount() & onBindViewHolder() called next in MyAdapter
-                adapter.notifyDataSetChanged();
+                if(postList != null) {
+                    Log.d(TAG, "postList not null");
+                    if(response.body().getResultsList() != null) {
+                        Log.d(TAG, "resultsList not null");
+                        postList.addAll(response.body().getResultsList());
+                        //getCount() & onBindViewHolder() called next in MyAdapter
+                        adapter.notifyDataSetChanged();
+                    }else {
+                        Log.d(TAG, "resultsList NULL");
+                    }
+                }else{
+                    Log.d(TAG, "postList NULL");
+                }
             }
 
             @Override
