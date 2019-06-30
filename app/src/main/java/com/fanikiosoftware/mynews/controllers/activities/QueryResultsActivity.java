@@ -8,6 +8,8 @@ import android.util.Log;
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.fragments.MyFragment;
 
+import java.util.ArrayList;
+
 
 public class QueryResultsActivity extends AppCompatActivity {
 
@@ -20,13 +22,14 @@ public class QueryResultsActivity extends AppCompatActivity {
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        MyFragment myFragment = MyFragment.newInstance(6, getUserQuery());
+        MyFragment myFragment = MyFragment.newInstance(6, getUserQueryList());
         ft.replace(R.id.fragment_holder, myFragment); // or ft.replace?
         // Complete the changes added above
         ft.commit();
     }
 
-    private String getUserQuery() {
-        return getIntent().getStringExtra("userQuery");
+    private ArrayList<String> getUserQueryList() {
+        ArrayList<String> userQueryList = getIntent().getStringArrayListExtra("userQueryList");
+        return userQueryList;
     }
 }

@@ -3,6 +3,7 @@ package com.fanikiosoftware.mynews.controllers.activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.fanikiosoftware.mynews.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -35,7 +37,7 @@ public class QueryActivity extends AppCompatActivity {
     @BindView(R.id.tvStartDateSpinner)
     TextView tvStartDateSpinner;
     @BindView(R.id.etSearch)
-    EditText etSearch;
+    TextInputEditText etSearch;
     @BindView(R.id.etDateStartLabel)
     EditText etDateStart;
     @BindView(R.id.etDateEndLabel)
@@ -97,11 +99,13 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
+        Log.d(TAG, "  :: QueryActivity setting up listeners");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                intent.putExtra("userQuery", getQuery());
+                intent.putStringArrayListExtra("userQueryList", getQuery());
+                System.out.println(TAG + " userquery = " + getQuery());
                 startActivity(intent);
             }
         });
@@ -123,47 +127,40 @@ public class QueryActivity extends AppCompatActivity {
         });
     }
 
-    private String getQuery() {
+    private ArrayList<String> getQuery() {
         //if search is empty then display error to user
-        String query = etSearch.getText().toString();
-        if (query.isEmpty()) {
+        ArrayList<String> userQueryList = new ArrayList<String>();
+        userQueryList.add(etSearch.getText().toString()); //this adds an element to the list.
+        if (userQueryList.isEmpty()) {
             Toast.makeText
                     (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
             return null;
         } else {
-            String query2 = "";
-            Boolean aBoolean = false; //track checked boxes, if any checked aBoolean will be true
             if (check1.isChecked()) {
-                query2 += check1.getText().toString() + ",";
-                aBoolean = true;
+                userQueryList.add(check1.getText().toString());
             }
             if (check2.isChecked()) {
-                query2 += check2.getText().toString() + ",";
-                aBoolean = true;
+                userQueryList.add(check2.getText().toString());
             }
             if (check3.isChecked()) {
-                query2 += check3.getText().toString() + ",";
-                aBoolean = true;
+                userQueryList.add(check3.getText().toString());
             }
             if (check4.isChecked()) {
-                query2 += check4.getText().toString() + ",";
-                aBoolean = true;
+                userQueryList.add(check4.getText().toString());
             }
             if (check5.isChecked()) {
-                query2 += check5.getText().toString() + ",";
-                aBoolean = true;
+                userQueryList.add(check5.getText().toString());
             }
             if (check6.isChecked()) {
-                query2 += check6.getText().toString();
-                aBoolean = true;
+                userQueryList.add(check6.getText().toString());
             }
-            if (query2.equals("")) {
-                //if no category section selected - notify user to choose at least one
+            if (userQueryList.size() < 1) {
+                //if no category selected - notify user to choose at least one
                 Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
                 return null;
             } else {
-               query =  query + "$" + query2.substring(0, query2.length() - 1);
-                return query;
+                Log.d(TAG, "  :: QueryActivity userQueryList: " + userQueryList);
+                return userQueryList;
             }
         }
     }

@@ -34,8 +34,7 @@ public interface NewsApi {
     @GET("search/v2/articlesearch.json")
     Call<PostResponse> getPosts6(
             @Query("q") String userQuery,
-            @Query("fq") String sections,
+            @Query("fq") String sectionList,
             @Query("api-key") String apiKey
     );
-
 }

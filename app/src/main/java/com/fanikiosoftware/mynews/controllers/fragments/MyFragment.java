@@ -35,7 +35,9 @@ public class MyFragment extends Fragment {
     NewsApi newsApi;
     @State
     int position;
-    String userQuery;
+    ArrayList<String> userQueryList;
+
+    //    String userQueryList = "";
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
     public static final String TAG = "MyFragment";
@@ -48,11 +50,11 @@ public class MyFragment extends Fragment {
         return fragment;
     }
 
-    public static MyFragment newInstance(int position, String userQuery) {
+    public static MyFragment newInstance(int position, ArrayList<String> userQueryList) {
         Log.d(TAG, "MyFragment newInstance 2 starting");
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putString("userQuery", userQuery);
+        bundle.putStringArrayList("userQueryList", userQueryList);
         MyFragment fragment = new MyFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -75,16 +77,20 @@ public class MyFragment extends Fragment {
     }
 
     private void readBundle(Bundle args) {
+        Log.d(TAG, " :: MyFragment reading bundle arg: " + args);
         if (args != null) {
             position = args.getInt("position");
+            Log.d(TAG, "pos: " + position);
             if (position > 5) {
-                userQuery = args.getString("userQuery");
-                System.out.println("query: " + userQuery + " Key: " + API_KEY);
+                Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
+                userQueryList = args.getStringArrayList("userQueryList");
+                Log.d(TAG, "userQueryList: (should have query and section values) " + userQueryList);
             }
         }
     }
 
     private void loadJSON(int whichFrag) {
+        Log.d(TAG, ": loading JSON");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -93,7 +99,6 @@ public class MyFragment extends Fragment {
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
         newsApi = retrofit.create(NewsApi.class);
         Call<PostResponse> call = null;
-        System.out.println("whichFrag: " + whichFrag);
         if (whichFrag == 0) {
             call = newsApi.getPosts();
         } else if (whichFrag == 1) {
@@ -107,13 +112,21 @@ public class MyFragment extends Fragment {
         } else if (whichFrag == 5) {
             call = newsApi.getPosts5();
         } else if (whichFrag == 6) {
-            //remove ending "," in query string
-            StringBuilder builder = new StringBuilder(userQuery);
-            builder.deleteCharAt(userQuery.length() - 1);
-            String[] query = userQuery.split("$");
-            call = newsApi.getPosts6(query[0], query[1], API_KEY);
+            Log.d(TAG, "whichFrag == 6 If Statement");
+            String query = userQueryList.get(0);
+            Log.d(TAG, "userQueryList = " + userQueryList);
+            String section = "";
+            //create a StringBuilder to convert the List<String> of sections to a string
+//            StringBuilder stringBuilder = new StringBuilder(section);
+            for (int i = 0; i < userQueryList.size(); i++) {
+//                stringBuilder.append(userQueryList.get(i));
+                section += userQueryList.get(i) + ",";
+            }
+            Log.d(TAG, "query = " + query + ", section = " + section);
+            call = newsApi.getPosts6(query, section, API_KEY);
         }
         assert call != null;
+        Log.d(TAG, "starting network call");
         call.enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
@@ -122,18 +135,13 @@ public class MyFragment extends Fragment {
                     Thread.currentThread().getStackTrace();
                     return;
                 }
-                if(postList != null) {
-                    Log.d(TAG, "postList not null");
-                    if(response.body().getResultsList() != null) {
-                        Log.d(TAG, "resultsList not null");
-                        postList.addAll(response.body().getResultsList());
-                        //getCount() & onBindViewHolder() called next in MyAdapter
-                        adapter.notifyDataSetChanged();
-                    }else {
-                        Log.d(TAG, "resultsList NULL");
-                    }
-                }else{
-                    Log.d(TAG, "postList NULL");
+                if (response.body() != null && response.body().getResultsList() != null) {
+                    postList.addAll(response.body().getResultsList());
+                    //getCount() & onBindViewHolder() called next in MyAdapter
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "resultsList NULL");
+                    return;
                 }
             }
 
