@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Post {
 
+    // from "results" on API call
     String section;
     String subsection;
     String title;

@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
+
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    private String[] titles = {"Top Stories", "Business", "Tech", "Fashion",
-           "Real Estate", "Health"};
 
     //Default Constructor
     public PagerAdapter(FragmentManager mgr) {
@@ -26,6 +26,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     //returns the title of the selected tab
     public String getPageTitle(int position) {
-        return titles[position];
+        return Constants.titles[position];
     }
 }

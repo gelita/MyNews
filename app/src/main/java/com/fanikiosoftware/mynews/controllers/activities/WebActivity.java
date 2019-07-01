@@ -55,7 +55,7 @@ public class WebActivity extends AppCompatActivity {
                 break;
         }
         //add intent extra int to identify which button click called the activity
-        intent.putExtra("title",  t);
+        intent.putExtra("title", t);
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;

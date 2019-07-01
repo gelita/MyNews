@@ -14,6 +14,7 @@ import com.fanikiosoftware.mynews.controllers.activities.MyAdapter;
 import com.fanikiosoftware.mynews.controllers.network.NewsApi;
 import com.fanikiosoftware.mynews.controllers.network.Post;
 import com.fanikiosoftware.mynews.controllers.network.PostResponse;
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +29,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyFragment extends Fragment {
 
-    private static final String BASE_URL = "https://api.nytimes.com/svc/";
-    public static final String API_KEY = "nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
     public TextView textViewResult;
     MyAdapter adapter;
     NewsApi newsApi;
     @State
     int position;
     ArrayList<String> userQueryList;
+    public static final String API_KEY = "nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
 
-    //    String userQueryList = "";
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
     public static final String TAG = "MyFragment";
@@ -92,7 +91,7 @@ public class MyFragment extends Fragment {
     private void loadJSON(int whichFrag) {
         Log.d(TAG, ": loading JSON");
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -127,29 +126,55 @@ public class MyFragment extends Fragment {
         }
         assert call != null;
         Log.d(TAG, "starting network call");
-        call.enqueue(new Callback<PostResponse>() {
-            @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                if (!response.isSuccessful()) {
-                    textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
-                    Thread.currentThread().getStackTrace();
-                    return;
+        if (position < 6) {
+            call.enqueue(new Callback<PostResponse>() {
+                @Override
+                public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                    if (!response.isSuccessful()) {
+                        textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
+                        Thread.currentThread().getStackTrace();
+                        return;
+                    }
+                    if (response.body() != null && response.body().getResultsList() != null) {
+                        postList.addAll(response.body().getResultsList());
+                        //getCount() & onBindViewHolder() called next in MyAdapter
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.d(TAG, "resultsList NULL");
+                        return;
+                    }
                 }
-                if (response.body() != null && response.body().getResultsList() != null) {
-                    postList.addAll(response.body().getResultsList());
-                    //getCount() & onBindViewHolder() called next in MyAdapter
-                    adapter.notifyDataSetChanged();
-                } else {
-                    Log.d(TAG, "resultsList NULL");
-                    return;
-                }
-            }
 
-            @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<PostResponse> call, Throwable t) {
+                    textViewResult.setText(t.getMessage());
+                }
+            });
+        } else {
+            call.enqueue(new Callback<PostResponse>() {
+                @Override
+                public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                    if (!response.isSuccessful()) {
+                        textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
+                        Thread.currentThread().getStackTrace();
+                        return;
+                    }
+                    if (response.body() != null && response.body().getResultsList() != null) {
+                        postList.addAll(response.body().getResultsList());
+                        //getCount() & onBindViewHolder() called next in MyAdapter
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.d(TAG, "resultsList NULL");
+                        return;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PostResponse> call, Throwable t) {
+                    textViewResult.setText(t.getMessage());
+                }
+            });
+        }
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
