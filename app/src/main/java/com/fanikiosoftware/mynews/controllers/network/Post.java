@@ -16,7 +16,6 @@ public class Post {
     @SerializedName("multimedia")
     List<Multimedia> multimediaList;
 
-
     public String getSection() {
         return section;
     }

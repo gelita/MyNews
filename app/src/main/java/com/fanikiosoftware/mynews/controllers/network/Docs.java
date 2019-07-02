@@ -7,14 +7,36 @@ import java.util.List;
 public class Docs {
 
     // from "results" on API call
-    String subsection_name;
-    String getSubsection_name;
-    String pub_date;
-    String headline;
     @SerializedName("web_url")
     String url;
-    @SerializedName("created_date")
-    String date;
+
     @SerializedName("multimedia")
     List<Multimedia> multimediaList;
+
+    @SerializedName("pub_date")
+    String date;
+    @SerializedName("section_name")
+    String section;
+    @SerializedName("subsection_name")
+    String subsection;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public List<Multimedia> getMultimediaList() {
+        return multimediaList;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public String getSubsection() {
+        return subsection;
+    }
 }

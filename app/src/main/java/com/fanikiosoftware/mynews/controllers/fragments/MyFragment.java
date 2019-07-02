@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.activities.MyAdapter;
+import com.fanikiosoftware.mynews.controllers.network.Docs;
 import com.fanikiosoftware.mynews.controllers.network.NewsApi;
 import com.fanikiosoftware.mynews.controllers.network.Post;
 import com.fanikiosoftware.mynews.controllers.network.PostResponse;
@@ -39,6 +40,7 @@ public class MyFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
+    List<Docs> docsList = new ArrayList<>();
     public static final String TAG = "MyFragment";
 
     public static MyFragment newInstance(int position) {
@@ -111,15 +113,14 @@ public class MyFragment extends Fragment {
         } else if (whichFrag == 5) {
             call = newsApi.getPosts5();
         } else if (whichFrag == 6) {
-            Log.d(TAG, "whichFrag == 6 If Statement");
+            Log.d(TAG, "whichFrag == 6");
             String query = userQueryList.get(0);
-            Log.d(TAG, "userQueryList = " + userQueryList);
             String section = "";
-            //create a StringBuilder to convert the List<String> of sections to a string
-//            StringBuilder stringBuilder = new StringBuilder(section);
-            for (int i = 0; i < userQueryList.size(); i++) {
-//                stringBuilder.append(userQueryList.get(i));
-                section += userQueryList.get(i) + ",";
+            if(userQueryList.size() > 1) {
+                //get sections from list starting at 2nd item on list(1st item is user's query)
+                for (int i = 1; i < userQueryList.size(); i++) {
+                    section += userQueryList.get(i) + ",";
+                }
             }
             Log.d(TAG, "query = " + query + ", section = " + section);
             call = newsApi.getPosts6(query, section, API_KEY);
@@ -159,12 +160,12 @@ public class MyFragment extends Fragment {
                         Thread.currentThread().getStackTrace();
                         return;
                     }
-                    if (response.body() != null && response.body().getResultsList() != null) {
-                        postList.addAll(response.body().getResultsList());
+                    if (response.body() != null && response.body().getDocsList() != null) {
+                        docsList.addAll(response.body().getDocsList());
                         //getCount() & onBindViewHolder() called next in MyAdapter
                         adapter.notifyDataSetChanged();
                     } else {
-                        Log.d(TAG, "resultsList NULL");
+                        Log.d(TAG, "docsList NULL");
                         return;
                     }
                 }
