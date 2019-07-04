@@ -39,5 +39,6 @@
     <string name="search_term_required">Please enter a search term.</string>
     <string name="checkbox_required">Please select at least one checkbox.</string>
     <string name="hint_date">date_here</string>
+    <string name="greater_than_symbol"><![CDATA[>]]></string>
 
 </resources>

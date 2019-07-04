@@ -6,25 +6,24 @@ import java.util.List;
 
 public class PostResponse {
 
-    @SerializedName("num_results")
-    private int numResults;
-
     @SerializedName("results")
     private List<Post> resultsList;
 
     @SerializedName("docs")
-    private List<Docs> docsList;
+    private List<Post> docsList;
 
-
-    public int getNumResults() {
-        return numResults;
-    }
+    @SerializedName("num_results")
+    private int numResults;
 
     public List<Post> getResultsList() {
         return resultsList;
     }
 
-    public List<Docs> getDocsList() {
+    public int getNumResults() {
+        return numResults;
+    }
+
+    public List<Post> getDocsList() {
         return docsList;
     }
 }

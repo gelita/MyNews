@@ -16,6 +16,33 @@ public class Post {
     @SerializedName("multimedia")
     List<Multimedia> multimediaList;
 
+    //ARTICLE SEARCH API
+    @SerializedName("section_name")
+    String searchSection;
+    @SerializedName("subsection_name")
+    String searchSubsection;
+    //url for the article
+    @SerializedName("web_url")
+    String searchUrl;
+    @SerializedName("pub_date")
+    String searchDate;
+
+    public String getSearchUrl() {
+        return searchUrl;
+    }
+
+    public String getSearchDate() {
+        return date;
+    }
+
+    public String getSearchSection() {
+        return searchSection;
+    }
+
+    public String getSearchSubsection() {
+        return searchSubsection;
+    }
+
     public String getSection() {
         return section;
     }

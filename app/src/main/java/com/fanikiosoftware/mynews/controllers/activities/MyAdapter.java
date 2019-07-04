@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.network.Multimedia;
 import com.fanikiosoftware.mynews.controllers.network.Post;
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder> {
 
     List<Post> postList;
-    List<Multimedia> multimediaList;
     private static final String TAG = "MyAdapter";
 
     public MyAdapter(List<Post> postList) {
@@ -67,11 +67,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
             }
         });
         if (!post.getMultimediaList().isEmpty()) {
+            //todo update image url for search api with Constants.BASE_IMAGE_URL
+            //if an image exists, get the image url for the Article Search
             Picasso.with(viewHolder.imageView.getContext())
                     .load(post.getMultimediaList().get(0).getUrl())
                     .resize(40, 40)
                     .into(viewHolder.imageView);
         } else {
+            //if no image available use the generic NYT image
             Picasso.with(viewHolder.imageView.getContext())
                     .load(R.drawable.ic_nyt)
                     .resize(40, 40)
@@ -80,6 +83,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //if article image is clicked -> open the webview of the article at SearchUrl
                 Log.d(TAG, "clicked on image from position: " + position);
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);

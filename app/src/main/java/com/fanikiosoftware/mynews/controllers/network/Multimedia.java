@@ -1,16 +1,28 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Multimedia {
 
-        String url;
-        Headline headline;
+    String url; //image url for articles
 
-        public String getUrl() {
-            return url;
+    Headline headline;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Headline getHeadline() {
+        return headline;
+    }
+
+    public class Headline {
+
+        @SerializedName("print_headline")
+        private String title;
+
+        public String getTitle() {
+            return title;
         }
-
-        public Headline getHeadline(){
-            return headline;
-        }
-
+    }
 }

@@ -36,11 +36,8 @@ public class MyFragment extends Fragment {
     @State
     int position;
     ArrayList<String> userQueryList;
-    public static final String API_KEY = "nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
-
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
-    List<Docs> docsList = new ArrayList<>();
     public static final String TAG = "MyFragment";
 
     public static MyFragment newInstance(int position) {
@@ -116,19 +113,20 @@ public class MyFragment extends Fragment {
             Log.d(TAG, "whichFrag == 6");
             String query = userQueryList.get(0);
             String section = "";
-            if(userQueryList.size() > 1) {
+            if (userQueryList.size() > 1) {
                 //get sections from list starting at 2nd item on list(1st item is user's query)
                 for (int i = 1; i < userQueryList.size(); i++) {
                     section += userQueryList.get(i) + ",";
                 }
             }
             Log.d(TAG, "query = " + query + ", section = " + section);
-            call = newsApi.getPosts6(query, section, API_KEY);
+            call = newsApi.getPosts6(query, section, Constants.API_KEY);
         }
         assert call != null;
         Log.d(TAG, "starting network call");
-        if (position < 6) {
+        if (position < 5) {
             call.enqueue(new Callback<PostResponse>() {
+
                 @Override
                 public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                     if (!response.isSuccessful()) {
@@ -136,6 +134,7 @@ public class MyFragment extends Fragment {
                         Thread.currentThread().getStackTrace();
                         return;
                     }
+                    Log.d(TAG, "response body: " + response.body() + " resultsList: " + response.body().getResultsList());
                     if (response.body() != null && response.body().getResultsList() != null) {
                         postList.addAll(response.body().getResultsList());
                         //getCount() & onBindViewHolder() called next in MyAdapter
@@ -152,6 +151,7 @@ public class MyFragment extends Fragment {
                 }
             });
         } else {
+            //network call for Search api
             call.enqueue(new Callback<PostResponse>() {
                 @Override
                 public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
@@ -160,8 +160,9 @@ public class MyFragment extends Fragment {
                         Thread.currentThread().getStackTrace();
                         return;
                     }
+                    Log.d(TAG, "response body: " + response.body() + " docsList: " + response.body().getDocsList());
                     if (response.body() != null && response.body().getDocsList() != null) {
-                        docsList.addAll(response.body().getDocsList());
+                        postList.addAll(response.body().getDocsList());
                         //getCount() & onBindViewHolder() called next in MyAdapter
                         adapter.notifyDataSetChanged();
                     } else {
