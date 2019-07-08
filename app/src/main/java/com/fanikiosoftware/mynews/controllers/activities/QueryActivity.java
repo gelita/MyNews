@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /*
- *query1 activity for searching api (article search)
+ *query activity for searching api (article search)
  */
 public class QueryActivity extends AppCompatActivity {
 
@@ -129,7 +129,7 @@ public class QueryActivity extends AppCompatActivity {
 
     private ArrayList<String> getQuery() {
         //if search is empty then display error to user
-        ArrayList<String> userQueryList = new ArrayList<String>();
+        ArrayList<String> userQueryList = new ArrayList<>();
         userQueryList.add(etSearch.getText().toString()); //this adds an element to the list.
         if (userQueryList.isEmpty()) {
             Toast.makeText
@@ -206,10 +206,9 @@ public class QueryActivity extends AppCompatActivity {
         return false;
     }
 
-    public String getActivityTitle() {
+    public void getActivityTitle() {
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
-        return title;
     }
 
     //remove notifications switch if on Search activity else remove Submit btn if on Notifications

@@ -15,6 +15,7 @@ public class Multimedia {
     public Headline getHeadline() {
         return headline;
     }
+    //--------------Headline inner class -----------------//
 
     public class Headline {
 

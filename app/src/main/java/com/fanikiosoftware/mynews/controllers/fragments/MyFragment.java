@@ -34,7 +34,6 @@ public class MyFragment extends Fragment {
     NewsApi newsApi;
     @State
     int position;
-    ArrayList<String> userQueryList;
     RecyclerView recyclerView;
     List<Post> postList = new ArrayList<>();
     public static final String TAG = "MyFragment";
@@ -47,19 +46,8 @@ public class MyFragment extends Fragment {
         return fragment;
     }
 
-    public static MyFragment newInstance(int position, ArrayList<String> userQueryList) {
-        Log.d(TAG, "MyFragment newInstance 2 starting");
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        bundle.putStringArrayList("userQueryList", userQueryList);
-        MyFragment fragment = new MyFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, " :: MyFragment onCreateView called");
+        Log.d(TAG, "onCreateView called");
         //Get activity_query identifier from abstract method declared in child class
         //this method will report the correct activity_query's identifier so the correct activity_query will be used
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
@@ -74,20 +62,14 @@ public class MyFragment extends Fragment {
     }
 
     private void readBundle(Bundle args) {
-        Log.d(TAG, " :: MyFragment reading bundle arg: " + args);
         if (args != null) {
             position = args.getInt("position");
             Log.d(TAG, "pos: " + position);
-            if (position > 5) {
-                Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
-                userQueryList = args.getStringArrayList("userQueryList");
-                Log.d(TAG, "userQueryList: (should have query and section values) " + userQueryList);
-            }
         }
     }
 
     private void loadJSON(int whichFrag) {
-        Log.d(TAG, ": loading JSON");
+        Log.d(TAG, "loading JSON");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -116,7 +98,7 @@ public class MyFragment extends Fragment {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (!response.isSuccessful()) {
-                    textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
+                    textViewResult.setText(response.code());
                     Thread.currentThread().getStackTrace();
                     return;
                 }
@@ -127,7 +109,6 @@ public class MyFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.d(TAG, "resultsList NULL");
-                    return;
                 }
             }
 

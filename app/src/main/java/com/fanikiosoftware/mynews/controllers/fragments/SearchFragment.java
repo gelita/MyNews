@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
-import com.fanikiosoftware.mynews.controllers.activities.MyAdapter;
+import com.fanikiosoftware.mynews.controllers.activities.SearchAdapter;
 import com.fanikiosoftware.mynews.controllers.network.Docs;
 import com.fanikiosoftware.mynews.controllers.network.NewsApi;
 import com.fanikiosoftware.mynews.controllers.network.SearchResponse;
@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SearchFragment extends Fragment {
 
     public TextView textViewResult;
-    MyAdapter adapter;
+    SearchAdapter adapter;
     NewsApi newsApi;
     @State
     int position;
@@ -39,16 +39,8 @@ public class SearchFragment extends Fragment {
     List<Docs> docsList = new ArrayList<>();
     public static final String TAG = "SearchFragment";
 
-    public static SearchFragment newInstance(int position) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        SearchFragment fragment = new SearchFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     public static SearchFragment newInstance(int position, ArrayList<String> userQueryList) {
-        Log.d(TAG, "MyFragment newInstance 2 starting");
+        Log.d(TAG, "newInstance");
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         bundle.putStringArrayList("userQueryList", userQueryList);
@@ -56,7 +48,6 @@ public class SearchFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called");
@@ -67,27 +58,24 @@ public class SearchFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.rv_recycler_view);
         readBundle(getArguments());
         recyclerView.setHasFixedSize(true);
-        adapter = new MyAdapter(docsList);git add
+        adapter = new SearchAdapter(docsList);
         recyclerView.setAdapter(adapter);
-        loadJSON(position);
+        loadJSON();
         return rootView;
     }
 
     private void readBundle(Bundle args) {
-        Log.d(TAG, " :: MyFragment reading bundle arg: " + args);
+        Log.d(TAG, "reading bundle args: " + args);
         if (args != null) {
             position = args.getInt("position");
-            Log.d(TAG, "pos: " + position);
-            if (position > 5) {
-                Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
-                userQueryList = args.getStringArrayList("userQueryList");
-                Log.d(TAG, "userQueryList: (should have query and section values) " + userQueryList);
-            }
+            Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
+            userQueryList = args.getStringArrayList("userQueryList");
+            Log.d(TAG, "userQueryList: (should have query and section values) " + userQueryList);
         }
     }
 
-    private void loadJSON(int whichFrag) {
-        Log.d(TAG, ": loading JSON");
+    private void loadJSON() {
+        Log.d(TAG, "loading JSON");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -95,11 +83,10 @@ public class SearchFragment extends Fragment {
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
         newsApi = retrofit.create(NewsApi.class);
-        Log.d(TAG, "whichFrag == 6");
         //get the user query that was in the arguments of the bundle
         String query = userQueryList.get(0);
         String section = "";
-        Log.d(TAG, "userQueryList.size() = " + String.valueOf(userQueryList.size()));
+        Log.d(TAG, "userQueryList.size() = " + userQueryList.size());
         if (userQueryList.size() > 1) {
             //get sections from list starting at 2nd item on list(1st item is user's query)
             for (int i = 1; i < userQueryList.size(); i++) {
@@ -107,26 +94,28 @@ public class SearchFragment extends Fragment {
             }
         }
         Log.d(TAG, "query = " + query + ", section = " + section + "api-key: " + Constants.API_KEY);
-        Call<SearchResponse> call = newsApi.getPosts6(query, section, Constants.API_KEY);
+        Call<SearchResponse> call = newsApi.getDocs(query, section, Constants.API_KEY);
         assert call != null;
-        Log.d(TAG, "starting network call");
+        Log.d(TAG, "starting Search network call");
         //network call for Search
         call.enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 if (!response.isSuccessful()) {
-                    textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
+                    textViewResult.setText(response.code());
                     Thread.currentThread().getStackTrace();
                     return;
                 }
-                Log.d(TAG, "response body: " + response.body() + " docsList: " + response.body().getDocsList());
-                if (response.body() != null && response.body().getDocsList() != null) {
-                    docsList.addAll(response.body().getDocsList());
-                    //getCount() & onBindViewHolder() called next in MyAdapter
-                    adapter.notifyDataSetChanged();
+                if (response.body() != null) {
+                    if (response.body().getDocsList() != null) {
+                        docsList.addAll(response.body().getDocsList());
+                        //getCount() & onBindViewHolder() called next in MyAdapter
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.d(TAG, "docsList:" + response.body().getDocsList());
+                    }
                 } else {
-                    Log.d(TAG, "docsList NULL");
-                    return;
+                    Log.d(TAG, "response.body(): " + response.body());
                 }
             }
 
