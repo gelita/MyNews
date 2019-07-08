@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.activities.MyAdapter;
+import com.fanikiosoftware.mynews.controllers.network.Docs;
 import com.fanikiosoftware.mynews.controllers.network.NewsApi;
-import com.fanikiosoftware.mynews.controllers.network.PostResponse;
+import com.fanikiosoftware.mynews.controllers.network.SearchResponse;
 import com.fanikiosoftware.mynews.controllers.utility.Constants;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class SearchFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.rv_recycler_view);
         readBundle(getArguments());
         recyclerView.setHasFixedSize(true);
-        adapter = new MyAdapter(docsList);
+        adapter = new MyAdapter(docsList);git add
         recyclerView.setAdapter(adapter);
         loadJSON(position);
         return rootView;
@@ -106,62 +107,34 @@ public class SearchFragment extends Fragment {
             }
         }
         Log.d(TAG, "query = " + query + ", section = " + section + "api-key: " + Constants.API_KEY);
-        Call<PostResponse> call = newsApi.getPosts6(query, section, Constants.API_KEY);
+        Call<SearchResponse> call = newsApi.getPosts6(query, section, Constants.API_KEY);
         assert call != null;
         Log.d(TAG, "starting network call");
-        if (position < 5) {
-            call.enqueue(new Callback<PostResponse>() {
+        //network call for Search
+        call.enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
+                    Thread.currentThread().getStackTrace();
+                    return;
+                }
+                Log.d(TAG, "response body: " + response.body() + " docsList: " + response.body().getDocsList());
+                if (response.body() != null && response.body().getDocsList() != null) {
+                    docsList.addAll(response.body().getDocsList());
+                    //getCount() & onBindViewHolder() called next in MyAdapter
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "docsList NULL");
+                    return;
+                }
+            }
 
-                @Override
-                public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                    if (!response.isSuccessful()) {
-                        textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
-                        Thread.currentThread().getStackTrace();
-                        return;
-                    }
-                    Log.d(TAG, "response body: " + response.body() + " resultsList: " + response.body().getResultsList());
-                    if (response.body() != null && response.body().getResultsList() != null) {
-                        docsList.addAll(response.body().getResultsList());
-                        //getCount() & onBindViewHolder() called next in MyAdapter
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "resultsList NULL");
-                        return;
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<PostResponse> call, Throwable t) {
-                    textViewResult.setText(t.getMessage());
-                }
-            });
-        } else {
-            //network call for Search api --> position > 5
-            call.enqueue(new Callback<PostResponse>() {
-                @Override
-                public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                    if (!response.isSuccessful()) {
-                        textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
-                        Thread.currentThread().getStackTrace();
-                        return;
-                    }
-                    Log.d(TAG, "response body: " + response.body() + " docsList: " + response.body().getDocsList());
-                    if (response.body() != null && response.body().getDocsList() != null) {
-                        docsList.addAll(response.body().getDocsList());
-                        //getCount() & onBindViewHolder() called next in MyAdapter
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "docsList NULL");
-                        return;
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<PostResponse> call, Throwable t) {
-                    textViewResult.setText(t.getMessage());
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
