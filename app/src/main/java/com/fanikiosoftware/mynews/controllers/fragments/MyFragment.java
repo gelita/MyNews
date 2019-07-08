@@ -132,6 +132,7 @@ public class MyFragment extends Fragment {
                     if (!response.isSuccessful()) {
                         textViewResult.setText("Error Code line MyFragment line 120: " + response.code());
                         Thread.currentThread().getStackTrace();
+                        Log.d("tag", "dummy tag");
                         return;
                     }
                     Log.d(TAG, "response body: " + response.body() + " resultsList: " + response.body().getResultsList());
