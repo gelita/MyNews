@@ -124,17 +124,18 @@ public class QueryActivity extends AppCompatActivity {
                 //Is the switch is on?
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
-                    onSwitchClicked(v);
+                    getQuery();
+                    setNotifications();
                 } else {
-                    //Do something when switch is off/unchecked
+                    //todo
+                    //cancel alarm??
                 }
             }
         });
     }
 
-    public void onSwitchClicked(View v) {
-        //todo do something here!
-        Log.d(TAG, "switch clicked");
+    private void setNotifications() {
+        //todo
     }
 
     private ArrayList<String> getQuery() {
