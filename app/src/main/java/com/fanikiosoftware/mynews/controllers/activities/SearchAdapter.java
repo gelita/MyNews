@@ -55,8 +55,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
             }
         } else {
             //if the Search Section  name is not available remove it and check for subsection only
-            viewHolder.tvSection.setVisibility(View.GONE);
-            viewHolder.tvSubsection.setVisibility(View.GONE);
+//            viewHolder.tvSection.setVisibility(View.GONE);
+//            viewHolder.tvSubsection.setVisibility(View.GONE);
+            viewHolder.tvSection.setText(" ");
+            viewHolder.tvSubsection.setText(" ");
         }
 
         String date = docs.getSearchDate();
@@ -98,13 +100,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
             url = Constants.BASE_IMAGE_URL + docs.getMultimediaList().get(0).getUrl();
             Picasso.with(viewHolder.imageView.getContext())
                     .load(url)
-                    .resize(40, 40)
+                    .resize(60, 60)
                     .into(viewHolder.imageView);
         } else {
             //if no image available use the generic NYT image
             Picasso.with(viewHolder.imageView.getContext())
                     .load(R.drawable.ic_nyt)
-                    .resize(40, 40)
+                    .resize(60, 60)
                     .into(viewHolder.imageView);
         }
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {

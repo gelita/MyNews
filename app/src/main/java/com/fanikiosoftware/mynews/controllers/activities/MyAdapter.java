@@ -70,13 +70,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
             //if an image exists, get the image url for the Article Search
             Picasso.with(viewHolder.imageView.getContext())
                     .load(post.getMultimediaList().get(0).getUrl())
-                    .resize(40, 40)
+                    .resize(60, 60)
                     .into(viewHolder.imageView);
         } else {
             //if no image available use the generic NYT image
             Picasso.with(viewHolder.imageView.getContext())
                     .load(R.drawable.ic_nyt)
-                    .resize(40, 40)
+                    .resize(60, 60)
                     .into(viewHolder.imageView);
         }
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
