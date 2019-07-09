@@ -1,5 +1,7 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class Docs {
     @SerializedName("pub_date")
     String searchDate;
 
+    @Nullable
     @SerializedName("multimedia")
     List<Multimedia> multimediaList;
 

@@ -6,10 +6,11 @@ import java.util.List;
 
 public class SearchResponse {
 
-    @SerializedName("docs")
-    private List<Docs> docsList;
+    @SerializedName("response")
+    private DocsResponse docsResponse;
 
-    public List<Docs> getDocsList() {
-        return docsList;
+
+    public DocsResponse getDocsResponse() {
+        return docsResponse;
     }
 }

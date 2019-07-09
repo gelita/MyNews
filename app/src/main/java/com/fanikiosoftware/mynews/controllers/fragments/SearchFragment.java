@@ -120,12 +120,12 @@ public class SearchFragment extends Fragment {
                     return;
                 }
                 if (response.body() != null) {
-                    if (response.body().getDocsList() != null) {
-                        docsList.addAll(response.body().getDocsList());
+                    if (response.body().getDocsResponse() != null) {
+                        docsList.addAll(response.body().getDocsResponse().getDocsList());
                         //getCount() & onBindViewHolder() called next in MyAdapter
                         adapter.notifyDataSetChanged();
                     } else {
-                        Log.d(TAG, "docsList:" + response.body().getDocsList());
+                        Log.d(TAG, "docsList:" + response.body().getDocsResponse());
                     }
                 } else {
                     Log.d(TAG, "response.body(): " + response.body());

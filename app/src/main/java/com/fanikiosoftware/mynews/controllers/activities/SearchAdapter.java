@@ -21,6 +21,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
 
     List<Docs> docsList;
     private static final String TAG = "SearchAdapter";
+    String url;
 
     public SearchAdapter(List<Docs> docsList) {
         this.docsList = docsList;
@@ -42,9 +43,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
     public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
         Log.d(TAG, "onBindViewHolder started");
         Docs docs = docsList.get(position);
-        viewHolder.tvSection.setText(docs.getSearchSection());
+        if(docs.getSearchSection() != null) {
+            viewHolder.tvSection.setText(docs.getSearchSection());
+        }
         //if subsection is not empty string then docs subsection after section >
-        if (!docs.getSearchSubsection().equals("")) {
+        if (docs.getSearchSubsection() != null && !docs.getSearchSubsection().equals("")) {
             viewHolder.tvSubsection.setText(" > " + docs.getSearchSubsection());
         } else {
             //remove subsection from view if subsection variable is empty string
@@ -53,18 +56,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
         String date = docs.getSearchDate();
         date = date.substring(5, 10) + "-" + date.substring(0, 4);
         viewHolder.tvDate.setText(date);
-        viewHolder.tvTitle.setText(docs.getMultimediaList().get(position).getHeadline().getTitle());
+        String headline = "";
+        if(docs.getMultimediaList().get(position).getHeadline() != null &&
+                !docs.getMultimediaList().get(position).getHeadline().getTitle().equals("")) {
+            headline = docs.getMultimediaList().get(position).getHeadline().getTitle();
+        }
+        if (headline != null && !headline.equals("")) {
+            viewHolder.tvTitle.setText(headline);
+        }
         viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "clicked on title from position: " + position);
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("url", docsList.get(position).getSearchUrl());
+                if(docsList.get(position).getSearchUrl() != null) {
+                    url = docsList.get(position).getSearchUrl();
+                    intent.putExtra("url", url);
+                }
                 context.startActivity(intent);
             }
         });
-        if (!docs.getMultimediaList().isEmpty()) {
+        if (docs.getMultimediaList() != null && !docs.getMultimediaList().isEmpty()) {
             //todo update image url for search api with Constants.BASE_IMAGE_URL
             //if an image exists, get the image url for the Article Search
             Picasso.with(viewHolder.imageView.getContext())
@@ -85,7 +98,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
                 Log.d(TAG, "clicked on image from position: " + position);
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("url", docsList.get(position).getSearchUrl());
+                intent.putExtra("url", url);
                 context.startActivity(intent);
             }
         });

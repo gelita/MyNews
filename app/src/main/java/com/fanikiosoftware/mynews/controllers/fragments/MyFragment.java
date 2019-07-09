@@ -15,12 +15,16 @@ import com.fanikiosoftware.mynews.controllers.network.NewsApi;
 import com.fanikiosoftware.mynews.controllers.network.Post;
 import com.fanikiosoftware.mynews.controllers.network.PostResponse;
 import com.fanikiosoftware.mynews.controllers.utility.Constants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import icepick.Icepick;
 import icepick.State;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,9 +74,18 @@ public class MyFragment extends Fragment {
 
     private void loadJSON(int whichFrag) {
         Log.d(TAG, "loading JSON");
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient)
                 .build();
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
