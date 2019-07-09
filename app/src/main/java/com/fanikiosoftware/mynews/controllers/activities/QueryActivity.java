@@ -117,6 +117,24 @@ public class QueryActivity extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        notificationSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Is the switch is on?
+                boolean on = ((Switch) v).isChecked();
+                if (on) {
+                    onSwitchClicked(v);
+                } else {
+                    //Do something when switch is off/unchecked
+                }
+            }
+        });
+    }
+
+    public void onSwitchClicked(View v) {
+        //todo do something here!
+        Log.d(TAG, "switch clicked");
     }
 
     private ArrayList<String> getQuery() {
