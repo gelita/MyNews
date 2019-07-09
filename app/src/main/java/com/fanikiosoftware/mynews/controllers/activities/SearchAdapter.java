@@ -56,13 +56,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
         String date = docs.getSearchDate();
         date = date.substring(5, 10) + "-" + date.substring(0, 4);
         viewHolder.tvDate.setText(date);
-        String headline = "";
-        if(docs.getMultimediaList().get(position).getHeadline() != null &&
-                !docs.getMultimediaList().get(position).getHeadline().getTitle().equals("")) {
-            headline = docs.getMultimediaList().get(position).getHeadline().getTitle();
+        String title = "";
+        if(docs.getHeadlineResponse().getTitle() != null &&
+                !docs.getHeadlineResponse().getTitle().equals("")) {
+            title = docs.getHeadlineResponse().getTitle();
         }
-        if (headline != null && !headline.equals("")) {
-            viewHolder.tvTitle.setText(headline);
+        if (title != null && !title.equals("")) {
+            viewHolder.tvTitle.setText(title);
+        }else{
+            viewHolder.tvTitle.setText("");
         }
         viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override

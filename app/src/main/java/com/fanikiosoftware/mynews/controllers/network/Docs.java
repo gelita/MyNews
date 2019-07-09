@@ -9,7 +9,7 @@ import java.util.List;
 public class Docs {
 
     //ARTICLE SEARCH API
-    @SerializedName("section_name")
+    @SerializedName("news_desk")
     String searchSection;
     @SerializedName("subsection_name")
     String searchSubsection;
@@ -18,6 +18,12 @@ public class Docs {
     String searchUrl;
     @SerializedName("pub_date")
     String searchDate;
+    @SerializedName("headline")
+    private Headline headlineResponse;
+
+    public Headline getHeadlineResponse() {
+        return headlineResponse;
+    }
 
     @Nullable
     @SerializedName("multimedia")

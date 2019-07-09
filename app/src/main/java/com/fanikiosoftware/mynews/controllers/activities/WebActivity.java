@@ -1,8 +1,10 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -11,9 +13,13 @@ import com.fanikiosoftware.mynews.R;
 
 public class WebActivity extends AppCompatActivity {
 
+
+    private static final String TAG = "WebActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: started");
         setContentView(R.layout.activity_webview);
         WebView webView = findViewById(R.id.webView);
         String url = getIntent().getStringExtra("url");
