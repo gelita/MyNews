@@ -67,7 +67,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
             }
         });
         if (!post.getMultimediaList().isEmpty()) {
-            //todo update image url for search api with Constants.BASE_IMAGE_URL
             //if an image exists, get the image url for the Article Search
             Picasso.with(viewHolder.imageView.getContext())
                     .load(post.getMultimediaList().get(0).getUrl())

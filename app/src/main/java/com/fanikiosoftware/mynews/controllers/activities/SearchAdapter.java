@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.network.Docs;
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,27 +44,38 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
     public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
         Log.d(TAG, "onBindViewHolder started");
         Docs docs = docsList.get(position);
-        if(docs.getSearchSection() != null) {
+        if (docs.getSearchSection() != null && !docs.getSearchSection().equals("None")) {
             viewHolder.tvSection.setText(docs.getSearchSection());
-        }
-        //if subsection is not empty string then docs subsection after section >
-        if (docs.getSearchSubsection() != null && !docs.getSearchSubsection().equals("")) {
-            viewHolder.tvSubsection.setText(" > " + docs.getSearchSubsection());
+            //if subsection is available then list subsection after section >
+            if (docs.getSearchSubsection() != null && !docs.getSearchSubsection().equals("")) {
+                viewHolder.tvSubsection.setText(" > " + docs.getSearchSubsection());
+            } else {
+                //remove subsection from view if subsection variable is empty string
+                viewHolder.tvSubsection.setVisibility(View.GONE);
+            }
         } else {
-            //remove subsection from view if subsection variable is empty string
+            //if the Search Section  name is not available remove it and check for subsection only
+            viewHolder.tvSection.setVisibility(View.GONE);
             viewHolder.tvSubsection.setVisibility(View.GONE);
         }
+
         String date = docs.getSearchDate();
         date = date.substring(5, 10) + "-" + date.substring(0, 4);
         viewHolder.tvDate.setText(date);
         String title = "";
-        if(docs.getHeadlineResponse().getTitle() != null &&
-                !docs.getHeadlineResponse().getTitle().equals("")) {
+        if (docs.getHeadlineResponse().
+
+                getTitle() != null &&
+                !docs.getHeadlineResponse().
+
+                        getTitle().
+
+                        equals("")) {
             title = docs.getHeadlineResponse().getTitle();
         }
         if (title != null && !title.equals("")) {
             viewHolder.tvTitle.setText(title);
-        }else{
+        } else {
             viewHolder.tvTitle.setText("");
         }
         viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
@@ -72,18 +84,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
                 Log.d(TAG, "clicked on title from position: " + position);
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
-                if(docsList.get(position).getSearchUrl() != null) {
-                    url = docsList.get(position).getSearchUrl();
-                    intent.putExtra("url", url);
+                if (docsList.get(position).getSearchUrl() != null) {
+                    intent.putExtra("url", docsList.get(position).getSearchUrl());
                 }
                 context.startActivity(intent);
             }
         });
-        if (docs.getMultimediaList() != null && !docs.getMultimediaList().isEmpty()) {
-            //todo update image url for search api with Constants.BASE_IMAGE_URL
+
+        if (docs.getMultimediaList() != null && !docs.getMultimediaList().
+
+                isEmpty()) {
             //if an image exists, get the image url for the Article Search
+            url = Constants.BASE_IMAGE_URL + docs.getMultimediaList().get(0).getUrl();
             Picasso.with(viewHolder.imageView.getContext())
-                    .load(docs.getMultimediaList().get(0).getUrl())
+                    .load(url)
                     .resize(40, 40)
                     .into(viewHolder.imageView);
         } else {
@@ -100,7 +114,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
                 Log.d(TAG, "clicked on image from position: " + position);
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("url", url);
+                intent.putExtra("url", docsList.get(position).getSearchUrl());
                 context.startActivity(intent);
             }
         });
