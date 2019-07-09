@@ -12,9 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fanikiosoftware.mynews.R;
@@ -32,16 +30,12 @@ import butterknife.ButterKnife;
  */
 public class QueryActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvEndDateSpinner)
-    TextView tvEndDateSpinner;
-    @BindView(R.id.tvStartDateSpinner)
-    TextView tvStartDateSpinner;
+    @BindView(R.id.dpStart)
+    DatePicker dpStart;
+    @BindView(R.id.dpEnd)
+    DatePicker dpEnd;
     @BindView(R.id.etSearch)
     TextInputEditText etSearch;
-    @BindView(R.id.etDateStartLabel)
-    EditText etDateStart;
-    @BindView(R.id.etDateEndLabel)
-    EditText etDateEnd;
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
     @BindView(R.id.check1)
@@ -95,7 +89,7 @@ public class QueryActivity extends AppCompatActivity {
     private void updateLabel() {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        tvStartDateSpinner.setText(sdf.format(myCalendar.getTime()));
+//        dpStart.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void setUpListeners() {
@@ -110,16 +104,14 @@ public class QueryActivity extends AppCompatActivity {
             }
         });
 
-        tvEndDateSpinner.setOnClickListener(new View.OnClickListener() {
+        dpStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
-        //todo replace w/textview no spinner
-        tvStartDateSpinner.setOnClickListener(new View.OnClickListener() {
+        dpEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(getApplicationContext(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -167,7 +159,7 @@ public class QueryActivity extends AppCompatActivity {
 
     //create menu options
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -187,10 +179,6 @@ public class QueryActivity extends AppCompatActivity {
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
                 t = "Help";
-                break;
-            case R.id.miNotifications:
-                intent = new Intent(getBaseContext(), QueryActivity.class);
-                t = "Notifications";
                 break;
             case R.id.miSearch:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
@@ -216,6 +204,8 @@ public class QueryActivity extends AppCompatActivity {
         if (s.equals("Search")) {
             notificationSwitch.setVisibility(View.GONE);
         } else if (s.equals("Notifications")) {
+            dpStart.setVisibility(View.GONE);
+            dpEnd.setVisibility(View.GONE);
             btnSubmit.setVisibility(View.GONE);
         }
     }

@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanikiosoftware.mynews.R;
-import com.fanikiosoftware.mynews.controllers.network.Multimedia;
 import com.fanikiosoftware.mynews.controllers.network.Post;
-import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
