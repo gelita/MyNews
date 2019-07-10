@@ -20,37 +20,42 @@ import com.fanikiosoftware.mynews.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.fanikiosoftware.mynews.R.id;
+import static com.fanikiosoftware.mynews.R.layout;
+import static com.fanikiosoftware.mynews.R.string;
 
 /*
  *query activity for searching api (article search)
  */
 public class QueryActivity extends AppCompatActivity {
 
-    @BindView(R.id.dpStart)
+    @BindView(id.dpStart)
     DatePicker dpStart;
-    @BindView(R.id.dpEnd)
+    @BindView(id.dpEnd)
     DatePicker dpEnd;
-    @BindView(R.id.etSearch)
+    @BindView(id.etSearch)
     TextInputEditText etSearch;
-    @BindView(R.id.btnSubmit)
+    @BindView(id.btnSubmit)
     Button btnSubmit;
-    @BindView(R.id.check1)
+    @BindView(id.check1)
     AppCompatCheckBox check1;
-    @BindView(R.id.check2)
+    @BindView(id.check2)
     AppCompatCheckBox check2;
-    @BindView(R.id.check3)
+    @BindView(id.check3)
     AppCompatCheckBox check3;
-    @BindView(R.id.check4)
+    @BindView(id.check4)
     AppCompatCheckBox check4;
-    @BindView(R.id.check5)
+    @BindView(id.check5)
     AppCompatCheckBox check5;
-    @BindView(R.id.check6)
+    @BindView(id.check6)
     AppCompatCheckBox check6;
-    @BindView(R.id.notificationSwitch)
+    @BindView(id.notificationSwitch)
     Switch notificationSwitch;
     String title;
     private DatePickerDialog.OnDateSetListener date;
@@ -61,7 +66,7 @@ public class QueryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "  :: QueryActivity onCreate called");
-        setContentView(R.layout.activity_query);
+        setContentView(layout.activity_query);
         ButterKnife.bind(this);
         getActivityTitle();
         setSwitch(title);
@@ -124,18 +129,16 @@ public class QueryActivity extends AppCompatActivity {
                 //Is the switch is on?
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
-                    getQuery();
-                    setNotifications();
+                    //get user query and send to method in order to start new activity
+                    Notification.setAlarm(QueryActivity.this, getQuery());
+                    //notify user that the notifications preference is now saved
+                    Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_SHORT).show();
                 } else {
                     //todo
-                    //cancel alarm??
+                    //do nothing? cancel alarm?
                 }
             }
         });
-    }
-
-    private void setNotifications() {
-        //todo
     }
 
     private ArrayList<String> getQuery() {
@@ -144,7 +147,7 @@ public class QueryActivity extends AppCompatActivity {
         userQueryList.add(etSearch.getText().toString()); //this adds an element to the list.
         if (userQueryList.isEmpty()) {
             Toast.makeText
-                    (getApplicationContext(), R.string.search_term_required, Toast.LENGTH_LONG).show();
+                    (getApplicationContext(), string.search_term_required, Toast.LENGTH_LONG).show();
             return null;
         } else {
             if (check1.isChecked()) {
@@ -188,18 +191,18 @@ public class QueryActivity extends AppCompatActivity {
         Intent intent = new Intent();
         String t = "";
         switch (item.getItemId()) {
-            case R.id.miBackPress:
+            case id.miBackPress:
                 intent = new Intent(getBaseContext(), MainActivity.class);
                 break;
-            case R.id.miAbout:
+            case id.miAbout:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
                 t = "About";
                 break;
-            case R.id.miHelp:
+            case id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
                 t = "Help";
                 break;
-            case R.id.miSearch:
+            case id.miSearch:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
                 t = "Search";
                 break;
