@@ -20,7 +20,6 @@ import com.fanikiosoftware.mynews.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -132,7 +131,9 @@ public class QueryActivity extends AppCompatActivity {
                     //get user query and send to method in order to start new activity
                     Notification.setAlarm(QueryActivity.this, getQuery());
                     //notify user that the notifications preference is now saved
-                    Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(QueryActivity.this, MainActivity.class);
+                    startActivity(intent);
                 } else {
                     //todo
                     //do nothing? cancel alarm?
