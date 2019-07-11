@@ -30,7 +30,6 @@
             </intent-filter>
         </activity>
 
-
         <receiver
             android:name=".controllers.activities.MyAlarmReceiver"
             android:enabled="true"

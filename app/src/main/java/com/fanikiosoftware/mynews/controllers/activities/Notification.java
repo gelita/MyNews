@@ -17,14 +17,15 @@ public class Notification extends AppCompatActivity {
     //set alarm intent so that app runs search 1x daily
     public static void setAlarm(Context context, ArrayList<String> notificationQueryList) {
         Log.d(TAG, "setting alarm...");
-        Intent intent = new Intent(context, MyAlarmReceiver.class);
-        intent.putStringArrayListExtra("notificationQuery", notificationQueryList);
+        //alarm going off will trigger MyAlarmReceiver
+        Intent alarmIntent = new Intent(context, MyAlarmReceiver.class);
+        alarmIntent.putStringArrayListExtra("notificationQuery", notificationQueryList);
         //pIntent grants permission to external applications to act on intent
-        PendingIntent pIntent = PendingIntent.getBroadcast(
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 100,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
         Calendar calendar = Calendar.getInstance();
         //calendar.setTimeInMillis(System.currentTimeMillis());
         //user HOUR_OF_DAY for 24 hr clock & set to 9 for 9am
@@ -33,17 +34,16 @@ public class Notification extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        //add 1 day to the calendar instance in order to prevent alarm from being called for past
-        //scheduled intent
+        //+1day to the calendar instance to prevent alarm from being called for past scheduled intent
         calendar.add(Calendar.DATE, 1);
         //RTC fires the pending intent at the specific time but does not wake up the device.
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.cancel(pIntent);
+        alarmMgr.cancel(pendingIntent);
         alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY,
-                pIntent
+                pendingIntent
         );
         Log.d(TAG, "Alarm set!");
     }
