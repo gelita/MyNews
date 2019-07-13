@@ -19,12 +19,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Alarm Receiver executing");
         //todo run query and then notify
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(android.R.drawable.sym_def_app_icon);
-        builder.setContentTitle(context.getString(R.string.notify_title));
-        builder.setContentText(context.getString(R.string.read_now_question));
-        builder.setAutoCancel(true);
-
         Intent notificationIntent = new Intent(context, QueryResultsActivity.class);
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity(
                 context,
@@ -32,8 +26,12 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
-        builder.setContentIntent(pendingNotificationIntent);
-
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                .setContentTitle(context.getString(R.string.notify_title))
+                .setContentText(context.getString(R.string.read_now_question))
+                .setAutoCancel(true)
+                .setContentIntent(pendingNotificationIntent);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
