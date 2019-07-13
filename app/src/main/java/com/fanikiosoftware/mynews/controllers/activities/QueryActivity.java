@@ -146,9 +146,10 @@ public class QueryActivity extends AppCompatActivity {
         //if search is empty then display error to user
         ArrayList<String> userQueryList = new ArrayList<>();
         userQueryList.add(etSearch.getText().toString()); //this adds an element to the list.
-        if (userQueryList.isEmpty()) {
+        if (userQueryList == null || userQueryList.equals("") || userQueryList.isEmpty()) {
+            Log.d(TAG, "no userQueryList found! Toasting");
             Toast.makeText
-                    (getApplicationContext(), string.search_term_required, Toast.LENGTH_LONG).show();
+                    (this, string.search_term_required, Toast.LENGTH_LONG).show();
             return null;
         } else {
             if (check1.isChecked()) {

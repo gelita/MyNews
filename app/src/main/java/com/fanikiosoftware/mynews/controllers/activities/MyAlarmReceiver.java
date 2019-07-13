@@ -1,12 +1,13 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.fanikiosoftware.mynews.R;
 
 public class MyAlarmReceiver extends BroadcastReceiver {
 
@@ -15,7 +16,20 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Alarm Receiver executing");
-        Bundle extras = intent.getExtras();
-        ArrayList<String> query = extras.getStringArrayList("notificationsQuery");
+        //todo run query and then notify
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setSmallIcon(android.R.drawable.sym_def_app_icon);
+        builder.setContentTitle(context.getString(R.string.notify_title));
+        builder.setContentText(context.getString(R.string.read_now_question));
+        builder.setAutoCancel(true);
+
+        Intent notificationIntent = new Intent(context, QueryResultsActivity.class);
+        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(
+                context,
+                0,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        builder.setContentIntent(pendingNotificationIntent);
     }
 }

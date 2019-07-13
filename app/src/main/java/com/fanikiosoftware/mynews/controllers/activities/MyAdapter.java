@@ -40,7 +40,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
     //binds the data with the view when the data is shown in the UI
     @Override
     public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
-        Log.d(TAG, " :: MyAdapter onBindViewHolder called");
         Post post = postList.get(position);
         viewHolder.tvSection.setText(post.getSection());
         //if subsection is not empty string then post subsection after section >
