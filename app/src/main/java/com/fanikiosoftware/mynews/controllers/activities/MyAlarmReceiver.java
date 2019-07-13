@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
@@ -12,6 +13,7 @@ import com.fanikiosoftware.mynews.R;
 public class MyAlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "MyAlarmReceiver";
+    public static final int NOTIFICATION_ID = 222;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -31,5 +33,8 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         builder.setContentIntent(pendingNotificationIntent);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 }
