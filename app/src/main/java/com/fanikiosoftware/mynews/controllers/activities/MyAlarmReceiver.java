@@ -23,9 +23,8 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Alarm Receiver executing");
         //todo run query and then notify
-//        createNotificationsChannels(context);
         createNotificationChannel(context);
-        notifyThis(context, R.string.notify_title_pt1 + "query" + R.string.notify_title_pt2, "Would you like to read them now?");
+        notifyThis(context, "Your article search is ready.", "Read now?");
     }
 
     private void createNotificationChannel(Context context) {
@@ -37,23 +36,19 @@ public class MyAlarmReceiver extends BroadcastReceiver {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NotificationManager.class);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
 
     public void notifyThis(Context context, String title, String message) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_about)
+                .setSmallIcon(R.drawable.nyt_notification)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-        // notificationId is a unique int for each notification that you must define
         notificationManager.notify(0, mBuilder.build());
     }
 }
