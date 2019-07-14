@@ -67,6 +67,7 @@ public class QueryActivity extends AppCompatActivity {
         Log.d(TAG, "  :: QueryActivity onCreate called");
         setContentView(layout.activity_query);
         ButterKnife.bind(this);
+        notificationSwitch.setChecked(false);
         getActivityTitle();
         setSwitch(title);
         setTitle(title);
@@ -101,10 +102,12 @@ public class QueryActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                intent.putStringArrayListExtra("userQueryList", getQuery());
-                System.out.println(TAG + " userquery = " + getQuery());
-                startActivity(intent);
+//                ArrayList<String> queryList = getQuery();
+                if (getQuery() != null) {
+                    Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
+                    intent.putStringArrayListExtra("userQueryList", getQuery());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -128,30 +131,34 @@ public class QueryActivity extends AppCompatActivity {
                 //Is the switch is on?
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
-                    //get user query and send to method in order to start new activity
-                    NotificationActivity.setAlarm(QueryActivity.this, getQuery());
-                    //notify user that the notifications preference is now saved
-                    Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(QueryActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    if (getQuery() != null) {
+                        //get user query and send to method in order to start new activity
+                        NotificationActivity.setAlarm(QueryActivity.this, getQuery());
+                        //notify user that the notifications preference is now saved
+                        Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(QueryActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
-                    //todo
-                    //do nothing? cancel alarm?
+                    //do something or nothing?
                 }
             }
         });
     }
 
     private ArrayList<String> getQuery() {
-        //if search is empty then display error to user
-        ArrayList<String> userQueryList = new ArrayList<>();
-        userQueryList.add(etSearch.getText().toString()); //this adds an element to the list.
-        if (userQueryList == null || userQueryList.equals("") || userQueryList.isEmpty()) {
+        //if search field is empty then display error to user
+        String search = etSearch.getText().toString().trim();
+        if (search.equals("")) {
             Log.d(TAG, "no userQueryList found! Toasting");
+            //reset toggle switch
+            notificationSwitch.setChecked(false);
             Toast.makeText
                     (this, string.search_term_required, Toast.LENGTH_LONG).show();
             return null;
         } else {
+            ArrayList<String> userQueryList = new ArrayList<>();
+            userQueryList.add(search); //this adds an element to the list.
             if (check1.isChecked()) {
                 userQueryList.add(check1.getText().toString());
             }
@@ -170,11 +177,13 @@ public class QueryActivity extends AppCompatActivity {
             if (check6.isChecked()) {
                 userQueryList.add(check6.getText().toString());
             }
-            if (userQueryList.size() < 1) {
+            if (userQueryList.size() < 2) {
                 //if no category selected - notify user to choose at least one
                 Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
+                notificationSwitch.setChecked(false);
                 return null;
             } else {
+                //if search term and at least 1 category selected then return query
                 Log.d(TAG, "  :: QueryActivity userQueryList: " + userQueryList);
                 return userQueryList;
             }

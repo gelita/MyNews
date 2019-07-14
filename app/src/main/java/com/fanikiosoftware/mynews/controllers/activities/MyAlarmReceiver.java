@@ -25,7 +25,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         //todo run query and then notify
 //        createNotificationsChannels(context);
         createNotificationChannel(context);
-        notifyThis(context, "title", "message");
+        notifyThis(context, R.string.notify_title_pt1 + "query" + R.string.notify_title_pt2, "Would you like to read them now?");
     }
 
     private void createNotificationChannel(Context context) {
