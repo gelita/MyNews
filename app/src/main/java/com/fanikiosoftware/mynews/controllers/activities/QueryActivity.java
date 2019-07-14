@@ -129,7 +129,7 @@ public class QueryActivity extends AppCompatActivity {
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
                     //get user query and send to method in order to start new activity
-                    Notification.setAlarm(QueryActivity.this, getQuery());
+                    NotificationActivity.setAlarm(QueryActivity.this, getQuery());
                     //notify user that the notifications preference is now saved
                     Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(QueryActivity.this, MainActivity.class);

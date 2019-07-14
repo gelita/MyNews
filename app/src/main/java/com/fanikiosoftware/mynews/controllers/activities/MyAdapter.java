@@ -29,7 +29,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder>
     //called everytime an instance of MyAdapter is created
     @Override
     public ArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, " :: MyAdapter onCreateViewHolder called");
+//        Log.d(TAG, " :: MyAdapter onCreateViewHolder called");
         //inflate the card view layout and setup each view within each individual card(row)of the rv
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item,
                 parent, false);
