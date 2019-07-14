@@ -14,6 +14,8 @@ import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
 
+import static android.support.v4.app.NotificationCompat.CATEGORY_RECOMMENDATION;
+
 public class MyAlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "MyAlarmReceiver";
@@ -46,6 +48,10 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.nyt_notification)
                 .setContentTitle(title)
                 .setContentText(message)
+                //notification automatically removed when clicked
+                .setAutoCancel(true)
+                //sets the type of notification for system use(example: when DO NOT DISTURB is on)
+                .setCategory(CATEGORY_RECOMMENDATION)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
