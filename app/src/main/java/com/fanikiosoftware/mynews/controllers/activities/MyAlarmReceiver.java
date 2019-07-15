@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -31,7 +32,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         runQuery(getExtras(intent));
         //if articles exist--> notify user of articles
         createNotificationChannel(context);
-        createPendingIntent(context);
         notifyThis(context, "Your New York Times articles are ready.", "Read now?");
     }
 
@@ -43,25 +43,13 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 
     }
 
-    private PendingIntent createPendingIntent(Context context) {
-        //This is the intent of PendingIntent
-        Intent intent = new Intent(context, QueryResultsActivity.class);
-        //This is optional if you have more than one buttons and want to differentiate between two
-        intent.putStringArrayListExtra("userQuery", userQueryList);
-        PendingIntent pendingIntent = null;
-        return pendingIntent.getBroadcast(
-                context,
-                1,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
     private void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
+        Log.d(TAG, "creating notification channel");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "channel1";
-            String description = "channel descrip";
+            String description = "channel description";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
@@ -71,6 +59,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     }
 
     public void notifyThis(Context context, String title, String message) {
+        Log.d(TAG, "creating notification builder");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.nyt_notification)
                 .setContentTitle(title)
@@ -87,4 +76,19 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(0, mBuilder.build());
     }
+
+    private PendingIntent createPendingIntent(Context context) {
+        Log.d(TAG, "creating pending intent");
+        // create the intent(query) for the notification's pending intent
+        Intent queryIntent = new Intent(context, QueryResultsActivity.class);
+        //add user query as extra
+        queryIntent.putStringArrayListExtra("userQuery", userQueryList);
+        // Create the TaskStackBuilder(creates a back stack) & add the intent
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(queryIntent);
+        PendingIntent pendingIntent =
+                stackBuilder.getPendingIntent(0,PendingIntent.FLAG_CANCEL_CURRENT);
+        return pendingIntent;
+    }
+
 }
