@@ -69,7 +69,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 //sets the type of notification for system use(example: when DO NOT DISTURB is on)
                 .setCategory(CATEGORY_RECOMMENDATION)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setColor(ContextCompat.getColor(context, R.color.colorBrightAccent))
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .addAction(R.drawable.ic_help, "Read articles now", createPendingIntent(context))
                 .setOngoing(true);
 
