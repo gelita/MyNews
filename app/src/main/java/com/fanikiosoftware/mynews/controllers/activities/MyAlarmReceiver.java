@@ -1,6 +1,5 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,23 +14,47 @@ import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
 
+import java.util.ArrayList;
+
 import static android.support.v4.app.NotificationCompat.CATEGORY_RECOMMENDATION;
 
 public class MyAlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "MyAlarmReceiver";
     public static final String CHANNEL_ID = "channel";
+    ArrayList<String> userQueryList = null;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Alarm Receiver executing");
-        //todo run query and then notify
-        runQuery();
+        Log.d(TAG, "executing");
+        //get user's query from the intent extra and then run Query
+        runQuery(getExtras(intent));
+        //if articles exist--> notify user of articles
         createNotificationChannel(context);
+        createPendingIntent(context);
         notifyThis(context, "Your New York Times articles are ready.", "Read now?");
     }
 
-    private void runQuery() {    }
+    private ArrayList<String> getExtras(Intent intent) {
+        return intent.getStringArrayListExtra("userQueryList");
+    }
+
+    private void runQuery(ArrayList<String> query) {
+
+    }
+
+    private PendingIntent createPendingIntent(Context context) {
+        //This is the intent of PendingIntent
+        Intent intent = new Intent(context, QueryResultsActivity.class);
+        //This is optional if you have more than one buttons and want to differentiate between two
+        intent.putStringArrayListExtra("userQuery", userQueryList);
+        PendingIntent pendingIntent = null;
+        return pendingIntent.getBroadcast(
+                context,
+                1,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 
     private void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -57,7 +80,9 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 //sets the type of notification for system use(example: when DO NOT DISTURB is on)
                 .setCategory(CATEGORY_RECOMMENDATION)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setColor(ContextCompat.getColor(context, R.color.colorBrightAccent));
+                .setColor(ContextCompat.getColor(context, R.color.colorBrightAccent))
+                .addAction(R.drawable.ic_help, "Read articles now", createPendingIntent(context))
+                .setOngoing(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(0, mBuilder.build());

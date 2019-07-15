@@ -2,6 +2,7 @@ package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -60,11 +61,13 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener date;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
+    private SharedPreferences mPreferences;
+    ArrayList<String> userQueryList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "  :: QueryActivity onCreate called");
+        Log.d(TAG, "onCreate called");
         setContentView(layout.activity_query);
         ButterKnife.bind(this);
         notificationSwitch.setChecked(false);
@@ -98,14 +101,13 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        Log.d(TAG, "  :: QueryActivity setting up listeners");
+        Log.d(TAG, "setting up listeners");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ArrayList<String> queryList = getQuery();
                 if (getQuery() != null) {
                     Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                    intent.putStringArrayListExtra("userQueryList", getQuery());
+                    intent.putStringArrayListExtra("userQueryList", userQueryList);
                     startActivity(intent);
                 }
             }
@@ -133,14 +135,15 @@ public class QueryActivity extends AppCompatActivity {
                 if (on) {
                     if (getQuery() != null) {
                         //get user query and send to method in order to start new activity
-                        NotificationActivity.setAlarm(QueryActivity.this, getQuery());
+                        NotificationActivity.setAlarm(QueryActivity.this, userQueryList);
                         //notify user that the notifications preference is now saved
                         Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(QueryActivity.this, MainActivity.class);
+                        intent.putStringArrayListExtra("query", userQueryList);
                         startActivity(intent);
                     }
                 } else {
-                    //do something or nothing?
+                    //todo
                 }
             }
         });
@@ -148,7 +151,8 @@ public class QueryActivity extends AppCompatActivity {
 
     private ArrayList<String> getQuery() {
         //if search field is empty then display error to user
-        String search = etSearch.getText().toString().trim();
+        String  search = "";
+        search = etSearch.getText().toString().trim();
         if (search.equals("")) {
             Log.d(TAG, "no userQueryList found! Toasting");
             //reset toggle switch
@@ -157,7 +161,6 @@ public class QueryActivity extends AppCompatActivity {
                     (this, string.search_term_required, Toast.LENGTH_LONG).show();
             return null;
         } else {
-            ArrayList<String> userQueryList = new ArrayList<>();
             userQueryList.add(search); //this adds an element to the list.
             if (check1.isChecked()) {
                 userQueryList.add(check1.getText().toString());
@@ -184,7 +187,7 @@ public class QueryActivity extends AppCompatActivity {
                 return null;
             } else {
                 //if search term and at least 1 category selected then return query
-                Log.d(TAG, "  :: QueryActivity userQueryList: " + userQueryList);
+                Log.d(TAG, "userQueryList: " + userQueryList);
                 return userQueryList;
             }
         }

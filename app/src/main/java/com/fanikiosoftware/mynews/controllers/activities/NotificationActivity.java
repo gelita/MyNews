@@ -15,11 +15,14 @@ public class NotificationActivity extends AppCompatActivity {
     private static final String TAG = "Notification";
 
     //set alarm intent so that app runs search 1x daily
-    public static void setAlarm(Context context, ArrayList<String> notificationQueryList) {
+    public static void setAlarm(Context context, ArrayList<String> userQueryList) {
+        Log.d(TAG, "setting alarm.");
         Log.d(TAG, "setting alarm...");
+        Log.d(TAG, "setting alarm.....");
         //alarm going off will trigger MyAlarmReceiver
         Intent alarmIntent = new Intent(context, MyAlarmReceiver.class);
-        alarmIntent.putStringArrayListExtra("notificationQuery", notificationQueryList);
+        //sending the query in order to be able to add it in pendingIntent for the notification
+        alarmIntent.putStringArrayListExtra("userQuery", userQueryList);
         //pIntent grants permission to external applications to act on intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
