@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
@@ -25,9 +26,12 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Alarm Receiver executing");
         //todo run query and then notify
+        runQuery();
         createNotificationChannel(context);
-        notifyThis(context, "Your article search is ready.", "Read now?");
+        notifyThis(context, "Your New York Times articles are ready.", "Read now?");
     }
+
+    private void runQuery() {    }
 
     private void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -52,7 +56,8 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 //sets the type of notification for system use(example: when DO NOT DISTURB is on)
                 .setCategory(CATEGORY_RECOMMENDATION)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setColor(ContextCompat.getColor(context, R.color.colorBrightAccent));
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(0, mBuilder.build());
