@@ -34,7 +34,7 @@ public class InfoActivity extends AppCompatActivity {
 
     //create menu options
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -53,10 +53,6 @@ public class InfoActivity extends AppCompatActivity {
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
                 t = "Help";
-                break;
-            case R.id.miNotifications:
-                intent = new Intent(getBaseContext(), QueryActivity.class);
-                t = "Notifications";
                 break;
             case R.id.miSearch:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
