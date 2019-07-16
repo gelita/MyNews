@@ -42,6 +42,9 @@
     <string name="greater_than_symbol"><![CDATA[>]]></string>
     <string name="notificationTitle">New York Times</string>
     <string name="notificationContext">New articles are available!</string>
-    <string name="confirm_search_saved">Your article search has been saved!</string>
+    <string name="confirm_search_saved">Your notifications preference has been saved!</string>
+    <string name="notify_title_pt1">Your articles about </string>
+    <string name="notify_title_pt2"> are ready.</string>
+    <string name="notify_question">Read them now?</string>
 
 </resources>

@@ -12,16 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".controllers.activities.QueryActivity" />
-        <activity android:name=".controllers.activities.QueryResultsActivity" />
+
+        <!--adding Main as the parent activity for QueryResultsActivity-->
+        <activity
+            android:name=".controllers.activities.QueryResultsActivity"
+            android:parentActivityName=".controllers.activities.MainActivity" />
         <activity
             android:name=".controllers.activities.InfoActivity"
             android:icon="@drawable/ic_back" />
 
         <activity android:name=".controllers.activities.WebActivity" />
-        <activity android:name=".controllers.activities.Notification" />
+        <activity android:name=".controllers.activities.NotificationActivity" />
         <activity android:name=".controllers.activities.MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

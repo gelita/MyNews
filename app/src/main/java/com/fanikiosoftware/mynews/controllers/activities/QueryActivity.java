@@ -2,6 +2,7 @@ package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -60,13 +61,15 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener date;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "  :: QueryActivity onCreate called");
+        Log.d(TAG, "onCreate called");
         setContentView(layout.activity_query);
         ButterKnife.bind(this);
+        notificationSwitch.setChecked(false);
         getActivityTitle();
         setSwitch(title);
         setTitle(title);
@@ -97,14 +100,15 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        Log.d(TAG, "  :: QueryActivity setting up listeners");
+        Log.d(TAG, "setting up listeners");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                intent.putStringArrayListExtra("userQueryList", getQuery());
-                System.out.println(TAG + " userquery = " + getQuery());
-                startActivity(intent);
+                if (getQuery() != null) {
+                    Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
+                    intent.putStringArrayListExtra("userQueryList", getQuery());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -128,29 +132,36 @@ public class QueryActivity extends AppCompatActivity {
                 //Is the switch is on?
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
-                    //get user query and send to method in order to start new activity
-                    Notification.setAlarm(QueryActivity.this, getQuery());
-                    //notify user that the notifications preference is now saved
-                    Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(QueryActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    if (getQuery() != null) {
+                        //get user query and send to method in order to start new activity
+                        NotificationActivity.setAlarm(QueryActivity.this, getQuery());
+                        //notify user that the notifications preference is now saved
+                        Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(QueryActivity.this, MainActivity.class);
+                        intent.putStringArrayListExtra("query", getQuery());
+                        startActivity(intent);
+                    }
                 } else {
                     //todo
-                    //do nothing? cancel alarm?
                 }
             }
         });
     }
 
     private ArrayList<String> getQuery() {
-        //if search is empty then display error to user
-        ArrayList<String> userQueryList = new ArrayList<>();
-        userQueryList.add(etSearch.getText().toString()); //this adds an element to the list.
-        if (userQueryList.isEmpty()) {
+        //if search field is empty then display error to user
+        String search = "";
+        search = etSearch.getText().toString().trim();
+        if (search.equals("")) {
+            Log.d(TAG, "no userQueryList found! Toasting");
+            //reset toggle switch
+            notificationSwitch.setChecked(false);
             Toast.makeText
-                    (getApplicationContext(), string.search_term_required, Toast.LENGTH_LONG).show();
+                    (this, string.search_term_required, Toast.LENGTH_LONG).show();
             return null;
         } else {
+            ArrayList<String> userQueryList = new ArrayList<>();
+            userQueryList.add(search); //this adds an element to the list.
             if (check1.isChecked()) {
                 userQueryList.add(check1.getText().toString());
             }
@@ -169,12 +180,14 @@ public class QueryActivity extends AppCompatActivity {
             if (check6.isChecked()) {
                 userQueryList.add(check6.getText().toString());
             }
-            if (userQueryList.size() < 1) {
+            if (userQueryList.size() < 2) {
                 //if no category selected - notify user to choose at least one
                 Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
+                notificationSwitch.setChecked(false);
                 return null;
             } else {
-                Log.d(TAG, "  :: QueryActivity userQueryList: " + userQueryList);
+                //if search term and at least 1 category selected then return query
+                Log.d(TAG, "userQueryList: " + userQueryList);
                 return userQueryList;
             }
         }
