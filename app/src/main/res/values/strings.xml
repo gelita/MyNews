@@ -40,5 +40,8 @@
     <string name="checkbox_required">Please select at least one checkbox.</string>
     <string name="hint_date">date_here</string>
     <string name="greater_than_symbol"><![CDATA[>]]></string>
+    <string name="notificationTitle">New York Times</string>
+    <string name="notificationContext">New articles are available!</string>
+    <string name="confirm_search_saved">Your article search has been saved!</string>
 
 </resources>
