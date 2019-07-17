@@ -138,7 +138,6 @@ public class QueryActivity extends AppCompatActivity {
                         Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(QueryActivity.this, MainActivity.class);
                         intent.putStringArrayListExtra("query", q);
-                        Log.d(TAG, "userQueryList line 142: " + q);
                         startActivity(intent);
                     }
                 } else {

@@ -21,6 +21,7 @@ public class NotificationActivity extends AppCompatActivity {
         Intent alarmIntent = new Intent(context, MyAlarmReceiver.class);
         //sending the query in order to be able to add it in pendingIntent for the notification
         alarmIntent.putStringArrayListExtra("userQuery", userQueryList);
+        Log.d(TAG, "userQueryList ln 24: " + userQueryList);
         //pIntent grants permission to external applications to act on intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -46,7 +47,7 @@ public class NotificationActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
         );
-        Log.d(TAG, "userQuerylist: " + userQueryList);
+        Log.d(TAG, "userQueryList ln 49: " + userQueryList);
         Log.d(TAG, "Alarm set!");
     }
 }

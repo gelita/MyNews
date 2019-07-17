@@ -32,7 +32,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     }
 
     private ArrayList<String> getExtras(Intent intent) {
-        return intent.getStringArrayListExtra("userQueryList");
+        return intent.getStringArrayListExtra("query");
     }
 
 //    private void runQuery(ArrayList<String> query) {
@@ -52,7 +52,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 //        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         //add user query as extra
         mIntent.putStringArrayListExtra("userQuery", userQueryList);
-        Log.d(TAG, "list: " + userQueryList);
+        Log.d(TAG, "userQueryList: " + userQueryList);
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, mIntent, 0);
         Log.d(TAG, "creating notification builder");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
