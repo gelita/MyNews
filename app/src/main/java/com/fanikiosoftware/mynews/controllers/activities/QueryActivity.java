@@ -2,7 +2,6 @@ package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +60,6 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener date;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
-    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,13 +130,15 @@ public class QueryActivity extends AppCompatActivity {
                 //Is the switch is on?
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
-                    if (getQuery() != null) {
-                        //get user query and send to method in order to start new activity
-                        NotificationActivity.setAlarm(QueryActivity.this, getQuery());
+                    ArrayList<String> q;
+                    q = getQuery();
+                    if (q != null) {
+                        NotificationActivity.setAlarm(QueryActivity.this, q);
                         //notify user that the notifications preference is now saved
                         Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(QueryActivity.this, MainActivity.class);
-                        intent.putStringArrayListExtra("query", getQuery());
+                        intent.putStringArrayListExtra("query", q);
+                        Log.d(TAG, "userQueryList line 142: " + q);
                         startActivity(intent);
                     }
                 } else {

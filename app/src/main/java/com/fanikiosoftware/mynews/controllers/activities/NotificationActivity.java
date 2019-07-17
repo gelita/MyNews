@@ -16,8 +16,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     //set alarm intent so that app runs search 1x daily
     public static void setAlarm(Context context, ArrayList<String> userQueryList) {
-        Log.d(TAG, "setting alarm.");
-        Log.d(TAG, "setting alarm...");
         Log.d(TAG, "setting alarm.....");
         //alarm going off will trigger MyAlarmReceiver
         Intent alarmIntent = new Intent(context, MyAlarmReceiver.class);
@@ -41,13 +39,14 @@ public class NotificationActivity extends AppCompatActivity {
         calendar.add(Calendar.SECOND, 10);
         //RTC fires the pending intent at the specific time but does not wake up the device.
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.cancel(pendingIntent);
+//        alarmMgr.cancel(pendingIntent);
         alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
         );
+        Log.d(TAG, "userQuerylist: " + userQueryList);
         Log.d(TAG, "Alarm set!");
     }
 }

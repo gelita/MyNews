@@ -97,7 +97,8 @@ public class SearchFragment extends Fragment {
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
         newsApi = retrofit.create(NewsApi.class);
         //get the user query that was in the arguments of the bundle
-        String query = userQueryList.get(0);
+        String query;
+        query = userQueryList.get(0);
         String section = "";
         Log.d(TAG, "userQueryList.size() = " + userQueryList.size());
         if (userQueryList.size() > 1) {

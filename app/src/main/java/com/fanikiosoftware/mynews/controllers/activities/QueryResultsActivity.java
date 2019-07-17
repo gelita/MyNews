@@ -23,6 +23,7 @@ public class QueryResultsActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
         SearchFragment searchFragment = SearchFragment.newInstance(6, getUserQueryList());
+        Log.d(TAG, "list: " + getUserQueryList());
         ft.replace(R.id.fragment_holder, searchFragment);
         // Complete the changes added above
         ft.commit();
@@ -30,5 +31,6 @@ public class QueryResultsActivity extends AppCompatActivity {
 
     private ArrayList<String> getUserQueryList() {
         return getIntent().getStringArrayListExtra("userQueryList");
+
     }
 }
