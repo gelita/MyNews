@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.fragments.SearchFragment;
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
 
 import java.util.ArrayList;
 
@@ -19,18 +20,14 @@ public class QueryResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate started");
         setContentView(R.layout.activity_query_results);
+        ArrayList<String> userQueryList = getIntent().getStringArrayListExtra(Constants.USER_QUERY_LIST);
+        Log.d(TAG, Constants.USER_QUERY_LIST + ": " + userQueryList);
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        SearchFragment searchFragment = SearchFragment.newInstance(6, getUserQueryList());
-        Log.d(TAG, "list: " + getUserQueryList());
+        SearchFragment searchFragment = SearchFragment.newInstance(6, userQueryList);
         ft.replace(R.id.fragment_holder, searchFragment);
         // Complete the changes added above
         ft.commit();
-    }
-
-    private ArrayList<String> getUserQueryList() {
-        return getIntent().getStringArrayListExtra("userQueryList");
-
     }
 }

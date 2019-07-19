@@ -47,7 +47,8 @@ public class SearchFragment extends Fragment {
         Log.d(TAG, "newInstance");
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putStringArrayList("userQueryList", userQueryList);
+        bundle.putStringArrayList(Constants.USER_QUERY_LIST, userQueryList);
+        Log.d(TAG, "userQueryList: " + userQueryList);
         SearchFragment fragment = new SearchFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -73,7 +74,7 @@ public class SearchFragment extends Fragment {
         if (args != null) {
             position = args.getInt("position");
             Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
-            userQueryList = args.getStringArrayList("userQueryList");
+            userQueryList = args.getStringArrayList(Constants.USER_QUERY_LIST);
             Log.d(TAG, "userQueryList: (should have query and section values) " + userQueryList);
         }
     }

@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
 
 import java.util.ArrayList;
 
@@ -31,8 +32,9 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         notifyThis(context, "Your New York Times articles are ready.", "Read now?");
     }
 
+
     private ArrayList<String> getExtras(Intent intent) {
-        return intent.getStringArrayListExtra("query");
+        return intent.getStringArrayListExtra(Constants.USER_QUERY_LIST);
     }
 
 //    private void runQuery(ArrayList<String> query) {
@@ -48,14 +50,13 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 
 
     public void notifyThis(Context context, String title, String message) {
-        Intent mIntent = new Intent(context, QueryResultsActivity.class);
-//        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //add user query as extra
-        mIntent.putStringArrayListExtra("userQuery", userQueryList);
-        Log.d(TAG, "userQueryList: " + userQueryList);
-        PendingIntent pIntent = PendingIntent.getActivity(context, 0, mIntent, 0);
+        Intent notificationIntent = new Intent(context, QueryResultsActivity.class);
+        notificationIntent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
+        Log.d(TAG, Constants.USER_QUERY_LIST + " ln55: " + userQueryList);
+
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
         Log.d(TAG, "creating notification builder");
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.nyt_notification)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -70,6 +71,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 .setOngoing(false);
 
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-        manager.notify(0, mBuilder.build());
+        manager.notify(0, builder.build());
     }
 }

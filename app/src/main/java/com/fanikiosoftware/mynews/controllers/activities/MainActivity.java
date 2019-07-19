@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, " :: MainActivity onCreate called");
+        Log.d(TAG, "onCreate called");
         setContentView(R.layout.activity_main);
         //Configure ViewPager
         this.configureViewPager();

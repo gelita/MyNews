@@ -10,6 +10,7 @@ public final class Constants {
 
     public static final String API_KEY = "nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
     public static final String BASE_IMAGE_URL = "https://static01.nyt.com/";
+    public static final String USER_QUERY_LIST = "userQueryList";
 
     //Prevent objects from being constructed from
     //this class, by declaring this private constructor.

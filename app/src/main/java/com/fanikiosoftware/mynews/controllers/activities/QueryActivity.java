@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.fanikiosoftware.mynews.R;
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class QueryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (getQuery() != null) {
                     Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                    intent.putStringArrayListExtra("userQueryList", getQuery());
+                    intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, getQuery());
                     startActivity(intent);
                 }
             }
@@ -137,7 +138,7 @@ public class QueryActivity extends AppCompatActivity {
                         //notify user that the notifications preference is now saved
                         Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(QueryActivity.this, MainActivity.class);
-                        intent.putStringArrayListExtra("query", q);
+                        intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, q);
                         startActivity(intent);
                     }
                 } else {
@@ -186,7 +187,7 @@ public class QueryActivity extends AppCompatActivity {
                 return null;
             } else {
                 //if search term and at least 1 category selected then return query
-                Log.d(TAG, "userQueryList: " + userQueryList);
+                Log.d(TAG, Constants.USER_QUERY_LIST + ": " + userQueryList);
                 return userQueryList;
             }
         }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.fanikiosoftware.mynews.controllers.utility.Constants;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -20,8 +22,8 @@ public class NotificationActivity extends AppCompatActivity {
         //alarm going off will trigger MyAlarmReceiver
         Intent alarmIntent = new Intent(context, MyAlarmReceiver.class);
         //sending the query in order to be able to add it in pendingIntent for the notification
-        alarmIntent.putStringArrayListExtra("userQuery", userQueryList);
-        Log.d(TAG, "userQueryList ln 24: " + userQueryList);
+        alarmIntent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
+        Log.d(TAG, Constants.USER_QUERY_LIST + " ln 24: " + userQueryList);
         //pIntent grants permission to external applications to act on intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -47,7 +49,6 @@ public class NotificationActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
         );
-        Log.d(TAG, "userQueryList ln 49: " + userQueryList);
         Log.d(TAG, "Alarm set!");
     }
 }
