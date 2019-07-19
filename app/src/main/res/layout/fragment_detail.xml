@@ -2,10 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fanikiosoftware.mynews.controllers.fragments.MyFragment"
+    android:background="#FFFFFF"
     android:gravity="center"
-    android:background="#FFFFFF">
-
-   <!-- TODO: complete fragment detailed view layout -->
+    tools:context="com.fanikiosoftware.mynews.controllers.fragments.MyFragment">
 
 </LinearLayout>
