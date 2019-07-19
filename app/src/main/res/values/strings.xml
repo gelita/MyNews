@@ -46,5 +46,7 @@
     <string name="notify_title_pt1">Your articles about </string>
     <string name="notify_title_pt2"> are ready.</string>
     <string name="notify_question">Read them now?</string>
+    <string name="channel_name">channelMain</string>
+    <string name="channel_description">channelMain</string>
 
 </resources>
