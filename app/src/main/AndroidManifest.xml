@@ -21,7 +21,7 @@
             android:parentActivityName=".controllers.activities.MainActivity" />
         <activity
             android:name=".controllers.activities.InfoActivity"
-            android:icon="@drawable/ic_back" />
+            android:icon="@drawable/ic_back" />l
 
         <activity android:name=".controllers.activities.WebActivity" />
         <activity android:name=".controllers.activities.NotificationActivity" />
