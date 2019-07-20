@@ -11,7 +11,6 @@ import com.fanikiosoftware.mynews.controllers.utility.Constants;
 
 import java.util.ArrayList;
 
-
 public class QueryResultsActivity extends AppCompatActivity {
 
     public static final String TAG = "QueryResultsActivity";

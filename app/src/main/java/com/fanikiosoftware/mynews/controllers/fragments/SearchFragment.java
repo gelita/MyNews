@@ -56,8 +56,6 @@ public class SearchFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called");
-        //Get activity_query identifier from abstract method declared in child class
-        //this method will report the correct activity_query's identifier so the correct activity_query will be used
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
         textViewResult = rootView.findViewById(R.id.tv_textView);
         recyclerView = rootView.findViewById(R.id.rv_recycler_view);
@@ -84,7 +82,6 @@ public class SearchFragment extends Fragment {
         Gson gson = new GsonBuilder().serializeNulls().create();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
