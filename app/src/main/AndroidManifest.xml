@@ -18,9 +18,11 @@
         <!--adding Main as the parent activity for QueryResultsActivity-->
         <activity
             android:name=".controllers.activities.QueryResultsActivity"
-            android:parentActivityName=".controllers.activities.MainActivity" />
+            android:parentActivityName=".controllers.activities.MainActivity"
+            android:icon="@drawable/ic_back"/>
         <activity
             android:name=".controllers.activities.InfoActivity"
+            android:parentActivityName=".controllers.activities.MainActivity"
             android:icon="@drawable/ic_back" />
 
         <activity android:name=".controllers.activities.WebActivity" />
