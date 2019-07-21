@@ -1,6 +1,7 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
 import android.support.annotation.Nullable;
+import android.text.method.MetaKeyKeyListener;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -20,15 +21,18 @@ public class Docs {
     String searchDate;
     @SerializedName("headline")
     private Headline headlineResponse;
+    private Meta meta;
 
     public Headline getHeadlineResponse() {
         return headlineResponse;
     }
 
+    public Meta getMeta(){
+        return meta;
+    }
     @Nullable
     @SerializedName("multimedia")
     List<Multimedia> multimediaList;
-
 
     public List<Multimedia> getMultimediaList() {
         return multimediaList;
