@@ -15,7 +15,6 @@ public class BootReceiver extends BroadcastReceiver {
         //verify that intent rec'd is in fact the one that is registered in the manifest
         assert action != null;
         if (action.equals("android.intent.action.BOOT_COMPLETED")) {
-
 //            NotificationActivity.setAlarm(context, userQueryList);
             Log.d(TAG, "reboot: alarm set");
         }

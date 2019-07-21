@@ -29,21 +29,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/inputSearch">
 
-        <DatePicker
-            android:id="@+id/dpStart"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvStart"
+            style="@android:style/Widget.Holo.Spinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:datePickerMode="spinner"
             android:layout_weight="1"
-            android:calendarViewShown="false"/>
+            android:clickable="true"
+            android:text=""
+            android:focusable="true" />
 
-        <DatePicker
-            android:id="@+id/dpEnd"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tvEnd"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"/>
+            android:layout_weight="1"
+            android:calendarViewShown="false"
+            android:clickable="true"
+            android:focusable="true"
+            style="@android:style/Widget.Holo.Spinner" />
 
     </LinearLayout>
 

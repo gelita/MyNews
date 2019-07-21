@@ -7,6 +7,7 @@ public class Meta {
     @SerializedName("hits")
     int numHits;
 
+    //returns the number of hits for a particular 'article search query'
     public int getNumHits() {
         return numHits;
     }

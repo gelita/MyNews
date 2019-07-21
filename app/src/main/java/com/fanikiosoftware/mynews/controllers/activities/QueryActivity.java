@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fanikiosoftware.mynews.R;
@@ -35,10 +36,10 @@ import static com.fanikiosoftware.mynews.R.string;
  */
 public class QueryActivity extends AppCompatActivity {
 
-    @BindView(id.dpStart)
-    DatePicker dpStart;
-    @BindView(id.dpEnd)
-    DatePicker dpEnd;
+    @BindView(id.tvStart)
+    TextView tvStart;
+    @BindView(id.tvEnd)
+    TextView tvEnd;
     @BindView(id.etSearch)
     TextInputEditText etSearch;
     @BindView(id.btnSubmit)
@@ -67,6 +68,7 @@ public class QueryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate called");
         setContentView(layout.activity_query);
+        //Field and method binding for  layout views
         ButterKnife.bind(this);
         notificationSwitch.setChecked(false);
         getActivityTitle();
@@ -76,6 +78,7 @@ public class QueryActivity extends AppCompatActivity {
         getDate();
     }
 
+    //get the date for the start/end date TextViews
     private void getDate() {
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
@@ -83,7 +86,6 @@ public class QueryActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -93,10 +95,14 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "MM/dd/yy";//format to use
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//        dpStart.setText(sdf.format(myCalendar.getTime()));
+        tvStart.setText(sdf.format(myCalendar.getTime()));
+        tvEnd.setText(sdf.format(myCalendar.getTime()));
+        tvStart.setText(myFormat);
+        tvEnd.setText(myFormat);
     }
+
 
     private void setUpListeners() {
         Log.d(TAG, "setting up listeners");
@@ -111,17 +117,16 @@ public class QueryActivity extends AppCompatActivity {
             }
         });
 
-        dpStart.setOnClickListener(new View.OnClickListener() {
+        tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showDatePicker();
             }
         });
-        dpEnd.setOnClickListener(new View.OnClickListener() {
+        tvEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getApplicationContext(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+               showDatePicker();
             }
         });
 
@@ -146,6 +151,12 @@ public class QueryActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showDatePicker() {
+        new DatePickerDialog(QueryActivity.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private ArrayList<String> getQuery() {
@@ -240,8 +251,8 @@ public class QueryActivity extends AppCompatActivity {
         if (s.equals("Search")) {
             notificationSwitch.setVisibility(View.GONE);
         } else if (s.equals("Notifications")) {
-            dpStart.setVisibility(View.GONE);
-            dpEnd.setVisibility(View.GONE);
+            tvStart.setVisibility(View.GONE);
+            tvEnd.setVisibility(View.GONE);
             btnSubmit.setVisibility(View.GONE);
         }
     }

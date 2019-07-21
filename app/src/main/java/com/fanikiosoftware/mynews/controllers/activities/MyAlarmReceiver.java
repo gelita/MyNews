@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.network.NewsApi;
@@ -41,20 +42,25 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     public static final int NOTIFICATION_ID = 0;
     ArrayList<String> userQueryList = null;
     NewsApi newsApi;
-    public boolean isArticles = false;
+    public int numHits;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "executing");
         //get user's query from the intent extra and then run Query
         userQueryList = getExtras(intent);
         createNotificationChannel(context);
         //check if there are articles and if so, send notification
-        runQuery(userQueryList);
         //if articles exist--> notify user of articles
-        Log.d(TAG, " " + isArticles);
-//        if(isArticles) {
+        runQuery(userQueryList); //returns the number of hits #articles returned in the query
+        Log.d(TAG, "executing");
+//        if(numHits >0){
             notifyThis(context, "Your New York Times articles are ready.", "Read now?");
+//        }else{
+            //no articles returned then Toast user 
+//            Toast.makeText(
+//                    context,
+//                    context.getResources().getString(R.string.notify_user_no_articles_found),
+//                    Toast.LENGTH_LONG).show();
 //        }
     }
 
@@ -78,7 +84,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    private void runQuery(ArrayList<String> userQueryList) {
+    private int runQuery(ArrayList<String> userQueryList) {
         //if articles returned -> notify user
         Log.d(TAG, "loading JSON");
         Gson gson = new GsonBuilder().serializeNulls().create();
@@ -118,23 +124,19 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getDocsResponse() != null) {
-                            isArticles = true;
-                            int numHits = response.body().getDocsResponse().getDocsList().size();
+                            /// need to make this getMeta().getNumHits();
+                            numHits = response.body().getDocsResponse().getDocsList().size();
                             Log.d(TAG, "numHits = " + numHits);
-                            if(numHits > 0){
-                                isArticles = true;
-                                Log.d(TAG, "isArticles = true");
-                            }
                         }
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                isArticles = false;
-                Log.d(TAG, "isArticles still false");
             }
         });
+        return numHits;
     }
 
     public void notifyThis(Context context, String title, String message) {

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class DocsResponse {
 
+    //class for Search queries- returns the List of Docs which are derived fr SearchResponse
         @SerializedName("docs")
         private List<Docs> docsList;
 

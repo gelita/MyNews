@@ -1,7 +1,6 @@
 package com.fanikiosoftware.mynews.controllers.network;
 
 import android.support.annotation.Nullable;
-import android.text.method.MetaKeyKeyListener;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class Docs {
 
-    //ARTICLE SEARCH API
+    //ARTICLE SEARCH API returns the following for each item in a List<Docs>
     @SerializedName("news_desk")
     String searchSection;
     @SerializedName("subsection_name")
@@ -19,6 +18,10 @@ public class Docs {
     String searchUrl;
     @SerializedName("pub_date")
     String searchDate;
+
+    @Nullable
+    @SerializedName("multimedia")
+    List<Multimedia> multimediaList;
     @SerializedName("headline")
     private Headline headlineResponse;
     private Meta meta;
@@ -27,12 +30,9 @@ public class Docs {
         return headlineResponse;
     }
 
-    public Meta getMeta(){
+    public Meta getMeta() {
         return meta;
     }
-    @Nullable
-    @SerializedName("multimedia")
-    List<Multimedia> multimediaList;
 
     public List<Multimedia> getMultimediaList() {
         return multimediaList;

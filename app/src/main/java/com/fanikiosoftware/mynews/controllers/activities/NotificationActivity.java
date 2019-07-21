@@ -39,7 +39,7 @@ public class NotificationActivity extends AppCompatActivity {
 //        calendar.set(Calendar.SECOND, 0);
 //        calendar.set(Calendar.MILLISECOND, 0);
         //+1day to the calendar instance to prevent alarm from being called for past scheduled intent
-        calendar.add(Calendar.SECOND, 10);
+        calendar.add(Calendar.SECOND, 15);
         //RTC fires the pending intent at the specific time but does not wake up the device.
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 //        alarmMgr.cancel(pendingIntent);
