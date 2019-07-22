@@ -24,15 +24,11 @@ public class Docs {
     List<Multimedia> multimediaList;
     @SerializedName("headline")
     private Headline headlineResponse;
-    private Meta meta;
 
     public Headline getHeadlineResponse() {
         return headlineResponse;
     }
 
-    public Meta getMeta() {
-        return meta;
-    }
 
     public List<Multimedia> getMultimediaList() {
         return multimediaList;

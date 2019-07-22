@@ -99,8 +99,6 @@ public class QueryActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         tvStart.setText(sdf.format(myCalendar.getTime()));
         tvEnd.setText(sdf.format(myCalendar.getTime()));
-        tvStart.setText(myFormat);
-        tvEnd.setText(myFormat);
     }
 
 
@@ -134,8 +132,7 @@ public class QueryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Is the switch is on?
-                boolean on = ((Switch) v).isChecked();
-                if (on) {
+                if (((Switch) v).isChecked()) {
                     ArrayList<String> q;
                     q = getQuery();
                     if (q != null) {
@@ -146,8 +143,6 @@ public class QueryActivity extends AppCompatActivity {
                         intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, q);
                         startActivity(intent);
                     }
-                } else {
-                    //todo
                 }
             }
         });
@@ -161,8 +156,7 @@ public class QueryActivity extends AppCompatActivity {
 
     private ArrayList<String> getQuery() {
         //if search field is empty then display error to user
-        String search = "";
-        search = etSearch.getText().toString().trim();
+        String search = etSearch.getText().toString().trim();
         if (search.equals("")) {
             Log.d(TAG, "no userQueryList found! Toasting");
             //reset toggle switch

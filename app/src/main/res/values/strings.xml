@@ -13,8 +13,6 @@
     <string name="sports">Sports</string>
     <string name="travel">Travel</string>
     <string name="politics">Politics</string>
-    <string name="start_date">Start Date</string>
-    <string name="end_date">End Date</string>
     <string name="tech_news_string">Tech News</string>
     <string name="about_and_help_info_here">About and Help info here</string>
     <string name="lorem_ipsum">Alohamora wand elf parchment, Wingardium Leviosa hippogriff, house
@@ -49,5 +47,7 @@
     <string name="channel_name">channelMain</string>
     <string name="channel_description">channelMain</string>
     <string name="notify_user_no_articles_found">Your daily search did not return any articles.</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
 
 </resources>

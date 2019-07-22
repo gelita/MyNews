@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".controllers.activities.QueryActivity" />
+        <activity android:name=".controllers.activities.QueryActivity"
+            android:windowSoftInputMode="adjustResize"            />
 
         <!--adding Main as the parent activity for QueryResultsActivity-->
         <activity

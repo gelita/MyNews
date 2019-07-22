@@ -7,10 +7,16 @@ import java.util.List;
 public class DocsResponse {
 
     //class for Search queries- returns the List of Docs which are derived fr SearchResponse
-        @SerializedName("docs")
-        private List<Docs> docsList;
+    @SerializedName("docs")
+    private List<Docs> docsList;
 
-        public List<Docs> getDocsList() {
-            return docsList;
-        }
+    private Meta meta;
+
+    public Meta getMeta() {
+        return meta;
     }
+
+    public List<Docs> getDocsList() {
+        return docsList;
+    }
+}

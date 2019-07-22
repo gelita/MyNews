@@ -8,8 +8,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.print.PrintDocumentAdapter;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -51,17 +49,8 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         createNotificationChannel(context);
         //check if there are articles and if so, send notification
         //if articles exist--> notify user of articles
-        runQuery(userQueryList); //returns the number of hits #articles returned in the query
+        runQuery(context, userQueryList); //returns the number of hits #articles returned in the query
         Log.d(TAG, "executing");
-//        if(numHits >0){
-            notifyThis(context, "Your New York Times articles are ready.", "Read now?");
-//        }else{
-            //no articles returned then Toast user 
-//            Toast.makeText(
-//                    context,
-//                    context.getResources().getString(R.string.notify_user_no_articles_found),
-//                    Toast.LENGTH_LONG).show();
-//        }
     }
 
     private ArrayList<String> getExtras(Intent intent) {
@@ -84,7 +73,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    private int runQuery(ArrayList<String> userQueryList) {
+    private void runQuery(final Context context, ArrayList<String> userQueryList) {
         //if articles returned -> notify user
         Log.d(TAG, "loading JSON");
         Gson gson = new GsonBuilder().serializeNulls().create();
@@ -113,7 +102,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 section += userQueryList.get(i) + ",";
             }
         }
-        Log.d(TAG, "query = " + query + ", section = " + section + "api-key: " + Constants.API_KEY);
         Call<SearchResponse> call = newsApi.getDocs(query, section, Constants.API_KEY);
         assert call != null;
         Log.d(TAG, "starting Search network call");
@@ -124,9 +112,17 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getDocsResponse() != null) {
-                            /// need to make this getMeta().getNumHits();
-                            numHits = response.body().getDocsResponse().getDocsList().size();
+                            numHits = response.body().getDocsResponse().getMeta().getNumHits();
                             Log.d(TAG, "numHits = " + numHits);
+                            if (numHits > 0) {
+                                notifyThis(context, "Your New York Times articles are ready.", "Read now?");
+                            } else {
+                                //no articles returned then Toast user
+                                Toast.makeText(
+                                        context,
+                                        context.getResources().getString(R.string.notify_user_no_articles_found),
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }
@@ -136,14 +132,13 @@ public class MyAlarmReceiver extends BroadcastReceiver {
             public void onFailure(Call<SearchResponse> call, Throwable t) {
             }
         });
-        return numHits;
     }
 
     public void notifyThis(Context context, String title, String message) {
         Intent notificationIntent = new Intent(context, QueryResultsActivity.class);
         notificationIntent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
         Log.d(TAG, "sending user notification");
-//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent pIntent = stackBuilder.getPendingIntent(22, PendingIntent.FLAG_UPDATE_CURRENT);
