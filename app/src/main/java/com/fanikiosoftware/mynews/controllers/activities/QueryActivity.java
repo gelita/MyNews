@@ -2,7 +2,9 @@ package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +65,7 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePicker;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,17 +103,6 @@ public class QueryActivity extends AppCompatActivity {
 
     private void setUpListeners() {
         Log.d(TAG, "setting up listeners");
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getQuery() != null) {
-                    Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                    intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, getQuery());
-                    startActivity(intent);
-                }
-            }
-        });
-
         tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,12 +125,13 @@ public class QueryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Is the switch on?
                 if (((Switch) v).isChecked()) {
-                    ArrayList<String> q;
-                    q = getQuery();
+                    ArrayList<String> q = getQuery();
                     if (q != null) {
                         NotificationActivity.setAlarm(QueryActivity.this, q);
                         //notify user that the notifications preference is now saved
-                        Toast.makeText(QueryActivity.this, string.confirm_search_saved, Toast.LENGTH_LONG).show();
+                        Toast.makeText(QueryActivity.this,
+                                string.confirm_search_saved,
+                                Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(QueryActivity.this, MainActivity.class);
                         intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, q);
                         startActivity(intent);
@@ -145,6 +139,17 @@ public class QueryActivity extends AppCompatActivity {
                 }
             }
         });
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getQuery() != null) {
+                    Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
+                    intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, getQuery());
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     private ArrayList<String> getQuery() {
@@ -160,23 +165,36 @@ public class QueryActivity extends AppCompatActivity {
         } else {
             ArrayList<String> userQueryList = new ArrayList<>();
             userQueryList.add(search); //this adds an element to the list.
+            //create var to save for sharedPreferences
+            String queryString = search;
+            queryString += ",";
             if (check1.isChecked()) {
                 userQueryList.add(check1.getText().toString());
+                queryString += check1.getText().toString() + ",";
             }
             if (check2.isChecked()) {
                 userQueryList.add(check2.getText().toString());
+                queryString += check2.getText().toString() + ",";
+
             }
             if (check3.isChecked()) {
                 userQueryList.add(check3.getText().toString());
+                queryString += check3.getText().toString() + ",";
+
             }
             if (check4.isChecked()) {
                 userQueryList.add(check4.getText().toString());
+                queryString += check4.getText().toString() + ",";
+
             }
             if (check5.isChecked()) {
                 userQueryList.add(check5.getText().toString());
+                queryString += check5.getText().toString() + ",";
+
             }
             if (check6.isChecked()) {
                 userQueryList.add(check6.getText().toString());
+                queryString += check6.getText().toString() + ",";
             }
             if (userQueryList.size() < 2) {
                 //if no category selected - notify user to choose at least one
@@ -185,7 +203,12 @@ public class QueryActivity extends AppCompatActivity {
                 return null;
             } else {
                 //if search term and at least 1 category selected then return query
-                Log.d(TAG, Constants.USER_QUERY_LIST + ": " + userQueryList);
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putString(Constants.USER_QUERY_LIST,queryString);
+                editor.apply();
+                SharedPreferences mgr = PreferenceManager.getDefaultSharedPreferences(this);
+                String name = mgr.getString(Constants.USER_QUERY_LIST, "default value");
+                Log.d(TAG, "name: " + name);
                 return userQueryList;
             }
         }

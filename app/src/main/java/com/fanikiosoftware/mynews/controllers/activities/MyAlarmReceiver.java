@@ -138,9 +138,9 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         Intent notificationIntent = new Intent(context, QueryResultsActivity.class);
         notificationIntent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
         Log.d(TAG, "sending user notification");
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addNextIntentWithParentStack(notificationIntent);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)
+                .addNextIntent(notificationIntent);
+//        stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent pIntent = stackBuilder.getPendingIntent(22, PendingIntent.FLAG_UPDATE_CURRENT);
         Log.d(TAG, "creating notification builder");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)

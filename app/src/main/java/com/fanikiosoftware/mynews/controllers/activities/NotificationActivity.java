@@ -23,7 +23,7 @@ public class NotificationActivity extends AppCompatActivity {
         Intent alarmIntent = new Intent(context, MyAlarmReceiver.class);
         //sending the query in order to be able to add it in pendingIntent for the notification
         alarmIntent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
-        Log.d(TAG, Constants.USER_QUERY_LIST + " ln 24: " + userQueryList);
+        Log.d(TAG, Constants.USER_QUERY_LIST + " ln 26: " + userQueryList);
         //pIntent grants permission to external applications to act on intent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -39,7 +39,7 @@ public class NotificationActivity extends AppCompatActivity {
 //        calendar.set(Calendar.SECOND, 0);
 //        calendar.set(Calendar.MILLISECOND, 0);
         //+1day to the calendar instance to prevent alarm from being called for past scheduled intent
-        calendar.add(Calendar.SECOND, 15);
+        calendar.add(Calendar.SECOND, 5);
         //RTC fires the pending intent at the specific time but does not wake up the device.
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 //        alarmMgr.cancel(pendingIntent);
