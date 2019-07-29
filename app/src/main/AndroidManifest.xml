@@ -16,7 +16,7 @@
 
         <activity
             android:name=".controllers.activities.QueryActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateUnspecified|adjustResize" />
 
         <!--adding Main as the parent activity for QueryResultsActivity-->
         <activity
