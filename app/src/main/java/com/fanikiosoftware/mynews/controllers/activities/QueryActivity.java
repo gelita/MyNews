@@ -2,10 +2,8 @@ package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -68,7 +66,7 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePicker;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
-    private SharedPreferences mPreferences = null;
+    //    private SharedPreferences mPreferences = null;
     String queryString = "";
 
     @Override
