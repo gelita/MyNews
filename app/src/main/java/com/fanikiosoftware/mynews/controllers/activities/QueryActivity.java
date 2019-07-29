@@ -3,6 +3,7 @@ package com.fanikiosoftware.mynews.controllers.activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ import static com.fanikiosoftware.mynews.R.string;
  */
 public class QueryActivity extends AppCompatActivity {
 
+    @BindView(id.scrollView1)
+    ScrollView scrollView1;
     @BindView(id.tvStart)
     TextView tvStart;
     @BindView(id.tvEnd)
@@ -74,6 +78,10 @@ public class QueryActivity extends AppCompatActivity {
         setContentView(layout.activity_query);
         //Field and method binding for  layout views
         ButterKnife.bind(this);
+        // disable ScrollView in portrait mode
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            scrollView1.setEnabled(false);
+        }
         notificationSwitch.setChecked(false);
         getActivityTitle();
         setSwitch(title);
