@@ -63,7 +63,8 @@ public class QueryActivity extends AppCompatActivity {
     @BindView(id.notificationSwitch)
     Switch notificationSwitch;
     String title;
-    private DatePickerDialog.OnDateSetListener datePicker;
+    private DatePickerDialog.OnDateSetListener datePicker_start;
+    private DatePickerDialog.OnDateSetListener datePicker_end;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
     //    private SharedPreferences mPreferences = null;
@@ -91,8 +92,7 @@ public class QueryActivity extends AppCompatActivity {
     //get the datePicker for the start/end datePicker TextViews
     private void getDate() {
         myCalendar = Calendar.getInstance();
-        datePicker = new DatePickerDialog.OnDateSetListener() {
-
+        datePicker_start = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 myCalendar.set(Calendar.YEAR, year);
@@ -104,6 +104,18 @@ public class QueryActivity extends AppCompatActivity {
                 tvStart.setText(sdf.format(myCalendar.getTime()));
             }
         };
+        datePicker_end = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                //update the labels
+                String myFormat = "MM/dd/yy";//format to use
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                tvEnd.setText(sdf.format(myCalendar.getTime()));
+            }
+        };
     }
 
 
@@ -112,7 +124,7 @@ public class QueryActivity extends AppCompatActivity {
         tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(QueryActivity.this, datePicker, myCalendar
+                new DatePickerDialog(QueryActivity.this, datePicker_start, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -120,7 +132,7 @@ public class QueryActivity extends AppCompatActivity {
         tvEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(QueryActivity.this, datePicker, myCalendar
+                new DatePickerDialog(QueryActivity.this, datePicker_end, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -158,7 +170,6 @@ public class QueryActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private ArrayList<String> getQuery() {
