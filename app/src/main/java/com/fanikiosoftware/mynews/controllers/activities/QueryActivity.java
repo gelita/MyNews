@@ -69,6 +69,8 @@ public class QueryActivity extends AppCompatActivity {
     public static final String TAG = "QueryActivity";
     //    private SharedPreferences mPreferences = null;
     String queryString = "";
+    String startDate = "";
+    String endDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,10 @@ public class QueryActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 //update the labels
                 String myFormat = "MM/dd/yy";//format to use
+                String myFormatStart = "yyyy-MM-dd";//format to use for query
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                SimpleDateFormat sdfStart = new SimpleDateFormat(myFormatStart, Locale.US);
+                startDate = sdfStart.format(myCalendar.getTime());
                 tvStart.setText(sdf.format(myCalendar.getTime()));
             }
         };
@@ -112,7 +117,10 @@ public class QueryActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 //update the labels
                 String myFormat = "MM/dd/yy";//format to use
+                String myFormatEnd = "yyyy-MM-dd";//format to use for query
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                SimpleDateFormat sdfEnd = new SimpleDateFormat(myFormatEnd, Locale.US);
+                endDate = sdfEnd.format(myCalendar.getTime());
                 tvEnd.setText(sdf.format(myCalendar.getTime()));
             }
         };
@@ -165,8 +173,8 @@ public class QueryActivity extends AppCompatActivity {
                 if (getQuery() != null) {
                     Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
                     intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, getQuery());
-                    intent.putExtra("startDate", tvStart.getText());
-                    intent.putExtra("endDate", tvEnd.getText());
+                    intent.putExtra(Constants.DATE_START, startDate);
+                    intent.putExtra(Constants.DATE_END, endDate);
                     startActivity(intent);
                 }
             }

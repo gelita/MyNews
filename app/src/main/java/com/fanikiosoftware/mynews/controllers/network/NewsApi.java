@@ -34,6 +34,8 @@ public interface NewsApi {
     Call<SearchResponse> getDocs(
             @Query("q") String userQuery,
             @Query("fq") String sectionList,
+            @Query("begin_date") String startDate,
+            @Query("end_date") String endDate,
             @Query("api-key") String apiKey
     );
 }

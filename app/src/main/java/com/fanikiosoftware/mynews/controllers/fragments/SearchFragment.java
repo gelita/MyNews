@@ -82,8 +82,6 @@ public class SearchFragment extends Fragment {
         if (args != null) {
             position = args.getInt("position");
             startDate = args.getString(Constants.DATE_START);
-            Log.d(TAG, startDate);
-            Log.d(TAG, endDate);
             endDate = args.getString(Constants.DATE_END);
             Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
             userQueryList = args.getStringArrayList(Constants.USER_QUERY_LIST);
@@ -120,7 +118,7 @@ public class SearchFragment extends Fragment {
             }
         }
         Log.d(TAG, "query = " + query + ", section = " + section + "api-key: " + Constants.API_KEY);
-        Call<SearchResponse> call = newsApi.getDocs(query, section, Constants.API_KEY);
+        Call<SearchResponse> call = newsApi.getDocs(query, section, startDate, endDate, Constants.API_KEY);
         assert call != null;
         Log.d(TAG, "starting Search network call");
         //network call for Search
