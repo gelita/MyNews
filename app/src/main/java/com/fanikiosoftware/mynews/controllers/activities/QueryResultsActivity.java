@@ -14,17 +14,24 @@ import java.util.ArrayList;
 public class QueryResultsActivity extends AppCompatActivity {
 
     public static final String TAG = "QueryResultsActivity";
+    String startDate = "";
+    String endDate = "";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate started");
         setContentView(R.layout.activity_query_results);
         ArrayList<String> userQueryList = getIntent().getStringArrayListExtra(Constants.USER_QUERY_LIST);
+        startDate = getIntent().getStringExtra(Constants.DATE_START);
+        endDate = getIntent().getStringExtra(Constants.DATE_END);
         Log.d(TAG, Constants.USER_QUERY_LIST + ": " + userQueryList);
+        Log.d(TAG, Constants.DATE_START + ": " + startDate);
+        Log.d(TAG, Constants.DATE_END + ": " + endDate);
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
-        SearchFragment searchFragment = SearchFragment.newInstance(6, userQueryList);
+        SearchFragment searchFragment = SearchFragment.newInstance(
+                6, userQueryList, startDate, endDate);
         ft.replace(R.id.fragment_holder, searchFragment);
         // Complete the changes added above
         ft.commit();

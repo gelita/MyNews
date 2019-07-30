@@ -38,27 +38,37 @@ public class SearchFragment extends Fragment {
     NewsApi newsApi;
     @State
     int position;
+    String startDate;
+    String endDate;
     ArrayList<String> userQueryList;
     RecyclerView recyclerView;
     List<Docs> docsList = new ArrayList<>();
     public static final String TAG = "SearchFragment";
 
-    public static SearchFragment newInstance(int position, ArrayList<String> userQueryList) {
+    //fragment constructor
+    public static SearchFragment newInstance(
+            int position, ArrayList<String> userQueryList, String start, String end) {
         Log.d(TAG, "newInstance");
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         bundle.putStringArrayList(Constants.USER_QUERY_LIST, userQueryList);
+        bundle.putString(Constants.DATE_START, start);
+        bundle.putString(Constants.DATE_END, end);
         Log.d(TAG, "userQueryList: " + userQueryList);
+        Log.d(TAG, "const. start date: " + start);
+        Log.d(TAG, "const. end date: " + end);
         SearchFragment fragment = new SearchFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called");
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
         textViewResult = rootView.findViewById(R.id.tv_textView);
         recyclerView = rootView.findViewById(R.id.rv_recycler_view);
+        //method below
         readBundle(getArguments());
         recyclerView.setHasFixedSize(true);
         adapter = new SearchAdapter(docsList);
@@ -71,6 +81,10 @@ public class SearchFragment extends Fragment {
         Log.d(TAG, "reading bundle args: " + args);
         if (args != null) {
             position = args.getInt("position");
+            startDate = args.getString(Constants.DATE_START);
+            Log.d(TAG, startDate);
+            Log.d(TAG, endDate);
+            endDate = args.getString(Constants.DATE_END);
             Log.d(TAG, "userQueryList: (should be null) " + userQueryList);//should be empty
             userQueryList = args.getStringArrayList(Constants.USER_QUERY_LIST);
             Log.d(TAG, "userQueryList: (should have query and section values) " + userQueryList);

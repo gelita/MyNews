@@ -18,17 +18,16 @@ public class Docs {
     String searchUrl;
     @SerializedName("pub_date")
     String searchDate;
-
     @Nullable
     @SerializedName("multimedia")
-    List<Multimedia> multimediaList;
+    private List<Multimedia> multimediaList;
     @SerializedName("headline")
     private Headline headlineResponse;
+
 
     public Headline getHeadlineResponse() {
         return headlineResponse;
     }
-
 
     public List<Multimedia> getMultimediaList() {
         return multimediaList;
@@ -49,6 +48,4 @@ public class Docs {
     public String getSearchDate() {
         return searchDate;
     }
-
-
 }
