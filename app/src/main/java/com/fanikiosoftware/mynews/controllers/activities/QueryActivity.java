@@ -118,7 +118,6 @@ public class QueryActivity extends AppCompatActivity {
         };
     }
 
-
     private void setUpListeners() {
         Log.d(TAG, "setting up listeners");
         tvStart.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +165,8 @@ public class QueryActivity extends AppCompatActivity {
                 if (getQuery() != null) {
                     Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
                     intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, getQuery());
+                    intent.putExtra("startDate", tvStart.getText());
+                    intent.putExtra("endDate", tvEnd.getText());
                     startActivity(intent);
                 }
             }
