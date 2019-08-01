@@ -1,4 +1,4 @@
-package com.fanikiosoftware.mynews.controllers.activities;
+/*package com.fanikiosoftware.mynews.controllers.activities;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -94,3 +94,4 @@ public class SearchActivityTest {
         };
     }
 }
+*/

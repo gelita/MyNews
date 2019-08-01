@@ -2,8 +2,10 @@ package com.fanikiosoftware.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -24,6 +26,7 @@ import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -69,12 +72,14 @@ public class QueryActivity extends AppCompatActivity {
     public static final String TAG = "QueryActivity";
     String queryString = "";
     String startDate, endDate;
+    private SharedPreferences userQueryPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate called");
         setContentView(layout.activity_query);
+        userQueryPref = PreferenceManager.getDefaultSharedPreferences(this);
         //Field and method binding for  layout views
         ButterKnife.bind(this);
         // disable ScrollView in portrait mode
@@ -169,9 +174,10 @@ public class QueryActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getQuery() != null) {
+                ArrayList<String> userQueryList = getQuery();
+                if (userQueryList != null) {
                     Intent intent = new Intent(getBaseContext(), QueryResultsActivity.class);
-                    intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, getQuery());
+                    intent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
                     intent.putExtra(Constants.DATE_START, startDate);
                     intent.putExtra(Constants.DATE_END, endDate);
                     startActivity(intent);
@@ -193,7 +199,7 @@ public class QueryActivity extends AppCompatActivity {
         } else {
             ArrayList<String> userQueryList = new ArrayList<>();
             userQueryList.add(search); //this adds an element to the list.
-            //create var to save for sharedPreferences
+            //create String variable to save for sharedPreferences
             queryString = search;
             queryString += ",";
             if (check1.isChecked()) {
@@ -228,9 +234,14 @@ public class QueryActivity extends AppCompatActivity {
                 //if no category selected - notify user to choose at least one
                 Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
                 notificationSwitch.setChecked(false);
+                queryString = "";
                 return null;
             } else {
                 //if search term and at least 1 category selected then return query
+                userQueryPref.edit().putString(Constants.USER_QUERY_LIST, queryString).apply();
+                Log.d(TAG, "line 242");
+                Log.d(TAG, "sharedPref: " + userQueryPref.getString(Constants.USER_QUERY_LIST, ""));
+                Log.d(TAG, " " + userQueryList);
                 return userQueryList;
             }
         }
