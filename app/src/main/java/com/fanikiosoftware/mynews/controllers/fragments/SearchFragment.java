@@ -62,7 +62,6 @@ public class SearchFragment extends Fragment {
         return fragment;
     }
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called");
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
@@ -110,14 +109,12 @@ public class SearchFragment extends Fragment {
         String query;
         query = userQueryList.get(0);
         String section = "";
-        Log.d(TAG, "userQueryList.size() = " + userQueryList.size());
         if (userQueryList.size() > 1) {
             //get sections from list starting at 2nd item on list(1st item is user's query)
             for (int i = 1; i < userQueryList.size(); i++) {
                 section += userQueryList.get(i) + ",";
             }
         }
-        Log.d(TAG, "query = " + query + ", section = " + section + "api-key: " + Constants.API_KEY);
         Call<SearchResponse> call = newsApi.getDocs(query, section, startDate, endDate, Constants.API_KEY);
         assert call != null;
         Log.d(TAG, "starting Search network call");

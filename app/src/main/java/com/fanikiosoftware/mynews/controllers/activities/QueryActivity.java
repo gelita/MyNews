@@ -67,10 +67,8 @@ public class QueryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePicker_end;
     private Calendar myCalendar;
     public static final String TAG = "QueryActivity";
-    //    private SharedPreferences mPreferences = null;
     String queryString = "";
-    String startDate = "";
-    String endDate = "";
+    String startDate, endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +118,7 @@ public class QueryActivity extends AppCompatActivity {
                 String myFormatEnd = "yyyy-MM-dd";//format to use for query
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 SimpleDateFormat sdfEnd = new SimpleDateFormat(myFormatEnd, Locale.US);
+                Log.d(TAG, "pre-end: " + endDate);
                 endDate = sdfEnd.format(myCalendar.getTime());
                 tvEnd.setText(sdf.format(myCalendar.getTime()));
             }
