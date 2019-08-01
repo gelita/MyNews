@@ -102,9 +102,9 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 section += userQueryList.get(i) + ",";
             }
         }
-        String start = "";
-        String end = "";
-        Call<SearchResponse> call = newsApi.getDocs(query, section, start, end, Constants.API_KEY);
+//        String start = null;
+//        String end = null;
+        Call<SearchResponse> call = newsApi.getDocs(query, section, null, null, Constants.API_KEY);
         assert call != null;
         Log.d(TAG, "starting Search network call");
         //network call for Search

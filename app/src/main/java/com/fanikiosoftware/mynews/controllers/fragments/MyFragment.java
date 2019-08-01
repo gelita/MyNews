@@ -23,8 +23,6 @@ import java.util.List;
 
 import icepick.Icepick;
 import icepick.State;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,17 +73,10 @@ public class MyFragment extends Fragment {
     private void loadJSON(int whichFrag) {
         Log.d(TAG, "loading JSON");
         Gson gson = new GsonBuilder().serializeNulls().create();
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(loggingInterceptor)
-//                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-//                .client(okHttpClient)
                 .build();
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
@@ -115,7 +106,6 @@ public class MyFragment extends Fragment {
                     Thread.currentThread().getStackTrace();
                     return;
                 }
-//                Log.d(TAG, "response body: " + response.body() + " resultsList: " + response.body().getResultsList());
                 if (response.body() != null && response.body().getResultsList() != null) {
                     postList.addAll(response.body().getResultsList());
                     //getCount() & onBindViewHolder() called next in MyAdapter
