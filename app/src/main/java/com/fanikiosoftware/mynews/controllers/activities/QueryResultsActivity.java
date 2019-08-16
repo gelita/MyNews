@@ -3,7 +3,6 @@ package com.fanikiosoftware.mynews.controllers.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.fanikiosoftware.mynews.R;
 import com.fanikiosoftware.mynews.controllers.fragments.SearchFragment;
