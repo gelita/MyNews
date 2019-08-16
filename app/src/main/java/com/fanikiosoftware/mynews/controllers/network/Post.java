@@ -7,14 +7,14 @@ import java.util.List;
 public class Post {
 
     // from "results" on API call
-    String section;
-    String subsection;
-    String title;
-    String url;
+    private String section;
+    private String subsection;
+    private String title;
+    private String url;
     @SerializedName("created_date")
-    String date;
+    private String date;
     @SerializedName("multimedia")
-    List<Multimedia> multimediaList;
+    private List<Multimedia> multimediaList;
 
     public String getSection() {
         return section;

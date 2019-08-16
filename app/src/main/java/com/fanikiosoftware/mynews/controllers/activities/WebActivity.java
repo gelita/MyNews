@@ -18,7 +18,6 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: started");
         setContentView(R.layout.activity_webview);
         WebView webView = findViewById(R.id.webView);
         String url = getIntent().getStringExtra("url");

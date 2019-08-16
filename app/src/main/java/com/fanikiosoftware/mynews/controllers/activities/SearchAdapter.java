@@ -16,22 +16,23 @@ import com.fanikiosoftware.mynews.controllers.network.Docs;
 import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleViewHolder> {
 
-    List<Docs> docsList;
+    private final List<Docs> docsList;
     private static final String TAG = "SearchAdapter";
-    String url;
 
     public SearchAdapter(List<Docs> docsList) {
         this.docsList = docsList;
     }
 
     //called when an instance of SearchAdapter is created
+    @NotNull
     @Override
-    public ArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder started");
+    public ArticleViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         //inflate the card view layout and setup each view within each individual card(row)of the rv
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item,
                 parent, false);
@@ -41,22 +42,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
 
     //binds the data with the view when the data is shown in the UI
     @Override
-    public void onBindViewHolder(ArticleViewHolder viewHolder, final int position) {
-        Log.d(TAG, "onBindViewHolder started");
+    public void onBindViewHolder(@NotNull ArticleViewHolder viewHolder, final int position) {
         Docs docs = docsList.get(position);
         if (docs.getSearchSection() != null && !docs.getSearchSection().equals("None")) {
             viewHolder.tvSection.setText(docs.getSearchSection());
             //if subsection is available then list subsection after section >
             if (docs.getSearchSubsection() != null && !docs.getSearchSubsection().equals("")) {
-                viewHolder.tvSubsection.setText(" > " + docs.getSearchSubsection());
+                StringBuilder stringBuilder = new StringBuilder();
+                viewHolder.tvSubsection.setText(stringBuilder.append(" > ").append(docs.getSearchSubsection()).toString());
             } else {
                 //remove subsection from view if subsection variable is empty string
                 viewHolder.tvSubsection.setVisibility(View.GONE);
             }
         } else {
             //if the Search Section  name is not available remove it and check for subsection only
-//            viewHolder.tvSection.setVisibility(View.GONE);
-//            viewHolder.tvSubsection.setVisibility(View.GONE);
             viewHolder.tvSection.setText(" ");
             viewHolder.tvSubsection.setText(" ");
         }
@@ -83,7 +82,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
         viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "clicked on title from position: " + position);
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
                 if (docsList.get(position).getSearchUrl() != null) {
@@ -97,7 +95,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
 
                 isEmpty()) {
             //if an image exists, get the image url for the Article Search
-            url = Constants.BASE_IMAGE_URL + docs.getMultimediaList().get(0).getUrl();
+            String url = Constants.BASE_IMAGE_URL + docs.getMultimediaList().get(0).getUrl();
             Picasso.with(viewHolder.imageView.getContext())
                     .load(url)
                     .resize(60, 60)
@@ -112,8 +110,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if article image is clicked -> open the webview of the article at SearchUrl
-                Log.d(TAG, "clicked on image from position: " + position);
+                //if article image is clicked -> open the web view of the article at SearchUrl
                 Context context = v.getContext();
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
                 intent.putExtra("url", docsList.get(position).getSearchUrl());
@@ -129,14 +126,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleVie
 
     public static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardView;
-        TextView tvSection;
-        TextView tvSubsection;
-        TextView tvTitle;
-        TextView tvDate;
-        ImageView imageView;
+        final CardView cardView;
+        final TextView tvSection;
+        final TextView tvSubsection;
+        final TextView tvTitle;
+        final TextView tvDate;
+        final ImageView imageView;
 
-        public ArticleViewHolder(View v) {
+        ArticleViewHolder(View v) {
             super(v);
             cardView = itemView.findViewById(R.id.card_view);
             tvTitle = itemView.findViewById(R.id.title_view);

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ConstantsTest {
+class ConstantsTest {
     @Test
     public void titleIsCorrect() {
         String expected = "Top Stories";
@@ -28,14 +28,14 @@ public class ConstantsTest {
 
     @Test
     public void baseImageURLIsCorrect() {
-        String expected = "https://static01.nyt.com/";;
+        String expected = "https://static01.ic_nyt.com/";
         String url = Constants.BASE_IMAGE_URL;
         assertEquals(expected, url);
     }
 
     @Test
     public void userQueryListIsCorrect() {
-        String expected = "userQueryList";;
+        String expected = "userQueryList";
         String userQueryList = Constants.USER_QUERY_LIST;
         assertEquals(expected, userQueryList);
     }

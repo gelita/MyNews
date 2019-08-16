@@ -13,11 +13,10 @@ import java.util.ArrayList;
 
 public class QueryResultsActivity extends AppCompatActivity {
 
-    public static final String TAG = "QueryResultsActivity";
+    private static final String TAG = "QueryResultsActivity";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate started");
         setContentView(R.layout.activity_query_results);
         ArrayList<String> userQueryList = getIntent().getStringArrayListExtra(Constants.USER_QUERY_LIST);
         String startDate = getIntent().getStringExtra(Constants.DATE_START);

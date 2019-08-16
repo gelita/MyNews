@@ -14,12 +14,11 @@ import com.fanikiosoftware.mynews.controllers.fragments.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate called");
         setContentView(R.layout.activity_main);
         //Configure ViewPager
         this.configureViewPager();

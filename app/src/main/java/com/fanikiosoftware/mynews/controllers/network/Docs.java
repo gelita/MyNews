@@ -10,25 +10,25 @@ public class Docs {
 
     //ARTICLE SEARCH API returns the following for each item in a List<Docs>
     @SerializedName("news_desk")
-    String searchSection;
+    private String searchSection;
     @SerializedName("subsection_name")
-    String searchSubsection;
+    private String searchSubsection;
     //url for the article
     @SerializedName("web_url")
-    String searchUrl;
+    private String searchUrl;
     @SerializedName("pub_date")
-    String searchDate;
+    private String searchDate;
     @Nullable
     @SerializedName("multimedia")
     private List<Multimedia> multimediaList;
     @SerializedName("headline")
     private Headline headlineResponse;
 
-
     public Headline getHeadlineResponse() {
         return headlineResponse;
     }
 
+    @org.jetbrains.annotations.Nullable
     public List<Multimedia> getMultimediaList() {
         return multimediaList;
     }

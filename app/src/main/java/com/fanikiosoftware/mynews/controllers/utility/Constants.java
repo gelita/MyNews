@@ -9,7 +9,7 @@ public final class Constants {
             "Top Stories", "Business", "Tech", "Fashion", "Real Estate", "Health"};
 
     public static final String API_KEY = "nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6";
-    public static final String BASE_IMAGE_URL = "https://static01.nyt.com/";
+    public static final String BASE_IMAGE_URL = "https://static01.ic_nyt.com/";
     public static final String USER_QUERY_LIST = "userQueryList";
     public static final String DATE_START = "startDate";
     public static final String DATE_END = "endDate";

@@ -1,5 +1,6 @@
 package com.fanikiosoftware.mynews.controllers.activities;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,6 +22,8 @@ import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -36,11 +39,10 @@ import static android.support.v4.app.NotificationCompat.CATEGORY_RECOMMENDATION;
 public class MyAlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "MyAlarmReceiver";
-    public static final String CHANNEL_ID = "channel";
-    public static final int NOTIFICATION_ID = 0;
-    ArrayList<String> userQueryList = null;
-    NewsApi newsApi;
-    public int numHits;
+    private static final String CHANNEL_ID = "channel";
+    private static final int NOTIFICATION_ID = 0;
+    private ArrayList<String> userQueryList = null;
+    private int numHits;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -50,7 +52,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         //check if there are articles and if so, send notification
         //if articles exist--> notify user of articles
         runQuery(context, userQueryList); //returns the number of hits #articles returned in the query
-        Log.d(TAG, "executing");
     }
 
     private ArrayList<String> getExtras(Intent intent) {
@@ -75,11 +76,10 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 
     private void runQuery(final Context context, ArrayList<String> userQueryList) {
         //if articles returned -> notify user
-        Log.d(TAG, "loading JSON");
         Gson gson = new GsonBuilder().serializeNulls().create();
         HttpLoggingInterceptor loggingInterceptor;
         loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
@@ -91,33 +91,30 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 .build();
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
-        newsApi = retrofit.create(NewsApi.class);
+        NewsApi newsApi = retrofit.create(NewsApi.class);
         //get the user query that was in the arguments of the bundle
         String query = userQueryList.get(0);
-        String section = "";
-        Log.d(TAG, "userQueryList.size() = " + userQueryList.size());
+        StringBuilder section = new StringBuilder();
         if (userQueryList.size() > 1) {
             //get sections from list starting at 2nd item on list(1st item is user's query)
             for (int i = 1; i < userQueryList.size(); i++) {
-                section += userQueryList.get(i) + ",";
+                section.append(userQueryList.get(i)).append(",");
             }
         }
 //        String start = null;
 //        String end = null;
-        Call<SearchResponse> call = newsApi.getDocs(query, section, null, null, Constants.API_KEY);
+        Call<SearchResponse> call = newsApi.getDocs(query, section.toString(), null, null, Constants.API_KEY);
         assert call != null;
-        Log.d(TAG, "starting Search network call");
         //network call for Search
         call.enqueue(new Callback<SearchResponse>() {
             @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+            public void onResponse(@NotNull Call<SearchResponse> call, @NotNull Response<SearchResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getDocsResponse() != null) {
                             numHits = response.body().getDocsResponse().getMeta().getNumHits();
-                            Log.d(TAG, "numHits = " + numHits);
                             if (numHits > 0) {
-                                notifyThis(context, "Your New York Times articles are ready.", "Read now?");
+                                notifyThis(context);
                             } else {
                                 //no articles returned then Toast user
                                 Toast.makeText(
@@ -131,24 +128,21 @@ public class MyAlarmReceiver extends BroadcastReceiver {
             }
 
             @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<SearchResponse> call, @NotNull Throwable t) {
             }
         });
     }
 
-    public void notifyThis(Context context, String title, String message) {
+    private void notifyThis(Context context) {
         Intent notificationIntent = new Intent(context, QueryResultsActivity.class);
         notificationIntent.putStringArrayListExtra(Constants.USER_QUERY_LIST, userQueryList);
-        Log.d(TAG, "sending user notification");
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)
                 .addNextIntent(notificationIntent);
-//        stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent pIntent = stackBuilder.getPendingIntent(22, PendingIntent.FLAG_UPDATE_CURRENT);
-        Log.d(TAG, "creating notification builder");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.nyt_notification)
-                .setContentTitle(title)
-                .setContentText(message)
+        @SuppressLint("IconColors") NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_nyt_notification)
+                .setContentTitle("Your New York Times articles are ready.")
+                .setContentText("Read now?")
                 //auto cancel removes notification automatically when user taps it
                 .setAutoCancel(true)
                 //sets the type of notification for system use(example: when DO NOT DISTURB is on)

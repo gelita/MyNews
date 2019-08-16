@@ -18,6 +18,8 @@ import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +33,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyFragment extends Fragment {
 
-    public TextView textViewResult;
-    MyAdapter adapter;
-    NewsApi newsApi;
+    private TextView textViewResult;
+    private MyAdapter adapter;
     @State
     int position;
-    RecyclerView recyclerView;
-    List<Post> postList = new ArrayList<>();
-    public static final String TAG = "MyFragment";
+    private final List<Post> postList = new ArrayList<>();
+    private static final String TAG = "MyFragment";
 
     public static MyFragment newInstance(int position) {
         Bundle bundle = new Bundle();
@@ -48,13 +48,12 @@ public class MyFragment extends Fragment {
         return fragment;
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView called");
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get activity_query identifier from abstract method declared in child class
         //this method will report the correct activity_query's identifier so the correct activity_query will be used
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
         textViewResult = rootView.findViewById(R.id.tv_textView);
-        recyclerView = rootView.findViewById(R.id.rv_recycler_view);
+        RecyclerView recyclerView = rootView.findViewById(R.id.rv_recycler_view);
         readBundle(getArguments());
         recyclerView.setHasFixedSize(true);
         adapter = new MyAdapter(postList);
@@ -66,12 +65,10 @@ public class MyFragment extends Fragment {
     private void readBundle(Bundle args) {
         if (args != null) {
             position = args.getInt("position");
-            Log.d(TAG, "pos: " + position);
         }
     }
 
     private void loadJSON(int whichFrag) {
-        Log.d(TAG, "loading JSON");
         Gson gson = new GsonBuilder().serializeNulls().create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -80,7 +77,7 @@ public class MyFragment extends Fragment {
                 .build();
 
         //retrofit will create the body of the method being called w/out a defn in NewsApi.class
-        newsApi = retrofit.create(NewsApi.class);
+        NewsApi newsApi = retrofit.create(NewsApi.class);
         Call<PostResponse> call = null;
         if (whichFrag == 0) {
             call = newsApi.getPosts();
@@ -96,11 +93,10 @@ public class MyFragment extends Fragment {
             call = newsApi.getPosts5();
         }
         assert call != null;
-        Log.d(TAG, "starting network call");
         call.enqueue(new Callback<PostResponse>() {
 
             @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+            public void onResponse(@NotNull Call<PostResponse> call, @NotNull Response<PostResponse> response) {
                 if (!response.isSuccessful()) {
                     textViewResult.setText(response.code());
                     Thread.currentThread().getStackTrace();
@@ -111,12 +107,12 @@ public class MyFragment extends Fragment {
                     //getCount() & onBindViewHolder() called next in MyAdapter
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.d(TAG, "resultsList NULL");
+                //todo
                 }
             }
 
             @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<PostResponse> call, @NotNull Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
@@ -126,11 +122,9 @@ public class MyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // Handling Bundle Restoration
         Icepick.restoreInstanceState(this, savedInstanceState);
-        // Update Design (Developer will call this method instead of override onActivityCreated())
-        this.updateDesign();
     }
 
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         //Handling Bundle Save
         Icepick.saveInstanceState(this, outState);
@@ -140,13 +134,5 @@ public class MyFragment extends Fragment {
         return new MyFragment();
     }
 
-    protected int getFragmentLayout() {
-        return R.layout.fragment_detail;
-    }
 
-    protected void configureDesign() {
-    }
-
-    protected void updateDesign() {
-    }
 }

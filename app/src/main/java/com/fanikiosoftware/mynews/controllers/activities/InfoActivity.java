@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 
 public class InfoActivity extends AppCompatActivity {
 
-    String title;
+    private String title;
     @BindView(R.id.tvFragmentInfo)
     TextView tvFragmentInfo;
 
@@ -68,9 +68,8 @@ public class InfoActivity extends AppCompatActivity {
         return false;
     }
 
-    public String getActivityTitle() {
+    private void getActivityTitle() {
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
-        return title;
     }
 }

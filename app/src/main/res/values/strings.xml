@@ -5,16 +5,12 @@
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="search_query_term">Search query term</string>
-    <string name="hint_start_date">Start date</string>
-    <string name="hint_end_date">End date</string>
     <string name="art">Art</string>
     <string name="business">Business</string>
     <string name="entrepreneurs">Entrepreneurs</string>
     <string name="sports">Sports</string>
     <string name="travel">Travel</string>
     <string name="politics">Politics</string>
-    <string name="tech_news_string">Tech News</string>
-    <string name="about_and_help_info_here">About and Help info here</string>
     <string name="lorem_ipsum">Alohamora wand elf parchment, Wingardium Leviosa hippogriff, house
         dementors betrayal. Holly, Snape centaur portkey ghost Hermione spell bezoar Scabbers.
         Peruvian-Night-Powder werewolf, Dobby pear-tickle half-moon-glasses, Knight-Bus. Padfoot
@@ -22,28 +18,14 @@
         robes I must not tell lies. Mudbloods yew pumpkin juice phials Ravenclaw’s Diadem 10 galleons
         Thieves Downfall. Ministry-of-Magic mimubulus mimbletonia Pigwidgeon knut phoenix feather
         other minister Azkaban. </string>
-    <string name="title">title</string>
-    <string name="Recycler">Recycler</string>
-    <string name="article_header">header here</string>
     <string name="headline">Article Headline Here</string>
     <string name="notificationSwitch">Enable notifications (1x daily)</string>
     <string name="article_section">section here</string>
     <string name="article_subsection">subsection</string>
-    <string name="api_key">.json?api-key=nHg4SGAl3zIrn5oT8ik9PQnhKXNsnjh6</string>
-    <string name="json_business">business</string>
-    <string name="json_tech">technology</string>
-    <string name="json_home">home</string>
     <string name="image_view">article image</string>
     <string name="search_term_required">Please enter a search term.</string>
-    <string name="checkbox_required">Please select at least one checkbox.</string>
     <string name="hint_date">date_here</string>
-    <string name="greater_than_symbol"><![CDATA[>]]></string>
-    <string name="notificationTitle">New York Times</string>
-    <string name="notificationContext">New articles are available!</string>
     <string name="confirm_search_saved">Your notifications preference has been saved!</string>
-    <string name="notify_title_pt1">Your articles about </string>
-    <string name="notify_title_pt2"> are ready.</string>
-    <string name="notify_question">Read them now?</string>
     <string name="channel_name">channelMain</string>
     <string name="channel_description">channelMain</string>
     <string name="notify_user_no_articles_found">Your daily search did not return any articles.</string>

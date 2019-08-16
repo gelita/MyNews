@@ -26,8 +26,8 @@ import com.fanikiosoftware.mynews.controllers.utility.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,19 +65,18 @@ public class QueryActivity extends AppCompatActivity {
     AppCompatCheckBox check6;
     @BindView(id.notificationSwitch)
     Switch notificationSwitch;
-    String title;
+    private String title;
     private DatePickerDialog.OnDateSetListener datePicker_start;
     private DatePickerDialog.OnDateSetListener datePicker_end;
     private Calendar myCalendar;
-    public static final String TAG = "QueryActivity";
-    String queryString = "";
-    String startDate, endDate;
+    private static final String TAG = "QueryActivity";
+    private String startDate;
+    private String endDate;
     private SharedPreferences userQueryPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate called");
         setContentView(layout.activity_query);
         userQueryPref = PreferenceManager.getDefaultSharedPreferences(this);
         //Field and method binding for  layout views
@@ -123,7 +122,6 @@ public class QueryActivity extends AppCompatActivity {
                 String myFormatEnd = "yyyy-MM-dd";//format to use for query
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 SimpleDateFormat sdfEnd = new SimpleDateFormat(myFormatEnd, Locale.US);
-                Log.d(TAG, "pre-end: " + endDate);
                 endDate = sdfEnd.format(myCalendar.getTime());
                 tvEnd.setText(sdf.format(myCalendar.getTime()));
             }
@@ -131,7 +129,6 @@ public class QueryActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        Log.d(TAG, "setting up listeners");
         tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,9 +185,8 @@ public class QueryActivity extends AppCompatActivity {
 
     private ArrayList<String> getQuery() {
         //if search field is empty then display error to user
-        String search = etSearch.getText().toString().trim();
+        String search = Objects.requireNonNull(etSearch.getText()).toString().trim();
         if (search.equals("")) {
-            Log.d(TAG, "no userQueryList found! Toasting");
             //reset toggle switch
             notificationSwitch.setChecked(false);
             Toast.makeText
@@ -200,7 +196,7 @@ public class QueryActivity extends AppCompatActivity {
             ArrayList<String> userQueryList = new ArrayList<>();
             userQueryList.add(search); //this adds an element to the list.
             //create String variable to save for sharedPreferences
-            queryString = search;
+            String queryString = search;
             queryString += ",";
             if (check1.isChecked()) {
                 userQueryList.add(check1.getText().toString());
@@ -234,14 +230,10 @@ public class QueryActivity extends AppCompatActivity {
                 //if no category selected - notify user to choose at least one
                 Toast.makeText(this, "Please select at least one category.", Toast.LENGTH_SHORT).show();
                 notificationSwitch.setChecked(false);
-                queryString = "";
                 return null;
             } else {
                 //if search term and at least 1 category selected then return query
                 userQueryPref.edit().putString(Constants.USER_QUERY_LIST, queryString).apply();
-                Log.d(TAG, "line 242");
-                Log.d(TAG, "sharedPref: " + userQueryPref.getString(Constants.USER_QUERY_LIST, ""));
-                Log.d(TAG, " " + userQueryList);
                 return userQueryList;
             }
         }
@@ -284,7 +276,7 @@ public class QueryActivity extends AppCompatActivity {
         return false;
     }
 
-    public void getActivityTitle() {
+    private void getActivityTitle() {
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
     }
