@@ -35,6 +35,7 @@ public class MyFragment extends Fragment {
     private TextView textViewResult;
     private MyAdapter adapter;
     @State
+    private
     int position;
     private final List<Post> postList = new ArrayList<>();
     private static final String TAG = "MyFragment";

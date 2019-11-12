@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import icepick.Icepick;
-import icepick.State;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -36,8 +35,6 @@ public class SearchFragment extends Fragment {
 
     private TextView textViewResult;
     private SearchAdapter adapter;
-    @State
-    int position;
     private String startDate;
     private String endDate;
     private ArrayList<String> userQueryList;
@@ -72,7 +69,7 @@ public class SearchFragment extends Fragment {
 
     private void readBundle(Bundle args) {
         if (args != null) {
-            position = args.getInt("position");
+            int position = args.getInt("position");
             startDate = args.getString(Constants.DATE_START);
             endDate = args.getString(Constants.DATE_END);
             userQueryList = args.getStringArrayList(Constants.USER_QUERY_LIST);
