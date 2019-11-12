@@ -3,7 +3,6 @@ package com.fanikiosoftware.mynews.controllers.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,34 +121,30 @@ public class SearchFragment extends Fragment {
                         docsList.addAll(response.body().getDocsResponse().getDocsList());
                         //getCount() & onBindViewHolder() called next in MyAdapter
                         adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "docsList:" + response.body().getDocsResponse());
                     }
-                } else {
-                    Log.d(TAG, "response.body(): " + response.body());
                 }
             }
 
-            @Override
-            public void onFailure(@NotNull Call<SearchResponse> call, @NotNull Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-    }
+                @Override
+                public void onFailure (@NotNull Call < SearchResponse > call, @NotNull Throwable t){
+                    textViewResult.setText(t.getMessage());
+                }
+            });
+        }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        // Handling Bundle Restoration
-        Icepick.restoreInstanceState(this, savedInstanceState);
-    }
+        public void onActivityCreated (Bundle savedInstanceState){
+            super.onActivityCreated(savedInstanceState);
+            // Handling Bundle Restoration
+            Icepick.restoreInstanceState(this, savedInstanceState);
+        }
 
-    public void onSaveInstanceState(@NotNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //Handling Bundle Save
-        Icepick.saveInstanceState(this, outState);
-    }
+        public void onSaveInstanceState (@NotNull Bundle outState){
+            super.onSaveInstanceState(outState);
+            //Handling Bundle Save
+            Icepick.saveInstanceState(this, outState);
+        }
 
-    protected SearchFragment newInstance() {
-        return new SearchFragment();
+        protected SearchFragment newInstance () {
+            return new SearchFragment();
+        }
     }
-}

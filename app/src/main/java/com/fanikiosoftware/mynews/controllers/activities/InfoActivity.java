@@ -29,7 +29,7 @@ public class InfoActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setIcon(R.drawable.ic_back);
         getActivityTitle();
         setTitle(title);
-        tvFragmentInfo.setText(R.string.lorem_ipsum);
+        tvFragmentInfo.setText(title);
     }
 
     //create menu options
@@ -41,28 +41,28 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent();
-        String t = "";
+        String title = "";
         switch (item.getItemId()) {
             case R.id.miBackPress:
                 intent = new Intent(getBaseContext(), MainActivity.class);
                 break;
             case R.id.miAbout:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                t = "About";
+                title = "About";
                 break;
             case R.id.miHelp:
                 intent = new Intent(getBaseContext(), InfoActivity.class);
-                t = "Help";
+                title = "Help";
                 break;
             case R.id.miSearch:
                 intent = new Intent(getBaseContext(), QueryActivity.class);
-                t = "Search";
+                title = "Search";
                 break;
             default:
                 break;
         }
         //add intent extra int to identify which button click called the activity
-        intent.putExtra("title", t);
+        intent.putExtra("title", title);
         startActivity(intent);
         //allow processing of menu item to carry on - return false per documentation
         return false;
