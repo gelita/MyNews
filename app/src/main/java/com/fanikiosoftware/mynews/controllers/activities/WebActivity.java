@@ -11,9 +11,6 @@ import com.fanikiosoftware.mynews.R;
 
 public class WebActivity extends AppCompatActivity {
 
-
-    private static final String TAG = "WebActivity";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

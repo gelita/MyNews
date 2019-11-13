@@ -37,7 +37,6 @@ import static android.support.v4.app.NotificationCompat.CATEGORY_RECOMMENDATION;
 
 public class MyAlarmReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "MyAlarmReceiver";
     private static final String CHANNEL_ID = "channel";
     private static final int NOTIFICATION_ID = 0;
     private ArrayList<String> userQueryList = null;

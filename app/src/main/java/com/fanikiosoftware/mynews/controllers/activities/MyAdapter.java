@@ -21,8 +21,6 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ArticleViewHolder> {
 
     private final List<Post> postList;
-    private static final String TAG = "MyAdapter";
-
     public MyAdapter(List<Post> postList) {
         this.postList = postList;
     }

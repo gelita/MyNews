@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 public class QueryResultsActivity extends AppCompatActivity {
 
-    private static final String TAG = "QueryResultsActivity";
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_results);

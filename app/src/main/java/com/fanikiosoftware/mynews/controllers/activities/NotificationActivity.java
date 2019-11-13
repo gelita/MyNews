@@ -13,8 +13,6 @@ import java.util.Calendar;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    private static final String TAG = "Notification";
-
     //set alarm intent so that app runs search 1x daily at 9am
     public static void setAlarm(Context context, ArrayList<String> userQueryList) {
         //alarm going off will trigger MyAlarmReceiver

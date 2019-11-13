@@ -39,7 +39,6 @@ public class SearchFragment extends Fragment {
     private String endDate;
     private ArrayList<String> userQueryList;
     private final List<Docs> docsList = new ArrayList<>();
-    private static final String TAG = "SearchFragment";
 
     //fragment constructor
     public static SearchFragment newInstance(

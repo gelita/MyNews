@@ -41,46 +41,33 @@ import static com.fanikiosoftware.mynews.R.string;
 public class QueryActivity extends AppCompatActivity {
 
     @BindView(id.scrollView1)
-    private
     ScrollView scrollView1;
     @BindView(id.tvStart)
-    private
     TextView tvStart;
     @BindView(id.tvEnd)
-    private
     TextView tvEnd;
     @BindView(id.etSearch)
-    private
     TextInputEditText etSearch;
     @BindView(id.btnSubmit)
-    private
     Button btnSubmit;
     @BindView(id.check1)
-    private
     AppCompatCheckBox check1;
     @BindView(id.check2)
-    private
     AppCompatCheckBox check2;
     @BindView(id.check3)
-    private
     AppCompatCheckBox check3;
     @BindView(id.check4)
-    private
     AppCompatCheckBox check4;
     @BindView(id.check5)
-    private
     AppCompatCheckBox check5;
     @BindView(id.check6)
-    private
     AppCompatCheckBox check6;
     @BindView(id.notificationSwitch)
-    private
     Switch notificationSwitch;
     private String title;
     private DatePickerDialog.OnDateSetListener datePicker_start;
     private DatePickerDialog.OnDateSetListener datePicker_end;
     private Calendar myCalendar;
-    private static final String TAG = "QueryActivity";
     private String startDate;
     private String endDate;
     private SharedPreferences userQueryPref;

@@ -22,7 +22,6 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ArticleViewHolder> {
 
     private final List<Docs> docsList;
-    private static final String TAG = "SearchAdapter";
 
     public SearchAdapter(List<Docs> docsList) {
         this.docsList = docsList;
